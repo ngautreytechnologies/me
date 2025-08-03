@@ -1,0 +1,10 @@
+google-api-python-client~=2.177.0
+google-auth-httplib2
+google-auth-oauthlib~=1.2.2
+markdown
+python-dateutil~=2.9.0.post0
+watchdog~=6.0.0
+python-dotenv~=1.1.1
+pyyaml
+protobuf~=6.31.1
+pytz
