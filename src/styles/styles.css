@@ -656,7 +656,6 @@ h2::after {
 /* Project Details Panel */
 .project-details-container {
     position: relative;
-    min-height: 660px;
     overflow: hidden;
 }
 
@@ -767,15 +766,93 @@ h2::after {
     .skills-grid {
         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     }
+}
 
+/* Extra small mobile devices (height <= 320px) */
+@media (max-height: 320px) {
+
+    /* Styles for small devices */
     .project-details-container {
-        min-height: 700px;
+        min-height: 1460px;
     }
 }
 
+/* Small mobile devices (height >= 320px) */
+@media (min-height: 320px) {
+
+    /* Styles for small devices */
+    .project-details-container {
+        min-height: 1460px;
+    }
+}
+
+/* Medium mobile devices (height >= 480px) */
+@media (min-height: 480px) {
+
+    /* Styles for medium devices */
+    .project-details-container {
+        min-height: 960px;
+    }
+}
+
+/* Large mobile devices / small tablets (height >= 640px) */
+@media (min-height: 640px) {
+
+    /* Styles for large mobiles or small tablets */
+    .project-details-container {
+        min-height: 960px;
+    }
+}
+
+/* Tablets (height >= 768px) */
+@media (min-height: 768px) {
+
+    /* Styles for tablets */
+    .project-details-container {
+        min-height: 960px;
+    }
+}
+
+/* Small laptops (height >= 900px) */
+@media (min-height: 900px) {
+
+    /* Styles for small laptops */
+    .project-details-container {
+        min-height: 960px;
+    }
+}
+
+/* Laptops / desktops (height >= 1024px) */
+@media (min-height: 1024px) {
+
+    /* Styles for laptops and desktops */
+    .project-details-container {
+        min-height: 960px;
+    }
+}
+
+/* Large desktops (height >= 1200px) */
+@media (min-height: 1200px) {
+
+    /* Styles for large desktops */
+    .project-details-container {
+        min-height: 960px;
+    }
+}
+
+/* Extra large screens (height >= 1440px) */
+@media (min-height: 1440px) {
+
+    /* Styles for extra large screens */
+    .project-details-container {
+        min-height: 960px;
+    }
+}
+
+
 @media (min-width: 769px) {
     .project-details-container {
-        min-height: 700px;
+        min-height: 960px;
     }
 }
 
