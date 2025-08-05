@@ -3,7 +3,8 @@ name: Build and Deploy CV Site
 on:
   push:
     branches:
-      - deploy-branch  # change this to your actual branch
+      - gh-pages
+      - main
 
 jobs:
   build-and-deploy:
@@ -18,15 +19,11 @@ jobs:
       with:
         node-version: '18'
 
-    - name: Clean dist folder
-      run: |
-        echo "Removing dist folder"
-        rm -rf dist
-
     - name: Install dependencies
       run: npm install
 
     - name: Build project
+      # TODO: Minify and bundle the website
       run: npm run copy
 
     - name: Deploy to GitHub Pages
