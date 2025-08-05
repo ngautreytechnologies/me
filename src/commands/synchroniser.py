@@ -23,19 +23,7 @@ CREDS_FILE = '../../credentials/credentials.json'
 
 load_dotenv()
 
-logger = logging.getLogger()
-logger.setLevel(logging.DEBUG)  # Set root logger level
-
-# Create console handler that logs to stdout
-console_handler = logging.StreamHandler(sys.stdout)
-console_handler.setLevel(logging.DEBUG)  # You can set to INFO or WARNING as needed
-
-# Create a formatter and set it to the handler
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-console_handler.setFormatter(formatter)
-
-# Add the handler to the logger
-logger.addHandler(console_handler)
+from 
 
 # Load batch_size and max_retries globally from workflows.yaml or override CLI
 # For this example, we'll just use defaults here; you can adjust later or load dynamically.
@@ -267,7 +255,7 @@ def main():
     parser.add_argument("--start-date", required=True, help="Schedule start date (YYYY-MM-DD)")
     parser.add_argument("--end-date", help="Schedule end date (YYYY-MM-DD), mutually exclusive with --duration-days")
     parser.add_argument("--duration-days", type=int, default=None,
-                        help="Number of days to schedule (alternative to --end-date)")
+                        help="Number of days to stchedule (alternative to --end-date)")
     parser.add_argument("--batch-size", type=int, default=DEFAULT_BATCH_SIZE, help="Batch size for API calls")
     parser.add_argument("--max-retries", type=int, default=DEFAULT_MAX_RETRIES, help="Max retries for API calls")
     parser.add_argument("--watch", action="store_true", help="Watch markdown file for changes and auto-sync")

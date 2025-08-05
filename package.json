@@ -1,0 +1,14 @@
+{
+  "name": "cv-site",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "esbuild assets/cv/src/index.js --bundle --minify --outfile=dist/js/scripts.js",
+    "copy": "mkdir -p dist && cp -r assets/cv/src/. dist/",
+    "publish": "",
+    "prepare": "rm -rf dist && mkdir -p dist/js dist/styles dist/images && cp -r assets/cv/src/styles dist/styles",
+    "start": "npx serve dist"
+  },
+  "devDependencies": {
+    "esbuild": "^0.18.10"
+  }
+}

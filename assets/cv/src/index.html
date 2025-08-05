@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nicholas Gautrey - Principal Engineer - AI Innovator</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link href="./styles/styles.css" rel="stylesheet">
+    <script src="./js/scripts.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="./images/favicon/site.webmanifest">
+</head>
+
+<body>
+    <div id="floating-elements"></div>
+    <script>
+        (function () {
+            const particleCount = 15;
+            const colors = ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#00f2fe'];
+
+            function initParticles(container) {
+                if (!container) return;
+
+                function createParticle() {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.textContent = Math.random() > 0.5 ? '1' : '0';
+                    particle.style.color = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.left = Math.random() * 100 + '%';
+                    // particle.style.animationDelay = Math.random() * 2 + 's';
+                    particle.style.animationDuration = (Math.random() * 7 + 8) + 's';
+
+                    container.appendChild(particle);
+
+                    setTimeout(() => {
+                        particle.remove();
+                    }, 24000);
+                }
+
+                setInterval(createParticle, 400);
+                for (let i = 0; i < particleCount; i++) {
+                    setTimeout(createParticle, i * 200);
+                }
+            }
+
+            // Watch for the container as early as possible
+            const observer = new MutationObserver(() => {
+                const container = document.getElementById('floating-elements');
+                if (container) {
+                    initParticles(container);
+                    observer.disconnect();
+                }
+            });
+
+            observer.observe(document.documentElement, { childList: true, subtree: true });
+        })();
+    </script>
+
+    <header>
+        <div class="header-content">
+            <div class="profile-section">
+                <div class="profile-image">
+                    <img src="./images/profile.jfif" alt="Nicholas Simon Gautrey">
+                </div>
+                <div class="profile-info">
+                    <h1>Nicholas Gautrey</h1>
+                    <div class="role">Principal Engineer</div>
+                    <div class="company">DendriFlow</div>
+                    <div class="company">AI Innovator</div>
+                </div>
+            </div>
+
+            <div class="contact-links">
+                <a href="mailto:ngautreytechnologies@gmail.com">📧 ngautreytechnologies@gmail.com</a>
+                <a href="https://github.com/ngautreytechnologies/DendriFlow">🐙 ngautreytechnologies/DendriFlow</a>
+                <a href="https://www.linkedin.com/in/nicholas-gautrey-5b0b17378/">💼
+                    linkedin.com/in/nicholas-gautrey-5b0b17378/</a>
+            </div>
+
+            <div class="export-buttons">
+                <button id="pdf-btn" onclick="exportPDF()">📄 Export PDF</button>
+                <button id="cta-btn">📞 Contact Me</button>
+            </div>
+
+        </div>
+    </header>
+
+    <main>
+
+        <div class="section-card">
+            <h2>Summary</h2>
+            <p>
+                Pragmatic and impact-driven Principal Software Engineer with 13+ years of experience architecting and
+                delivering scalable, cloud-native solutions in fast-paced tech startup environments. Expert in designing
+                microservices and event-driven architectures using Python, Go, and AWS serverless technologies. Skilled
+                in infrastructure as code with Terraform, implementing robust CI/CD pipelines, and championing Agile and
+                DevOps best practices. Creator of DendriFlow, an open-source AI-augmented automation platform inspired
+                by cognitive science.
+            </p>
+            <br>
+            <p>
+                Deeply passionate about advancing AI technologies and their practical applications to solve complex
+                real-world problems. Continuously exploring cutting-edge AI methodologies, including machine learning,
+                natural language processing, and cognitive automation, to drive innovation and improve system
+                performance and user experience. Committed to ethical AI development, prioritizing data privacy,
+                transparency, and responsible design.
+            </p>
+            <br>
+            <p>
+                Passionate about building clean, modular, and maintainable codebases while mentoring engineering teams
+                to adopt scalable, test-driven development approaches. Adept at collaborating cross-functionally to
+                align technical strategy with business goals and accelerate product delivery. Committed to driving
+                innovation through automation, cloud optimization, and developer-first tools that empower teams and
+                deliver measurable impact.
+            </p>
+
+        </div>
+
+        <div class="section-card">
+            <h2>🚀 Key Skills</h2>
+            <div class="skills-grid">
+
+                <div class="skill-badge">Python</div>
+                <div class="skill-badge">Go</div>
+                <div class="skill-badge">C#</div>
+                <div class="skill-badge">.NET</div>
+                <div class="skill-badge">AWS</div>
+                <div class="skill-badge">Azure</div>
+                <div class="skill-badge">CI/CD</div>
+                <div class="skill-badge">Terraform</div>
+
+                <!-- Systems design thinking -->
+                <div class="skill-badge">Systems Design</div>
+                <div class="skill-badge">Microservices Architecture</div>
+                <div class="skill-badge">Event-Driven Architecture</div>
+                <div class="skill-badge">API Design & RESTful Services</div>
+                <div class="skill-badge">Serverless Architecture</div>
+                <div class="skill-badge">Observability & Monitoring</div>
+                <div class="skill-badge">Performance Optimization</div>
+
+                <!-- Soft skills -->
+                <div class="skill-badge">Mentorship</div>
+                <div class="skill-badge">Leadership</div>
+                <div class="skill-badge">Technical Strategy</div>
+                <div class="skill-badge">Cross-Team Collaboration</div>
+                <div class="skill-badge">Problem Solving</div>
+                <div class="skill-badge">Communication</div>
+
+            </div>
+        </div>
+
+        <div class="section-card full-width">
+            <h2>💼 Experience</h2>
+            <div class="experience-timeline">
+                <div class="experience-item">
+                    <div class="job-title">Founder & Lead Architect</div>
+                    <div class="job-company">DendriFlow (Open-Source Software Venture)</div>
+                    <div class="job-period">2023 - Present</div>
+                    <p>
+                        Created <strong>DendriFlow</strong>, an open-source orchestration platform that models cognitive
+                        states, learning loops, and emotional context. Designed for developers, it combines AI-augmented
+                        flow execution, modular brain-inspired architecture, and local-first data privacy.
+                        <br></br>
+                        Enables reflective learning, workflow automation, and performance enhancement through
+                        declarative YAML configurations and developer-centric tooling.
+                    </p>
+
+                    </p>
+                </div>
+
+                <div class="experience-item">
+                    <div class="job-title">Principal Engineer</div>
+                    <div class="job-company">Alchem Technologies</div>
+                    <div class="job-period">2022 - Present</div>
+                    <p>
+                        Led the architecture and delivery of a scalable, high-performance platform using a
+                        monolith-first approach, setting the stage for future Domain-Driven Design (DDD) adoption.
+                        <br><br>
+                        Actively mentored engineers in both technical skills (testing, design) and soft skills
+                        (communication, collaboration), fostering a high-trust team culture.
+                        <br><br>
+                        Spearheaded solution architecture through formal SAD documents, aligning system designs with
+                        product and business objectives.
+                        <br><br>
+                        Shifted focus in later stages to technical strategy and mentorship, bridging engineering
+                        efforts with company-wide initiatives.
+                    </p>
+                </div>
+                <div class="experience-item">
+                    <div class="job-title">Principal Software Engineer</div>
+                    <div class="job-company">E-Bate</div>
+                    <div class="job-period">2019 - 2022</div>
+                    <p>
+                        Delivered key features for a cloud-based rebate platform, leading a core engine re-architecture
+                        that improved scalability, observability, and performance on AWS. Results included a 40%
+                        increase in speed, 35% better scalability, and a 25% reduction in infrastructure costs via
+                        optimized resource usage.
+                        <br></br>
+                        Promoted from Senior to Principal Engineer for spearheading high-impact client integrations and
+                        championing clean, testable code. Cultivated a culture of autonomy and continuous improvement by
+                        driving automation-first practices, codifying engineering standards, and mentoring engineers
+                        across disciplines.
+                    </p>
+                </div>
+
+                <div class="experience-item">
+                    <div class="job-title">Senior Software Engineer</div>
+                    <div class="job-company">Collision Management Systems</div>
+                    <div class="job-period">2017 - 2019</div>
+                    <p>
+                        Developed and maintained telematics data systems in C# and .NET on Azure, ensuring high
+                        reliability and scalability. Built real-time analytics pipelines and REST APIs to monitor
+                        vehicle behavior, improving data accuracy and system responsiveness.
+                        <br></br>
+                        Partnered with product teams to shape features driven by customer feedback and usage insights,
+                        directly enhancing user satisfaction and product effectiveness.
+                    </p>
+                </div>
+
+                <div class="experience-item">
+                    <div class="job-title">Software Engineer</div>
+                    <div class="job-company">Intamac</div>
+                    <div class="job-period">2015 - 2017</div>
+                    <p>
+                        Contributed to a cloud-based IoT platform for smart home and industrial devices. Developed
+                        scalable backend APIs, automated workflows, and internal dashboards to streamline operations and
+                        enhance user experience.
+                        <br></br>
+                        Gained hands-on experience with device communication protocols and telemetry processing for
+                        real-time monitoring and analytics. Advocated for maintainable code and collaborated
+                        cross-functionally to align technical solutions with business goals.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2>🎯 Featured Projects</h2>
+
+            <div class="project-card" onclick="showProjectDetails('DendriFlow')">
+                <div class="project-title">DendriFlow</div>
+                <p>A modern CLI & AI automation platform for building workflow chains using Flowlets and missions.
+                    Combines YAML automation with voice/AI control.</p>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2>📋 Project Details</h2>
+            <div id="project-details" class="project-details-container">
+                <div class="project-detail active" id="DendriFlow-details">
+                    <div class="detail-header">
+                        <h3>🔧 DendriFlow</h3>
+                        <div class="project-tags">
+                            <span class="tag">CLI</span>
+                            <span class="tag">AI</span>
+                            <span class="tag">Automation</span>
+                            <span class="tag">YAML</span>
+                        </div>
+                    </div>
+                    <div class="detail-content">
+                        <p><strong>Overview:</strong> DendriFlow is an advanced automation and orchestration
+                            platform
+                            inspired by the structure of the human brain. It empowers developers to streamline tasks
+                            by
+                            connecting modular AI-enhanced components—called <em>Neurons</em>—that mirror cognitive
+                            flow
+                            and decision-making patterns.</p>
+
+                        <p><strong>Key Features:</strong></p>
+                        <ul>
+                            <li>Neuron-based orchestration for adaptive, brain-inspired modular workflows</li>
+                            <li>Voice command interface for hands-free interaction and cognitive accessibility</li>
+                            <li>YAML-driven configuration for clear, declarative, and reproducible workflows</li>
+                            <li>Mission-based task system aligning automation with user goals and learning loops
+                            </li>
+                        </ul>
+
+                        <p><strong>Impact:</strong> Actively helping me manage complex tasks, reduce friction, and
+                            stay
+                            focused — enabling me to excel both technically and cognitively in a demanding
+                            engineering
+                            environment.</p>
+                    </div>
+
+                </div>
+            </div>
+    </main>
+    <footer class="print-footer only-print">
+        <div class="footer-note">
+            References available upon request.
+        </div>
+    </footer>
+
+</body>
+
+</html>

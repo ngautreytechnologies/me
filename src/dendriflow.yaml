@@ -1,0 +1,11 @@
+logging:
+  level: DEBUG
+  ollama_summarizer:
+    enabled: true
+    model: phi
+    store_in_neo4j: true
+    neo4j:
+      uri: bolt://localhost:7687
+      user: neo4j
+      password: test
+    
