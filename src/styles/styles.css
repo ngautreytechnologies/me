@@ -728,7 +728,6 @@ h2::after {
 }
 
 .detail-content {
-    color: var(--text-secondary);
     line-height: 1.7;
 }
 
