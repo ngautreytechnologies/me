@@ -366,6 +366,24 @@ header {
     animation: fadeInRight 1s ease-out 0.8s both;
 }
 
+#cta-btn,
+.button {
+    display: inline-block;
+    background-color: #f97316;
+    /* example orange */
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    user-select: none;
+}
+
+#cta-btn:hover {
+    background-color: #ea580c;
+}
+
 .contact-links a {
     color: var(--text-secondary);
     text-decoration: none;
@@ -915,14 +933,25 @@ h2::after {
     font-weight: 600;
     cursor: pointer;
     box-shadow: 0 4px 16px rgba(75, 85, 99, 0.2);
-    /* same shadow as pdf-btn */
     transition: all 0.3s ease;
     animation: none;
+
+    width: 220px;
+    height: 50px;
+    display: inline-flex;
+    /* changed */
+    align-items: center;
+    /* added */
+    justify-content: center;
+    /* added */
+    text-align: center;
+    /* can keep, but not necessary with flex */
+    line-height: 1;
+    /* added */
 }
 
 #cta-btn:hover {
     background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
-    /* darker orange on hover */
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(75, 85, 99, 0.3);
 }
