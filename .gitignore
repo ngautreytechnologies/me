@@ -3,3 +3,6 @@ credentials/token.json
 .env
 .idea
 dist
+node_modules
+.
+.venv
