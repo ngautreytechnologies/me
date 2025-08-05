@@ -2,7 +2,7 @@
   "name": "cv-site",
   "version": "1.0.0",
   "scripts": {
-    "build": "esbuild src/index.js --bundle --minify --outfile=dist/js/scripts.js",
+    "build": "esbuild src/index.js  --bundle --minify --outfile=dist/js/scripts.js",
     "copy": "mkdir -p dist && cp -r src/. dist/",
     "publish": "",
     "prepare": "rm -rf dist && mkdir -p dist/js dist/styles dist/images && cp -r src/styles dist/styles",
