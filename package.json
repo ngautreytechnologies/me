@@ -2,11 +2,9 @@
   "name": "cv-site",
   "version": "1.0.0",
   "scripts": {
-    "clean": "shx rm -rf dist",
-    "prepare-dist": "shx mkdir -p dist/js dist/styles dist/images",
-    "copy": "shx cp -r src/* dist/",
-    "build-js": "esbuild src/index.js --bundle --minify --outfile=dist/js/scripts.js",
-    "build": "npm run clean && npm run prepare-dist && npm run copy && npm run build-js",
+    "build": "esbuild src/index.js --bundle --minify --outfile=dist/js/scripts.js",
+    "copy": "shx rm -rf dist && shx mkdir -p dist/js dist/styles dist/images && shx cp -r src/. dist/",
+    "prepare": "shx rm -rf dist && shx mkdir -p dist/js dist/styles dist/images && shx cp -r src/styles/. dist/styles/",
     "start": "npx serve dist"
   },
   "devDependencies": {
