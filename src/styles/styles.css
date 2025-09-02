@@ -16,8 +16,28 @@
     display: none !important;
 }
 
+.no-print br {
+    display: none !important;
+}
+
+.no-print {
+    display: inline-block;
+    margin-right: 0.3em;
+    /* some space between icon and text */
+    /* optionally: vertical-align for alignment */
+    vertical-align: middle;
+}
+
+
 /* Print-friendly version */
 @media print {
+    .no-print br {
+        display: none !important;
+    }
+
+    .no-print {
+        display: none !important;
+    }
 
     /* General document styling */
     body {
@@ -953,24 +973,10 @@ h2::after {
     }
 }
 
-* Education Timeline Styles - Alternative without vertical line */ .education-timeline {
+.education-timeline {
     position: relative;
     padding-left: 2rem;
 }
-
-/* Remove or comment out the timeline line if you prefer no vertical rule */
-/*
-.education-timeline::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: calc(100% - 1rem);
-    width: 2px;
-    background: var(--accent-gradient);
-    border-radius: 1px;
-}
-*/
 
 .education-item {
     position: relative;
@@ -1071,7 +1077,7 @@ h2::after {
     }
 }
 
-/* Print styles for education section */
+/* Print styles for education section
 @media print {
     .education-timeline::before {
         background: #333 !important;
@@ -1103,8 +1109,91 @@ h2::after {
         background: transparent !important;
         border: 1px solid #333 !important;
     }
-}
+} */
 
+/* ===== Your existing styles ===== */
+/* Paste your current styles here or keep linking your styles.css */
+
+/* ===== Print styles for ATS compliance ===== */
+@media print {
+
+    .project-card,
+    .project-detail {
+        display: block !important;
+        /* Force visibility */
+        opacity: 1 !important;
+        /* Make sure they're fully opaque */
+        visibility: visible !important;
+        /* Ensure visibility */
+        height: auto !important;
+        /* Adjust height if needed */
+        pointer-events: auto !important;
+        /* Enable interaction */
+    }
+
+    /* Hide images, profile photo, floating particles */
+    .profile-image,
+    img,
+    #floating-elements {
+        display: none !important;
+    }
+
+    /* Hide contact icons and links */
+    .contact-links a,
+    .contact-links i,
+    .export-buttons,
+    button,
+    a.button {
+        display: none !important;
+    }
+
+    /* Hide emojis in headings by hiding the first character */
+    h2::first-letter,
+    h3::first-letter {
+        display: none;
+    }
+
+    /* Hide project tags and interactive project cards */
+    .project-tags,
+    .project-card {
+        display: none !important;
+    }
+
+    /* Remove social media icons */
+    i.fa-brands,
+    i.fa-solid {
+        display: none !important;
+    }
+
+    /* Remove footer */
+    .print-footer {
+        display: none !important;
+    }
+
+    /* Make links plain text (no underline, no pointer events) */
+    a {
+        color: black !important;
+        text-decoration: none !important;
+        pointer-events: none !important;
+    }
+
+    /* Keep the first section-card (Summary) on the first page */
+    main>.section-card:first-child {
+        page-break-after: always;
+    }
+
+    /* Text and background color reset for printing */
+    body {
+        color: black !important;
+        background: white !important;
+    }
+
+    /* Remove backgrounds, shadows */
+    * {
+        background: none !important;
+        box-shadow: none !important;
+    }
+}
 
 /* Certifications Timeline Styles */
 .certifications-timeline {
