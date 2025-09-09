@@ -1,16 +1,21 @@
-.skills-grid, .skill-expertise-grid {
+.skills-grid,
+.skill-expertise-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 1rem;
 }
-.skill-badge, .skill-expertise-card {
+
+.skill-badge,
+.skill-expertise-card {
     background: var(--glass-bg);
     border: 1px solid var(--border-glass);
     border-radius: 12px;
     padding: 0.8rem 1rem;
     text-align: center;
 }
-.skill-badge:hover, .skill-expertise-card:hover {
+
+.skill-badge:hover,
+.skill-expertise-card:hover {
     transform: translateY(-3px);
     color: white;
 }

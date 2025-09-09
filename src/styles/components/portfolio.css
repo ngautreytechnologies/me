@@ -1,21 +1,91 @@
+/* ===========================
+   Portfolio Grid - Recursive Tiles
+   =========================== */
 .portfolio-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 1rem;
+    margin-top: 2rem;
 }
 
+/* Square portfolio tiles (same look as skill badges) */
+.portfolio-badge {
+    aspect-ratio: 1 / 1;
+    /* perfect square */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: var(--glass-bg, rgba(255, 255, 255, 0.08));
+    border: 1px solid var(--border-glass, rgba(255, 255, 255, 0.15));
+    border-radius: 12px;
+    padding: 0.8rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary, #fff);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    word-break: break-word;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+
+/* Gradient hover effect (same as skill badges) */
+.portfolio-badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-gradient, linear-gradient(135deg, #667eea, #764ba2));
+    transition: left 0.5s ease;
+    z-index: -1;
+}
+
+/* Hover animation */
+.portfolio-badge:hover::before {
+    left: 0;
+}
+
+/* Lift + glow on hover */
+.portfolio-badge:hover {
+    transform: translateY(-3px);
+    color: white;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+/* Active/selected tile */
+.portfolio-badge.active {
+    background: var(--accent-color-strong, #3730a3);
+    color: #fff;
+    border-color: var(--accent-color-strong, #3730a3);
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+    .portfolio-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 0.8rem;
+    }
+
+    .portfolio-badge {
+        font-size: 0.8rem;
+        padding: 0.6rem;
+    }
+}
+
+/* ---------- Repo Cards ---------- */
 .repo-card {
     background: #f9f9f9;
-    padding: 1rem;
-    border-radius: 8px;
-    transition: transform 0.2s, box-shadow 0.2s;
+    color: #111;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.repo-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-}
-
+/* Repo details */
 .repo-details {
     background: #1e1e1e;
     color: #fff;
@@ -24,6 +94,30 @@
     border-radius: 8px;
 }
 
+/* ---------- Project Cards (scrollable row) ---------- */
+.scrollable-projects {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    padding: 1rem 0;
+}
+
+.project-card {
+    min-width: 250px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.project-tags .tag {
+    display: inline-block;
+    margin: 0.2rem 0.3rem;
+    padding: 0.2rem 0.5rem;
+    background: #667eea;
+    color: #fff;
+    font-size: 0.75rem;
+    border-radius: 10px;
+}
+
+/* ---------- Tabs ---------- */
 .tabs {
     display: flex;
     gap: 0.5rem;
@@ -37,6 +131,7 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    transition: background 0.2s ease;
 }
 
 .tab-btn.active {
@@ -53,40 +148,7 @@
     white-space: pre-wrap;
 }
 
-
-.skill-node {
-    margin-left: 20px;
-    margin-top: 8px;
-}
-
-.tag-badge {
-    display: inline-block;
-    padding: 4px 10px;
-    margin: 2px;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    font-weight: 500;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.tag-badge:hover {
-    transform: scale(1.05);
-}
-
-.children {
-    margin-top: 4px;
-    margin-left: 16px;
-    display: none;
-}
-
-.expanded>.children {
-    display: block;
-}
-
-/* -------------------- Skill Tree / Key-Skills Style -------------------- */
-
+/* ---------- Skill Tree / Key-Skills ---------- */
 #skill-tree {
     display: flex;
     flex-direction: column;
@@ -102,21 +164,18 @@
     transition: all 0.3s ease;
 }
 
-/* Nested children container */
 .skill-node .children {
     display: none;
     margin-left: 1.5rem;
-    /* indent nested levels */
     flex-direction: column;
     gap: 0.3rem;
 }
 
-/* Expanded state */
 .skill-node.expanded>.children {
     display: flex;
 }
 
-/* Badge style */
+/* Tag badges for skills */
 .tag-badge {
     display: inline-block;
     padding: 0.25rem 0.6rem;
@@ -130,59 +189,30 @@
     white-space: nowrap;
 }
 
-/* Hover effect */
 .tag-badge:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Optional: leaf node highlight */
 .skill-node>.tag-badge:only-child {
     background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
 }
 
-/* Children badges spacing */
 .skill-node .children .tag-badge {
     font-size: 0.82rem;
     padding: 0.2rem 0.5rem;
 }
 
-/* Tooltip style (using title attribute) */
-.tag-badge[title] {
-    position: relative;
-}
+/* ---------- Responsive Tweaks ---------- */
+@media (max-width: 600px) {
+    .portfolio-grid {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 0.8rem;
+    }
 
-/* Scrollable projects */
-.scrollable-projects {
-    display: flex;
-    overflow-x: auto;
-    gap: 1rem;
-    padding: 1rem 0;
-}
-
-/* Project card */
-.project-card {
-    min-width: 250px;
-    padding: 1rem;
-    border-radius: 12px;
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.project-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-}
-
-/* Project tags in detail panel */
-.project-tags .tag {
-    display: inline-block;
-    margin: 0.2rem 0.3rem 0.2rem 0;
-    padding: 0.2rem 0.5rem;
-    background: #667eea;
-    color: #fff;
-    font-size: 0.75rem;
-    border-radius: 10px;
+    .portfolio-badge,
+    .project-card {
+        font-size: 0.85rem;
+        padding: 0.8rem;
+    }
 }
