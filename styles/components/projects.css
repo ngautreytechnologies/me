@@ -1,0 +1,33 @@
+.project-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-glass);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.project-card:hover {
+    transform: translateY(-3px);
+}
+
+.project-detail {
+    opacity: 0;
+    transform: translateX(20px);
+    display: none;
+}
+
+.project-detail.active {
+    opacity: 1;
+    transform: translateX(0);
+    display: block;
+}
+
+
+@media (min-width: 769px) {
+
+    .project-details-container,
+    .project-detail {
+        overflow: visible;
+        /* ensure it's not hidden */
+        max-height: none;
+    }
+}

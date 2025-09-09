@@ -5,12 +5,46 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nicholas Gautrey - Principal Engineer - AI Innovator</title>
+
+    <!-- Google Fonts: Inter for body, JetBrains Mono for code -->
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet">
-    <link href="./styles/styles.css" rel="stylesheet">
-    <script src="./js/scripts.js"></script>
+
+    <!-- Variables + Reset -->
+    <link href="./styles/variables.css" rel="stylesheet">
+    <link href="./styles/reset.css" rel="stylesheet">
+
+    <!-- Base + Typography -->
+    <link href="./styles/base.css" rel="stylesheet">
+    <link href="./styles/typography.css" rel="stylesheet">
+
+    <!-- Animations -->
+    <link href="./styles/animations.css" rel="stylesheet">
+
+    <!-- Components -->
+    <link href="./styles/components/navbar.css" rel="stylesheet">
+    <link href="./styles/components/header.css" rel="stylesheet">
+    <link href="./styles/components/hero.css" rel="stylesheet">
+    <link href="./styles/components/profile.css" rel="stylesheet">
+    <link href="./styles/components/skills.css" rel="stylesheet">
+    <link href="./styles/components/experience.css" rel="stylesheet">
+    <link href="./styles/components/education.css" rel="stylesheet">
+    <link href="./styles/components/certifications.css" rel="stylesheet">
+    <link href="./styles/components/portfolio.css" rel="stylesheet">
+    <link href="./styles/components/buttons.css" rel="stylesheet">
+    <link href="./styles/components/cta.css" rel="stylesheet">
+
+    <!-- Base JS file with cross-cutting concerns -->
+    <script src="./js/base.js"></script>
+    <script src="./js/animations.js"></script>
+    <script src="./js/cta.js"></script>
+    <script src="./js/portfolio.js"></script>
+    <script src="./js/sections.js"></script>
+    <script src="./js/utils.js"></script>
+
     <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon/apple-touch-icon.png">
+
     <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon/favicon-16x16.png">
     <link rel="manifest" href="./images/favicon/site.webmanifest">
@@ -62,7 +96,22 @@
             observer.observe(document.documentElement, { childList: true, subtree: true });
         })();
     </script>
+    <nav id="navbar" class="navbar">
+        <div class="nav-container">
+            <!-- Brand / Logo -->
+            <div class="nav-brand hidden">Nicholas Gautrey</div>
 
+            <!-- Navigation Links -->
+            <div class="nav-links">
+                <a href="#skills" class="nav-link" data-section="skills">Core Skills</a>
+                <a href="#skills-expertise" class="nav-link" data-section="tools">Skills Expertise</a>
+                <a href="#portfolio" class="nav-link" data-section="portfolio">Portfolio</a>
+                <a href="#experience" class="nav-link" data-section="experience">Experience</a>
+                <a href="#education" class="nav-link" data-section="education">Education</a>
+                <a href="#certifications" class="nav-link" data-section="certifications">Certifications</a>
+            </div>
+        </div>
+    </nav>
     <header>
         <div class="header-content">
             <div class="profile-section">
@@ -76,7 +125,6 @@
                     <div class="company">AI Innovator</div>
                 </div>
             </div>
-
             <div class="contact-links">
                 <a href="mailto:ngautreytechnologies@gmail.com">
                     <i class="fa-solid fa-envelope"></i> ngautreytechnologies@gmail.com
@@ -90,128 +138,173 @@
                     <i class="fa-brands fa-linkedin"></i> linkedin.com/in/nicholas-gautrey-5b0b17378/
                 </a>
             </div>
-
             <div class="export-buttons">
                 <button id="pdf-btn" onclick="exportPDF()">📄 Export PDF</button>
-                <a href="mailto:ngautreytechnologies@gmail.com" id="cta-btn" class="button">📞 Contact Me</a>
+                <button id="cta-btn" onclick="contactMe()">📞 Contact Me</button>
             </div>
-
         </div>
     </header>
-
     <main>
-
-        <div class="section-card">
+        <div id="summary" class="section-card full-width">
             <h2>Summary</h2>
             <p>
-                Pragmatic and impact-driven Principal Software Engineer with 13+ years of experience architecting and
-                delivering scalable, cloud-native solutions in fast-paced tech startup environments. Expert in designing
-                microservices and event-driven architectures using Python, Go, and AWS serverless technologies. Skilled
-                in infrastructure as code with Terraform, implementing robust CI/CD pipelines, and championing Agile and
-                DevOps best practices. Creator of DendriFlow, an open-source AI-augmented automation platform inspired
-                by cognitive science.
+                I am a results-driven Principal Software Engineer with over 13 years of experience working in a variety
+                of environments, ranging from extremely fast-paced startups to process-focused corporate cultures. My
+                expertise is centered on backend and full-stack development, with a strong emphasis on building
+                scalable, maintainable, and high-performance systems. I am passionate about leveraging technology to
+                solve complex problems and drive business growth.
+                <br><br>
+                My technical skills include designing and developing microservices and event-driven architectures in
+                cloud-native serverless functions, using a range of programming languages and frameworks such as Python,
+                C#, and the .NET Framework.
+                <br><br>
+                I am passionate about advancing AI technologies and apply methodologies like machine learning and
+                natural language processing to solve real-world problems while ensuring ethical AI development, focused
+                on data privacy and transparency. I am also exploring adaptive workflow tools like
+                <strong>DendriFlow</strong> to enhance developer productivity and maintain trust in AI-driven systems.
+                <br><br>
+                Throughout my career, I have delivered measurable improvements to mission-critical systems. For example,
+                I led a complete rearchitecture of a company's tiered rebate calculation engine, reducing processing
+                time from approximately 2 hours to 18 minutes—an improvement of over <strong>85%</strong> significantly
+                enhancing calculation speed and user satisfaction.
             </p>
-            <br>
-            <p>
-                Deeply passionate about advancing AI technologies and their practical applications to solve complex
-                real-world problems. Continuously exploring cutting-edge AI methodologies, including machine learning,
-                natural language processing, and cognitive automation, to drive innovation and improve system
-                performance and user experience. Committed to ethical AI development, prioritizing data privacy,
-                transparency, and responsible design.
-            </p>
-            <br>
-            <p>
-                Passionate about building clean, modular, and maintainable codebases while mentoring engineering teams
-                to adopt scalable, test-driven development approaches. Adept at collaborating cross-functionally to
-                align technical strategy with business goals and accelerate product delivery. Committed to driving
-                innovation through automation, cloud optimization, and developer-first tools that empower teams and
-                deliver measurable impact.
-            </p>
+        </div>
 
+        <div id="skills" class="section-card">
+            <h2>🚀 Core Skills</h2>
+            <div class="skills-grid">
+                <!-- Programming languages and frameworks -->
+                <div class="skill-badge">Python</div>
+                <div class="skill-badge">C#</div>
+                <div class="skill-badge">AWS</div>
+                <div class="skill-badge">Angular</div>
+                <div class="skill-badge">Full Stack Development</div>
+                <div class="skill-badge">CI/CD</div>
+                <div class="skill-badge">SQL</div>
+                <div class="skill-badge">NoSQL</div>
+                <div class="skill-badge">Neo4j</div>
+            </div>
+        </div>
+
+        <div id="skills-expertise" class="section-card">
+            <h2>📋 Skills Expertise</h2>
+            <div id="skill-expertise-details-container" class="skill-expertise-details-container">
+                <div class="skill-expertise-detail active" id="Python-details">
+                    <div class="detail-header">
+                        <h3>Python / AI</h3>
+                        <div class="skill-expertise-tags">
+                            <span class="tag">AI</span>
+                            <span class="tag">Automation</span>
+                            <span class="tag">LLM</span>
+                        </div>
+                    </div>
+                    <div class="skill-expertise-details">
+                        <p><strong>Overview:</strong> Python is my primary language for AI-enhanced workflows and API
+                            development.
+                            I leverage FastAPI and Flask for web services, and LangChain for building modular AI
+                            components.
+                        </p>
+
+                        <p><strong>Key Features / Strengths:</strong></p>
+                        <ul>
+                            <li>FastAPI and Flask for lightweight, scalable APIs</li>
+                            <li>LangChain for modular LLM workflows and automation</li>
+                            <li>AI sidecar patterns for orchestration and task delegation</li>
+                            <li>Rapid prototyping with Python and AI libraries</li>
+                        </ul>
+
+                        <p><strong>Pros:</strong> Highly versatile, strong ecosystem, great for AI/ML workflows, quick
+                            development cycles.</p>
+                        <p><strong>Cons:</strong> Some runtime performance overhead, requires careful dependency
+                            management, async complexity in large projects.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="projects" class="section-card">
+            <h2>🎯 Featured Projects</h2>
+            <div id="skill-tree"></div>
+            <!-- Static DendriFlow project -->
+            <div class="project-card active" onclick="showRepoDetails('DendriFlow')">
+                <div class="project-title">DendriFlow</div>
+                <p>A modern CLI & AI automation platform for building workflow chains using Flowlets and missions.
+                    Combines YAML automation with voice/AI control.</p>
+            </div>
+
+            <!-- Container for dynamically loaded GitHub projects -->
+            <div id="github-projects"></div>
         </div>
 
         <div class="section-card">
-            <h2>
-                <div>
-                    <div class="no-print">🚀</div> Key Skills
+            <h2>📋 Project Details</h2>
+            <div id="project-details" class="project-details-container">
+
+                <!-- Static DendriFlow details -->
+                <div class="project-detail active" id="DendriFlow-details">
+                    <div class="detail-header">
+                        <h3>🔧 DendriFlow</h3>
+                        <div class="project-tags">
+                            <span class="tag">CLI</span>
+                            <span class="tag">AI</span>
+                            <span class="tag">Automation</span>
+                            <span class="tag">YAML</span>
+                        </div>
+                    </div>
+                    <div class="detail-content">
+                        <p><strong>Overview:</strong> DendriFlow is an advanced automation and orchestration platform
+                            inspired by the structure of the human brain. It empowers developers to streamline tasks by
+                            connecting modular AI-enhanced components—called <em>Neurons</em>—that mirror cognitive flow
+                            and decision-making patterns.</p>
+
+                        <p><strong>Key Features:</strong></p>
+                        <ul>
+                            <li>Neuron-based orchestration for adaptive, brain-inspired modular workflows</li>
+                            <li>Voice command interface for hands-free interaction and cognitive accessibility</li>
+                            <li>YAML-driven configuration for clear, declarative, and reproducible workflows</li>
+                            <li>Mission-based task system aligning automation with user goals and learning loops</li>
+                        </ul>
+                    </div>
                 </div>
-            </h2>
-            <div class="skills-grid">
 
-                <div class="skill-badge">Python</div>
-                <div class="skill-badge">Angular | React</div>
-                <div class="skill-badge">C#</div>
-                <div class="skill-badge">.NET</div>
-                <div class="skill-badge">AWS</div>
-                <div class="skill-badge">Azure</div>
-                <div class="skill-badge">CI/CD</div>
-                <div class="skill-badge">Terraform</div>
-
-                <!-- Systems design thinking -->
-                <div class="skill-badge">Systems Design</div>
-                <div class="skill-badge">Microservices Architecture</div>
-                <div class="skill-badge">Event-Driven Architecture</div>
-                <div class="skill-badge">API Design & RESTful Services</div>
-                <div class="skill-badge">Serverless Architecture</div>
-                <div class="skill-badge">Observability & Monitoring</div>
-                <div class="skill-badge">Performance Optimization</div>
-
-                <!-- Soft skills -->
-                <div class="skill-badge">Mentorship</div>
-                <div class="skill-badge">Leadership</div>
-                <div class="skill-badge">Technical Strategy</div>
-                <div class="skill-badge">Cross-Team Collaboration</div>
-                <div class="skill-badge">Problem Solving</div>
-                <div class="skill-badge">Communication</div>
-
+                <!-- Container for dynamic GitHub project details -->
+                <div id="github-project-details"></div>
             </div>
         </div>
 
-        <div class="section-card full-width">
-            <h2>Technical Toolkit</h2>
-            <div class="skills-grid">
-                <div class="skill-badge">DendriFlow</div>
-                <div class="skill-badge">Python (FastAPI, Flask, AsyncIO)</div>
-                <div class="skill-badge">C# (.NET Framework, ASP.NET Core)</div>
-                <div class="skill-badge">JavaScript / TypeScript</div>
-                <div class="skill-badge">SQL (PostgreSQL, MySQL)</div>
-                <div class="skill-badge">Docker / Kubernetes</div>
-                <div class="skill-badge">AWS (Lambda, SQS, S3)</div>
-                <div class="skill-badge">Redis / RabbitMQ</div>
-                <div class="skill-badge">Git / CI/CD</div>
-                <div class="skill-badge">YAML / JSON Schema</div>
-                <div class="skill-badge">AI Orchestration / LLM Pipelines</div>
-            </div>
-        </div>
 
-        <div class="section-card full-width">
-            <h2>
-                <div class="no-print">💼</div> Experience
-            </h2>
+        <div id="experience" class="section-card full-width">
+            <h2>💼 Experience</h2>
             <div class="experience-timeline">
-                <div class="experience-item">
+                <div class="detail-content experience-item">
                     <div class="job-title">Founder & Architect</div>
                     <div class="job-company">DendriFlow (Open-Source Software Venture)</div>
                     <div class="job-period">Jul 2025 - Present</div>
                     <p>
-                        Initiated <strong>DendriFlow</strong>, an experimental brain-inspired orchestration platform
-                        exploring cognitive states, learning loops, emotional context, and modular brain modes.
-                        <br><br>
-                        Applied UNIX design philosophies to create simple, composable, and developer-friendly
-                        abstractions
-                        for AI-augmented workflow execution. Prototyping declarative YAML configuration, local-first
-                        data privacy, and reflective learning tools.
-                        <br><br>
-                        Built as a polyglot system capable of integrating many lanugages, libraries, and frameworks,
-                        inclding
-                        Python (FastAPI, Flask), C# (.NET), and other tools, emphasizing flexible architecture,
-                        UNIX-inspired composability, and declarative
-                        configuration to allow seamless incorporation of multiple frameworks, libraries, and services
-                        into end-to-end AI-centric workflows
-                        <br><br>
-                        Project is currently in early development; demonstrates concept feasibility, technical
-                        innovation, and forward-looking architecture thinking.
+                        I have initiated <strong>DendriFlow</strong>, an experimental development tool and AI automation
+                        platform designed to adapt to individual needs.
                     </p>
+
+                    <p>
+                        I will apply <strong>UNIX design philosophies</strong> to create developer-friendly abstractions
+                        for
+                        AI-driven workflows.
+                        This includes a declarative YAML configuration, a focus on local-first data privacy, and
+                        reflective learning tools.
+                    </p>
+
+                    <p>
+                        DendriFlow will be a <strong>polyglot system</strong> that integrates multiple programming
+                        languages
+                        and frameworks,
+                        emphasizing flexible architecture and composability for seamless workflow integration.
+                    </p>
+
+                    <p>
+                        Currently, the project is in <em>early development</em> with a focus on core architecture and
+                        foundational features.
+                    </p>
+
                 </div>
 
                 <div class="experience-item">
@@ -303,55 +396,7 @@
             </div>
         </div>
 
-        <div class="section-card">
-            <h2>
-                <div class="no-print">🎯</div>Featured Projects
-            </h2>
-
-            <div class="project-card" onclick="showProjectDetails('DendriFlow')">
-                <div class="project-title">DendriFlow</div>
-                <p>A modern CLI & AI automation platform for building workflow chains using Flowlets and missions.
-                    Combines YAML automation with voice/AI control.</p>
-            </div>
-        </div>
-
-        <div class="section-card">
-            <h2>📋 Project Details</h2>
-            <div id="project-details" class="project-details-container">
-                <div class="project-detail active" id="DendriFlow-details">
-                    <div class="detail-header">
-                        <h3>🔧 DendriFlow</h3>
-                        <div class="project-tags">
-                            <span class="tag">CLI</span>
-                            <span class="tag">AI</span>
-                            <span class="tag">Automation</span>
-                            <span class="tag">YAML</span>
-                        </div>
-                    </div>
-                    <div class="detail-content">
-                        <p><strong>Overview:</strong> DendriFlow is an advanced automation and orchestration
-                            platform
-                            inspired by the structure of the human brain. It empowers developers to streamline tasks
-                            by
-                            connecting modular AI-enhanced components—called <em>Neurons</em>—that mirror cognitive
-                            flow
-                            and decision-making patterns.</p>
-
-                        <p><strong>Key Features:</strong></p>
-                        <ul>
-                            <li>Neuron-based orchestration for adaptive, brain-inspired modular workflows</li>
-                            <li>Voice command interface for hands-free interaction and cognitive accessibility</li>
-                            <li>YAML-driven configuration for clear, declarative, and reproducible workflows</li>
-                            <li>Mission-based task system aligning automation with user goals and learning loops
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Add this section after the Project Details section in your HTML -->
-        <div class="section-card full-width">
+        <div id="education" class="section-card full-width">
             <h2>🎓 Education</h2>
             <div class="education-timeline">
 
@@ -362,13 +407,16 @@
                     <div class="education-grade">Grade: First Honours</div>
                     <div class="education-description">
                         <ul>
-                            <li>Completed a 3-year programme with a focus on software engineering in the final two years
+                            <li>Completed a 3-year programme with a focus on software engineering in the final two
+                                years
                             </li>
-                            <li>Studied programming, systems design, software architecture, database technologies, and
+                            <li>Studied programming, systems design, software architecture, database technologies,
+                                and
                                 artificial intelligence</li>
-                            <li>Proactively learned C# outside of the curriculum, gaining proficiency ahead of peers
+                            <li>Proactively learned C# outside of the curriculum to enhance employability.
                             </li>
-                            <li>Recognised for strong academic performance, fast learning, and a passionate approach to
+                            <li>Recognised for strong academic performance, fast learning, and a passionate approach
+                                to
                                 software development</li>
                         </ul>
                     </div>
@@ -382,8 +430,8 @@
                 </div>
             </div>
         </div>
-        <!-- Add this section after the Education section in your HTML -->
-        <div class="section-card full-width">
+
+        <div id="certifications" class="section-card full-width">
             <h2>🏆 Certifications</h2>
             <div class="certifications-timeline">
                 <div class="certification-item">
@@ -423,15 +471,9 @@
                     <div class="certification-date">Issued Aug 2019 · Expired Aug 2022</div>
                     <div class="certification-status expired">Expired</div>
                 </div>
-            </div>
+            </div>xx
         </div>
     </main>
-    <footer class="print-footer only-print">
-        <div class="footer-note">
-            References available upon request.
-        </div>
-    </footer>
-
 </body>
 
 </html>
