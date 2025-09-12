@@ -1,6 +1,17 @@
+// Javascript 
 import './components/certifications/certifications.js';
 import './components/education/education.js';
 import './components/experience/experience.js';
+import './components/header/header.js';
+import './components/navbar/navbar.js';
+import './components/summary/summary.js';
+
+// CSS
+import './styles/variables.css';
+import './styles/base.css';
+import './styles/reset.css';
+import './styles/typography.css';
+import './styles/animations.css';
 
 document.addEventListener("DOMContentLoaded", async () => {
     const skillTree = document.querySelector("skill-tree");

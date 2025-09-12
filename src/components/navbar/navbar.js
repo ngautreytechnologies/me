@@ -1,8 +1,8 @@
 import BaseComponent from '../base-component.js';
-import templateHtml from './summary.html'; // HTML file with your profile + contacts
-import css from './summary.css'; // your CSS
+import templateHtml from './navbar.html'; // HTML file with your profile + contacts
+import css from './navbar.css'; // your CSS
 
-class Summary extends BaseComponent {
+class Navbar extends BaseComponent {
     constructor() {
         super(templateHtml, css); // Inject HTML and CSS into shadow DOM
     }
@@ -13,4 +13,4 @@ class Summary extends BaseComponent {
     }
 }
 
-customElements.define('summary', Summary);
+customElements.define('navigation-bar', Navbar);

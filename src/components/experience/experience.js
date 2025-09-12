@@ -62,7 +62,7 @@ const data = [
     }
 ];
 
-class ExperienceTimeline extends BaseComponent {
+class Experience extends BaseComponent {
     constructor() {
         super(templateHtml, css);
 
@@ -104,4 +104,4 @@ class ExperienceTimeline extends BaseComponent {
     }
 }
 
-customElements.define('experience-timeline', ExperienceTimeline);
+customElements.define('experience-timeline', Experience);
