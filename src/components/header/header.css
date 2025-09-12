@@ -1,3 +1,110 @@
+header {
+    position: relative;
+    padding: 3rem 2rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-glass);
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 2rem;
+    align-items: center;
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.profile-image {
+    position: relative;
+    width: 120px;
+    height: 120px;
+}
+
+.profile-image::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    background: var(--primary-gradient);
+    border-radius: 50%;
+}
+
+.profile-image img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--dark-bg);
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.profile-info h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+    animation: fadeInUp 1s ease-out 0.2s both;
+}
+
+.profile-info .role {
+    font-size: 1.2rem;
+    color: var(--text-accent);
+    font-weight: 500;
+    animation: fadeInUp 1s ease-out 0.4s both;
+}
+
+.profile-info .company {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    animation: fadeInUp 1s ease-out 0.6s both;
+}
+
+@keyframes fadeInUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+#cta-btn,
+#pdf-btn,
+.button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+}
+
+#cta-btn:hover {
+    transform: translateY(-2px);
+}
+
 .contact-links {
     display: flex;
     flex-direction: column;

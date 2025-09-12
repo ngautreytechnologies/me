@@ -22,19 +22,6 @@
     <!-- Animations -->
     <link href="./styles/animations.css" rel="stylesheet">
 
-    <!-- Components -->
-    <link href="./styles/components/navbar.css" rel="stylesheet">
-    <link href="./styles/components/header.css" rel="stylesheet">
-    <link href="./styles/components/hero.css" rel="stylesheet">
-    <link href="./styles/components/profile.css" rel="stylesheet">
-    <link href="./styles/components/skills.css" rel="stylesheet">
-    <link href="./styles/components/experience.css" rel="stylesheet">
-    <link href="./styles/components/education.css" rel="stylesheet">
-    <link href="./styles/components/certifications.css" rel="stylesheet">
-    <link href="./styles/components/portfolio.css" rel="stylesheet">
-    <link href="./styles/components/buttons.css" rel="stylesheet">
-    <link href="./styles/components/cta.css" rel="stylesheet">
-
     <!-- Base JS file with cross-cutting concerns -->
     <script src="./js/base.js"></script>
     <script src="./js/animations.js"></script>
@@ -114,34 +101,7 @@
     </nav>
     <header>
         <div class="header-content">
-            <div class="profile-section">
-                <div class="profile-image">
-                    <img src="./images/profile.jfif" alt="Nicholas Simon Gautrey">
-                </div>
-                <div class="profile-info">
-                    <h1>Nicholas Gautrey</h1>
-                    <div class="role">Principal Engineer</div>
-                    <div class="company">DendriFlow</div>
-                    <div class="company">AI Innovator</div>
-                </div>
-            </div>
-            <div class="contact-links">
-                <a href="mailto:ngautreytechnologies@gmail.com">
-                    <i class="fa-solid fa-envelope"></i> ngautreytechnologies@gmail.com
-                </a>
-
-                <a href="https://github.com/ngautreytechnologies/DendriFlow">
-                    <i class="fa-brands fa-github"></i> ngautreytechnologies/DendriFlow
-                </a>
-
-                <a href="https://www.linkedin.com/in/nicholas-gautrey-5b0b17378/">
-                    <i class="fa-brands fa-linkedin"></i> linkedin.com/in/nicholas-gautrey-5b0b17378/
-                </a>
-            </div>
-            <div class="export-buttons">
-                <button id="pdf-btn" onclick="exportPDF()">📄 Export PDF</button>
-                <button id="cta-btn" onclick="contactMe()">📞 Contact Me</button>
-            </div>
+            <header-content></header-content>
         </div>
     </header>
     <main>
@@ -237,7 +197,7 @@
             <div id="github-projects"></div>
         </div>
 
-        <div class="section-card">
+        <div id="project-details" class="section-card">
             <h2>📋 Project Details</h2>
             <div id="project-details" class="project-details-container">
 
@@ -273,206 +233,15 @@
             </div>
         </div>
 
-
         <div id="experience" class="section-card full-width">
-            <h2>💼 Experience</h2>
-            <div class="experience-timeline">
-                <div class="detail-content experience-item">
-                    <div class="job-title">Founder & Architect</div>
-                    <div class="job-company">DendriFlow (Open-Source Software Venture)</div>
-                    <div class="job-period">Jul 2025 - Present</div>
-                    <p>
-                        I have initiated <strong>DendriFlow</strong>, an experimental development tool and AI automation
-                        platform designed to adapt to individual needs.
-                    </p>
-
-                    <p>
-                        I will apply <strong>UNIX design philosophies</strong> to create developer-friendly abstractions
-                        for
-                        AI-driven workflows.
-                        This includes a declarative YAML configuration, a focus on local-first data privacy, and
-                        reflective learning tools.
-                    </p>
-
-                    <p>
-                        DendriFlow will be a <strong>polyglot system</strong> that integrates multiple programming
-                        languages
-                        and frameworks,
-                        emphasizing flexible architecture and composability for seamless workflow integration.
-                    </p>
-
-                    <p>
-                        Currently, the project is in <em>early development</em> with a focus on core architecture and
-                        foundational features.
-                    </p>
-
-                </div>
-
-                <div class="experience-item">
-                    <div class="job-title">Principal Software Engineer</div>
-                    <div class="job-company">Alchem Technologies Ltd</div>
-                    <div class="job-period">Mar 2024 - July 2025</div>
-                    <p>
-                        Leading solution architecture and software development initiatives using Python and design
-                        patterns.
-                        Providing platform and architectural guidance to drive technical excellence and innovation.
-                        <br><br>
-                        Focusing on scalable system design and mentoring engineering teams to adopt best practices
-                        in software architecture and development methodologies.
-                    </p>
-                </div>
-
-                <div class="experience-item">
-                    <div class="job-title">Principal Software Developer</div>
-                    <div class="job-company">E-bate Limited</div>
-                    <div class="job-period">Sep 2022 - Mar 2024</div>
-                    <p>
-                        Contributed to project planning by providing platform and architectural guidance. Led analysis
-                        and design
-                        of solutions that resulted in better quality software, increased customer satisfaction, and
-                        enhanced team knowledge.
-                        <br><br>
-                        Spearheaded innovation by re-architecting platform elements, improving security, reliability,
-                        scalability,
-                        and performance. Created DevOps tools that reduced tenant onboarding and migration time, helping
-                        secure
-                        new customers and increasing business revenue.
-                        <br><br>
-                        Mentored team members and established coding standards and guidelines, reducing knowledge silos
-                        and
-                        improving workload distribution across the engineering organization.
-                    </p>
-                </div>
-
-                <div class="experience-item">
-                    <div class="job-title">Senior Software Developer</div>
-                    <div class="job-company">E-bate Limited</div>
-                    <div class="job-period">Nov 2021 - Sep 2022</div>
-                    <p>
-                        Designed and developed new features focusing on clean code principles and unit testing best
-                        practices
-                        using .NET and C#. Led a rapid response team for analyzing and fixing critical business defects.
-                        <br><br>
-                        Created sample and template projects that increased developer productivity and set architectural
-                        standards for future microservices. Designed and developed an identity and access management
-                        solution
-                        that reduced operational overhead and costs.
-                    </p>
-                </div>
-
-                <div class="experience-item">
-                    <div class="job-title">Senior Software Engineer</div>
-                    <div class="job-company">Collision Management Systems (CMS)</div>
-                    <div class="job-period">Sep 2020 - Jul 2021</div>
-                    <p>
-                        Designed and developed new features while improving code quality, resulting in increased
-                        maintainability,
-                        extensibility, and testability. Mentored junior team members by sharing knowledge and best
-                        practices.
-                        <br><br>
-                        Implemented complex data ingestion requirements for new and existing customers. Conducted
-                        knowledge-sharing
-                        sessions that improved team synergy and increased overall software quality standards.
-                    </p>
-                </div>
-
-                <div class="experience-item">
-                    <div class="job-title">Software Engineer</div>
-                    <div class="job-company">Intamac Systems</div>
-                    <div class="job-period">Apr 2016 - Mar 2020</div>
-                    <p>
-                        Designed and developed new features for the IoT platform, involving refactoring and retrofitting
-                        unit tests
-                        that significantly reduced bug rates and improved code maintainability. Contributed to platform
-                        re-architecture
-                        by designing and implementing cloud solutions on AWS.
-                        <br><br>
-                        Led legacy system migrations from VB6/VB.Net to C#, and researched technology choices for the
-                        new platform.
-                        Developed microservices and established best practices, including design and development of a
-                        new image and
-                        video storage solution using AWS that achieved scalability, reliability, and high availability.
-                    </p>
-                </div>
-            </div>
+            <experience-timeline></experience-timeline>
         </div>
 
         <div id="education" class="section-card full-width">
-            <h2>🎓 Education</h2>
-            <div class="education-timeline">
-
-                <div class="education-item">
-                    <div class="education-degree">Bachelor's Degree, Software Engineering</div>
-                    <div class="education-institution">University of Northampton</div>
-                    <div class="education-period">2009 - 2012</div>
-                    <div class="education-grade">Grade: First Honours</div>
-                    <div class="education-description">
-                        <ul>
-                            <li>Completed a 3-year programme with a focus on software engineering in the final two
-                                years
-                            </li>
-                            <li>Studied programming, systems design, software architecture, database technologies,
-                                and
-                                artificial intelligence</li>
-                            <li>Proactively learned C# outside of the curriculum to enhance employability.
-                            </li>
-                            <li>Recognised for strong academic performance, fast learning, and a passionate approach
-                                to
-                                software development</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="education-item">
-                    <div class="education-degree">A2 Level, Applied ICT Double Award</div>
-                    <div class="education-institution">Northampton College</div>
-                    <div class="education-period">2007 - 2009</div>
-                    <div class="education-grade">Grade: CC</div>
-                </div>
-            </div>
+            <education-list></education-list>
         </div>
-
         <div id="certifications" class="section-card full-width">
-            <h2>🏆 Certifications</h2>
-            <div class="certifications-timeline">
-                <div class="certification-item">
-                    <div class="certification-name">Neo4j & LLM Fundamentals</div>
-                    <div class="certification-issuer">Neo4j</div>
-                    <div class="certification-date">Issued Apr 2024</div>
-                    <div class="certification-credential">Credential ID: 1729e21e-3334-44cd-ae65-63316aab624f</div>
-                    <div class="certification-status active">Current</div>
-                </div>
-
-                <div class="certification-item">
-                    <div class="certification-name">Graph Data Modeling Fundamentals</div>
-                    <div class="certification-issuer">Neo4j</div>
-                    <div class="certification-date">Issued Feb 2024</div>
-                    <div class="certification-credential">Credential ID: 6ee6f1bc-3fcd-48f1-853a-84eefa5b5f83</div>
-                    <div class="certification-status active">Current</div>
-                </div>
-
-                <div class="certification-item">
-                    <div class="certification-name">Neo4j Fundamentals</div>
-                    <div class="certification-issuer">Neo4j</div>
-                    <div class="certification-date">Issued Feb 2024</div>
-                    <div class="certification-credential">Credential ID: 0c5f2e9a-a3af-4ffd-b140-256cca71f4a7</div>
-                    <div class="certification-status active">Current</div>
-                </div>
-
-                <div class="certification-item">
-                    <div class="certification-name">AWS Certified Developer – Associate</div>
-                    <div class="certification-issuer">Amazon Web Services (AWS)</div>
-                    <div class="certification-date">Issued Oct 2019 · Expired Oct 2022</div>
-                    <div class="certification-status expired">Expired</div>
-                </div>
-
-                <div class="certification-item">
-                    <div class="certification-name">AWS Certified Solutions Architect – Associate</div>
-                    <div class="certification-issuer">Amazon Web Services (AWS)</div>
-                    <div class="certification-date">Issued Aug 2019 · Expired Aug 2022</div>
-                    <div class="certification-status expired">Expired</div>
-                </div>
-            </div>xx
+            <certification-list></certification-list>
         </div>
     </main>
 </body>
