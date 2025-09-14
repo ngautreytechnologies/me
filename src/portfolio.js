@@ -173,7 +173,7 @@ class Utils {
      * @returns {Promise<object|null>} Parsed JSON or null on failure
      */
     static async fetchJson(url, retries = Config.MAX_RETRIES) {
-        try {
+        try {   
             const response = await Utils.withTimeout(
                 fetch(url, { signal: (new AbortController()).signal }),
                 Config.FETCH_TIMEOUT
