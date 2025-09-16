@@ -18,6 +18,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon/favicon-16x16.png">
     <link rel="manifest" href="./images/favicon/site.webmanifest">
 
+    <link rel="stylesheet" href="./distglobals.css" />
+
 </head>
 
 <body>
@@ -64,13 +66,14 @@
             observer.observe(document.documentElement, { childList: true, subtree: true });
         })();
     </script>
-    <navigation-bar></navigation-bar>
     <header>
+        <navigation-bar></navigation-bar>
         <header-content></header-content>
     </header>
     <main>
         <div id="summary" class="section-card full-width">
-            <summary></summary>
+            <h2>Summary</h2>
+            <cv-summary></cv-summary>
         </div>
 
         <div id="skills" class="section-card">
@@ -177,14 +180,17 @@
         </div>
 
         <div id="experience" class="section-card full-width">
+            <h2>💼 Experience</h2>
             <experience-timeline></experience-timeline>
         </div>
 
         <div id="education" class="section-card full-width">
+            <h2>🎓 Education</h2>
             <education-list></education-list>
         </div>
 
         <div id="certifications" class="section-card full-width">
+            <h2>🏆 Certifications</h2>
             <certification-list></certification-list>
         </div>
     </main>

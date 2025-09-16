@@ -1,3 +1,4 @@
+import BaseShadowComponent from '../base-shadow-component';
 import BaseComponent from '../base-component.js';
 import css from './certifications.css';
 import templateHtml from './certifications.html';
@@ -10,7 +11,7 @@ const data = [
     { name: "AWS Certified Solutions Architect - Associate", issuer: "AWS", date: "Issued Aug 2019 · Expired Aug 2022", status: "Expired" }
 ];
 
-class Certifications extends BaseComponent {
+class Certifications extends BaseShadowComponent {
     constructor() {
         super(templateHtml, css);
 
@@ -24,8 +25,8 @@ class Certifications extends BaseComponent {
     }
 
     render() {
-        const container = this.shadow.querySelector('[data-container]');
-        const templateEl = this.shadow.querySelector('template');
+        const container = this.root.querySelector('[data-container]');
+        const templateEl = this.root.querySelector('template');
         if (!container || !templateEl) return;
 
         // Clear existing content 
@@ -42,6 +43,7 @@ class Certifications extends BaseComponent {
             container.appendChild(clone);
         });
     }
+    
 }
 
 customElements.define('certification-list', Certifications);

@@ -1,4 +1,5 @@
 import BaseComponent from '../base-component.js';
+import BaseShadowComponent from '../base-shadow-component.js';
 import css from './education.css';
 import templateHtml from './education.html';
 
@@ -31,7 +32,7 @@ const data = [
  * Renders a list of educational qualifications.
  * Uses BaseComponent’s reactive data binding.
  */
-class Education extends BaseComponent {
+class Education extends BaseShadowComponent {
     constructor() {
         super(templateHtml, css);
 
@@ -45,8 +46,8 @@ class Education extends BaseComponent {
     }
 
     render() {
-        const container = this.shadow.querySelector('[data-container]');
-        const templateEl = this.shadow.querySelector('template');
+        const container = this.root.querySelector('[data-container]');
+        const templateEl = this.root.querySelector('template');
         if (!container || !templateEl) return;
 
         // Clear existing content

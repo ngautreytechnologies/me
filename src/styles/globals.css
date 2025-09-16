@@ -12,12 +12,6 @@
     --shadow-glow: 0 8px 32px rgba(102, 126, 234, 0.3);
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
 body {
     font-family: 'Inter', sans-serif;
     background: var(--dark-bg);
@@ -36,7 +30,6 @@ main {
     gap: 3rem;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     main {
         grid-template-columns: 1fr;
@@ -79,4 +72,12 @@ main {
 
 .full-width {
     grid-column: 1 / -1;
+}
+
+header {
+    position: relative;
+    padding: 3rem 2rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-glass);
 }

@@ -1,6 +1,7 @@
 import BaseComponent from '../base-component.js';
 import templateHtml from './experience.html'; // optional template file
 import css from './experience.css';
+import BaseShadowComponent from '../base-shadow-component.js';
 
 const data = [
     {
@@ -62,7 +63,7 @@ const data = [
     }
 ];
 
-class Experience extends BaseComponent {
+class Experience extends BaseShadowComponent {
     constructor() {
         super(templateHtml, css);
 
@@ -76,8 +77,8 @@ class Experience extends BaseComponent {
     }
 
     render() {
-        const container = this.shadow.querySelector('.experience-timeline');
-        const templateEl = this.shadow.querySelector('template');
+        const container = this.root.querySelector('.experience-timeline');
+        const templateEl = this.root.querySelector('template');
         if (!container || !templateEl) return;
 
         // Clear previous content

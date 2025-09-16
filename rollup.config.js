@@ -17,27 +17,29 @@ export default {
         resolve(),
         commonjs(),
         string({ include: '**/*.html' }),
+
+        // Component styles → bundled into JS, injected into shadow DOM
         postcss({
             include: 'src/components/**/*.css',
+            inject: false,   // we don’t want auto <style> tags
+            extract: false,  // don’t write to disk
+            minimize: true,
+        }),
+
+        // Global styles → also bundled into JS (not extracted file)
+        postcss({
+            include: 'src/styles/*.css',
             inject: false,
             extract: false,
             minimize: true,
         }),
-        postcss({
-            include: 'src/styles/*.css',
-            extract: 'globals.css',
-            inject: false,
-            minimize: true,
-        }),
 
-        // HTML template → copy to dist
         html({
             template: 'src/index.html',
             target: 'dist/index.html',
             attrs: ['script:type="module"'],
         }),
 
-        // Copy images folder to dist
         copy({
             targets: [
                 { src: 'src/images/**/*', dest: 'dist/images' }
