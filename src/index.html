@@ -18,7 +18,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon/favicon-16x16.png">
     <link rel="manifest" href="./images/favicon/site.webmanifest">
 
-    <link rel="stylesheet" href="./distglobals.css" />
+    <!-- Global styles -->
 
 </head>
 
@@ -66,8 +66,32 @@
             observer.observe(document.documentElement, { childList: true, subtree: true });
         })();
     </script>
+    <nav id="navbar" class="navbar">
+        <div class="nav-container">
+            <!-- Brand / Logo -->
+            <div class="nav-brand hidden">Nicholas Gautrey</div>
+
+            <!-- Navigation Links -->
+            <div class="nav-links">
+                <a href="#skills" class="nav-link" data-section="skills">Core Skills</a>
+                <a href="#skills-expertise" class="nav-link" data-section="tools">Skills Expertise</a>
+                <a href="#portfolio" class="nav-link" data-section="portfolio">Portfolio</a>
+                <a href="#experience" class="nav-link" data-section="experience">Experience</a>
+                <a href="#education" class="nav-link" data-section="education">Education</a>
+                <a href="#certifications" class="nav-link" data-section="certifications">Certifications</a>
+            </div>
+
+            <div class="nav-icons hidden">
+                <a href="mailto:youremail@example.com" class="nav-icon" title="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="#download-pdf" class="nav-icon" title="Generate PDF">
+                    <i class="fas fa-file-pdf"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
     <header>
-        <navigation-bar></navigation-bar>
         <header-content></header-content>
     </header>
     <main>
@@ -78,54 +102,12 @@
 
         <div id="skills" class="section-card">
             <h2>🚀 Core Skills</h2>
-            <div class="skills-grid">
-                <!-- Programming languages and frameworks -->
-                <div class="skill-badge">Python</div>
-                <div class="skill-badge">C#</div>
-                <div class="skill-badge">AWS</div>
-                <div class="skill-badge">Angular</div>
-                <div class="skill-badge">Full Stack Development</div>
-                <div class="skill-badge">CI/CD</div>
-                <div class="skill-badge">SQL</div>
-                <div class="skill-badge">NoSQL</div>
-                <div class="skill-badge">Neo4j</div>
-            </div>
+            <skills-grid></skills-grid>
         </div>
 
         <div id="skills-expertise" class="section-card">
             <h2>📋 Skills Expertise</h2>
-            <div id="skill-expertise-details-container" class="skill-expertise-details-container">
-                <div class="skill-expertise-detail active" id="Python-details">
-                    <div class="detail-header">
-                        <h3>Python / AI</h3>
-                        <div class="skill-expertise-tags">
-                            <span class="tag">AI</span>
-                            <span class="tag">Automation</span>
-                            <span class="tag">LLM</span>
-                        </div>
-                    </div>
-                    <div class="skill-expertise-details">
-                        <p><strong>Overview:</strong> Python is my primary language for AI-enhanced workflows and API
-                            development.
-                            I leverage FastAPI and Flask for web services, and LangChain for building modular AI
-                            components.
-                        </p>
-
-                        <p><strong>Key Features / Strengths:</strong></p>
-                        <ul>
-                            <li>FastAPI and Flask for lightweight, scalable APIs</li>
-                            <li>LangChain for modular LLM workflows and automation</li>
-                            <li>AI sidecar patterns for orchestration and task delegation</li>
-                            <li>Rapid prototyping with Python and AI libraries</li>
-                        </ul>
-
-                        <p><strong>Pros:</strong> Highly versatile, strong ecosystem, great for AI/ML workflows, quick
-                            development cycles.</p>
-                        <p><strong>Cons:</strong> Some runtime performance overhead, requires careful dependency
-                            management, async complexity in large projects.</p>
-                    </div>
-                </div>
-            </div>
+            <skill-expertise-details></skill-expertise-details>
         </div>
 
         <div id="projects" class="section-card">

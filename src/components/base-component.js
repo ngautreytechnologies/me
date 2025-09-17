@@ -1,5 +1,4 @@
-// universal-base-component.js
-import { GLOBAL_SHEETS, ensureGlobalStyleInjected } from '../globals.js';
+import { GLOBAL_SHEETS, ensureGlobalStyleInjected } from '../utils/styles.js';
 import { ReactiveValue } from '../utils/reactive.js';
 
 export default class BaseComponent extends HTMLElement {
@@ -84,34 +83,7 @@ export default class BaseComponent extends HTMLElement {
     }
 
     renderData(items) {
-        try {
-            const container = this.root.querySelector('[data-container]');
-            const templateEl = this.root.querySelector('template');
-            if (!container || !templateEl) return;
-
-            container.innerHTML = '';
-
-            items.forEach(item => {
-                const clone = templateEl.content.cloneNode(true);
-
-                clone.querySelectorAll('[data-field]').forEach(el => {
-                    const value = item[el.dataset.field];
-                    if (value) el.textContent = value;
-                    else el.remove();
-
-                    if (el.dataset.field === 'status' && value)
-                        el.classList.add(value.toLowerCase());
-                });
-
-                container.appendChild(clone);
-            });
-
-            // Hook: called after each successful render
-            if (typeof this.onRender === 'function') this.onRender(items);
-
-        } catch (err) {
-            console.error(`[${this.constructor.name}] renderData error:`, err);
-        }
+        console.warn(`[${this.constructor.name}] renderData not implemented`, items);
     }
 
     // -----------------------
@@ -169,17 +141,33 @@ export default class BaseComponent extends HTMLElement {
 
     _injectTemplate(template, containerSelector = null) {
         if (!template) return;
-        const temp = document.createElement('template');
-        temp.innerHTML = template;
 
-        // Target: whole root or a specific container
+        const temp = document.createElement('template');
+        temp.innerHTML = template.trim();
+
         const target = containerSelector
             ? this.root.querySelector(containerSelector)
             : this.root;
 
-        // Replace current content
+        // Clear previous content
+        this._log(`[${this.constructor.name}] Clearing target for template injection`, target);
         target.innerHTML = '';
-        target.appendChild(temp.content.cloneNode(true));
+
+        // If the template string already has a <template> tag, preserve it
+        if (temp.content.querySelector('template')) {
+            this._log(`[${this.constructor.name}] Preserving <template> element`);
+            Array.from(temp.content.childNodes).forEach(node => {
+                target.appendChild(node.cloneNode(true));
+            });
+        } else {
+            this._log(`[${this.constructor.name}] Injecting as raw HTML`);
+            target.appendChild(temp.content.cloneNode(true));
+        }
+
+        // Hook for subclasses
+        if (typeof this.onTemplateInjected === 'function') {
+            this.onTemplateInjected(target);
+        }
     }
 
     // -----------------------

@@ -16,7 +16,8 @@ export default {
     plugins: [
         resolve(),
         commonjs(),
-        string({ include: '**/*.html' }),
+        // Import HTML templates as strings
+        string({ include: ['src/components/**/*.html'] }),
 
         // Component styles → bundled into JS, injected into shadow DOM
         postcss({
@@ -30,7 +31,7 @@ export default {
         postcss({
             include: 'src/styles/*.css',
             inject: false,
-            extract: false,
+            extract: 'styles.css', // write to disk for fallback
             minimize: true,
         }),
 

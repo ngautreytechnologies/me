@@ -14,19 +14,17 @@ const data = [
 class Certifications extends BaseShadowComponent {
     constructor() {
         super(templateHtml, css);
-
-        // Initialize reactive data
-        this.data.set(data);
     }
 
     connectedCallback() {
         super.connectedCallback();
-        this.render();
     }
 
     render() {
         const container = this.root.querySelector('[data-container]');
         const templateEl = this.root.querySelector('template');
+        console.log('templateEl:', templateEl);
+
         if (!container || !templateEl) return;
 
         // Clear existing content 
@@ -43,7 +41,7 @@ class Certifications extends BaseShadowComponent {
             container.appendChild(clone);
         });
     }
-    
+
 }
 
 customElements.define('certification-list', Certifications);

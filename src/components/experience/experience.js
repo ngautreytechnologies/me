@@ -1,7 +1,6 @@
-import BaseComponent from '../base-component.js';
-import templateHtml from './experience.html'; // optional template file
-import css from './experience.css';
 import BaseShadowComponent from '../base-shadow-component.js';
+import css from './experience.css';
+import templateHtml from './experience.html'; // optional template file
 
 const data = [
     {
