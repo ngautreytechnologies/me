@@ -37,17 +37,32 @@ export default class BaseComponent extends HTMLElement {
     static get observedAttributes() { return this._observedAttrs; }
 
     connectedCallback() {
+        // Prevent multiple initializations
+        if (this._initialized) return;
+        this._initialized = true;
+
         // Subscribe to reactive state
-        this._trackDisposable(this.data.subscribe(value => this.renderData(value)));
-        this._trackDisposable(this.events.subscribe(events => {
-            for (const key in events) {
-                if (typeof this[key] === 'function') this[key](events[key]);
-            }
-        }));
+        this._trackDisposable(
+            this.data.subscribe(value => this.renderData(value))
+        );
+        this._trackDisposable(
+            this.events.subscribe(events => {
+                for (const key in events) {
+                    if (typeof this[key] === 'function') this[key](events[key]);
+                }
+            })
+        );
 
         // Load initial data
         this.dataAttrs.forEach(attr => this.loadData(attr));
 
+        // Inject template only if container exists and is empty
+        const container = this.root.querySelector('[data-container]');
+        if (container && container.childNodes.length === 0 && this.templateHtml) {
+            this._injectTemplate(this.templateHtml);
+        }
+
+        // Call hook
         if (typeof this.onConnect === 'function') this.onConnect();
     }
 
@@ -121,7 +136,6 @@ export default class BaseComponent extends HTMLElement {
             ensureGlobalStyleInjected();
         }
     }
-
 
     _applyFonts() {
         const fonts = [

@@ -74,9 +74,8 @@
             <!-- Navigation Links -->
             <div class="nav-links">
                 <a href="#skills" class="nav-link" data-section="skills">Core Skills</a>
-                <a href="#skills-expertise" class="nav-link" data-section="tools">Skills Expertise</a>
-                <a href="#portfolio" class="nav-link" data-section="portfolio">Portfolio</a>
                 <a href="#experience" class="nav-link" data-section="experience">Experience</a>
+                <a href="#portfolio" class="nav-link" data-section="portfolio">Portfolio</a>
                 <a href="#education" class="nav-link" data-section="education">Education</a>
                 <a href="#certifications" class="nav-link" data-section="certifications">Certifications</a>
             </div>
@@ -105,9 +104,14 @@
             <skills-grid></skills-grid>
         </div>
 
-        <div id="skills-expertise" class="section-card">
-            <h2>📋 Skills Expertise</h2>
-            <skill-expertise-details></skill-expertise-details>
+        <div id="skill-details" class="section-card">
+            <h2>📋 Skill Details</h2>
+            <skill-details></skill-details>
+        </div>
+
+        <div id="experience" class="section-card full-width">
+            <h2>💼 Experience</h2>
+            <experience-timeline></experience-timeline>
         </div>
 
         <div id="projects" class="section-card">
@@ -149,7 +153,8 @@
                         <p><strong>Key Features:</strong></p>
                         <ul>
                             <li>Neuron-based orchestration for adaptive, brain-inspired modular workflows</li>
-                            <li>Voice command interface for hands-free interaction and cognitive accessibility</li>
+                            <li>Voice command interface for hands-free interaction and cognitive accessibilit
+                                y</li>
                             <li>YAML-driven configuration for clear, declarative, and reproducible workflows</li>
                             <li>Mission-based task system aligning automation with user goals and learning loops</li>
                         </ul>
@@ -160,12 +165,6 @@
                 <div id="github-project-details"></div>
             </div>
         </div>
-
-        <div id="experience" class="section-card full-width">
-            <h2>💼 Experience</h2>
-            <experience-timeline></experience-timeline>
-        </div>
-
         <div id="education" class="section-card full-width">
             <h2>🎓 Education</h2>
             <education-list></education-list>

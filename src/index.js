@@ -6,11 +6,12 @@ import 'utils/navigation.js';
 import 'utils/styles.js';
 import 'utils/resilience.js';
 import 'utils/animations.js';
+import 'utils/dom.js';
 
 import './globals.js';
 
 import './components/skills/skills-grid/skills-grid.js';
-import './components/skills/skills-expertise/skills-expertise.js';
+import './components/skills/skill-details/skill-details.js';
 import './components/certifications/certifications.js';
 import './components/education/education.js';
 import './components/experience/experience.js';

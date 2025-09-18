@@ -1,5 +1,4 @@
 import BaseShadowComponent from '../base-shadow-component';
-import BaseComponent from '../base-component.js';
 import css from './certifications.css';
 import templateHtml from './certifications.html';
 
@@ -17,31 +16,9 @@ class Certifications extends BaseShadowComponent {
     }
 
     connectedCallback() {
+        this.data.set(data);
         super.connectedCallback();
     }
-
-    render() {
-        const container = this.root.querySelector('[data-container]');
-        const templateEl = this.root.querySelector('template');
-        console.log('templateEl:', templateEl);
-
-        if (!container || !templateEl) return;
-
-        // Clear existing content 
-        container.innerHTML = '';
-
-        this.data.get().forEach(cert => {
-            const clone = templateEl.content.cloneNode(true);
-
-            // Fill standard fields
-            clone.querySelectorAll('[data-field]').forEach(el => {
-                const field = el.dataset.field;
-                if (cert[field]) el.textContent = cert[field];
-            });
-            container.appendChild(clone);
-        });
-    }
-
 }
 
 customElements.define('certification-list', Certifications);

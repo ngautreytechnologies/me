@@ -1,11 +1,10 @@
 <div class="experience-timeline" data-container>
-    <!-- Template for each experience item -->
     <template id="experience-item-template">
         <div class="experience-item">
             <div data-field="title" class="job-title"></div>
             <div data-field="company" class="job-company"></div>
             <div data-field="period" class="job-period"></div>
-            <div data-field="description" class="job-description"></div>
+            <slot name="description" class="experience-description"></slot>
         </div>
     </template>
 </div>

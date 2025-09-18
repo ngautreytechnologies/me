@@ -1,4 +1,3 @@
-import BaseComponent from '../base-component.js';
 import BaseShadowComponent from '../base-shadow-component.js';
 import css from './education.css';
 import templateHtml from './education.html';
@@ -35,44 +34,35 @@ const data = [
 class Education extends BaseShadowComponent {
     constructor() {
         super(templateHtml, css);
-
-        // Initialize reactive data
-        this.data.set(data);
     }
 
     connectedCallback() {
+        this.data.set(data);
         super.connectedCallback();
-        this.render();
     }
 
-    render() {
+    renderData(items) {
+        // Call parent method first
+        super.renderData(items);
+
+        // Then handle custom rendering (slot replacement)
         const container = this.root.querySelector('[data-container]');
-        const templateEl = this.root.querySelector('template');
-        if (!container || !templateEl) return;
+        if (!container) return;
 
-        // Clear existing content
-        container.innerHTML = '';
+        const itemElements = container.querySelectorAll('.education-item');
 
-        this.data.get().forEach(item => {
-            const clone = templateEl.content.cloneNode(true);
+        items.forEach((item, index) => {
+            const el = itemElements[index];
+            if (!el) return;
 
-            // Fill standard fields
-            clone.querySelectorAll('[data-field]').forEach(el => {
-                const field = el.dataset.field;
-                if (item[field]) el.textContent = item[field];
-                else if (field !== 'description') el.remove();
-            });
-
-            // Inject description HTML if present
             if (item.description) {
                 const descEl = document.createElement('div');
                 descEl.className = 'education-description';
                 descEl.innerHTML = item.description;
-                const slot = clone.querySelector('slot[name="description"]');
+
+                const slot = el.querySelector('slot[name="description"]');
                 if (slot) slot.replaceWith(descEl);
             }
-
-            container.appendChild(clone);
         });
     }
 }

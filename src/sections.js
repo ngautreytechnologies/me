@@ -20,25 +20,3 @@ function showProjectDetails(id) {
     // Show selected project details
     document.getElementById(id + '-details').classList.add('active');
 }
-
-function showSkillExpertise(id) {
-    // Get all detail panels
-    const details = document.querySelectorAll('.skill-expertise-detail');
-    details.forEach(detail => {
-        detail.classList.remove('active');
-    });
-
-    // Activate the clicked tool's detail panel
-    const activeDetail = document.getElementById(`${id}-details`);
-    if (activeDetail) {
-        activeDetail.classList.add('active');
-    }
-}
-
-// Optional: add click listeners dynamically
-document.querySelectorAll('.skill-expertise-card').forEach(card => {
-    card.addEventListener('click', () => {
-        const toolId = card.getAttribute('data-tool-id');
-        showSkillExpertise(toolId);
-    });
-});
