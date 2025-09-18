@@ -13,3 +13,11 @@ export function defineSafeElement(tagName, elementClass) {
         console.warn(`[CustomElements] <${tagName}> is already defined, skipping.`);
     }
 }
+
+export function removeElements(container, except) {
+    Array.from(container.children).forEach(child => {
+        if (child.tagName.toLowerCase() !== except.toLowerCase()) {
+            child.remove();
+        }
+    });
+}

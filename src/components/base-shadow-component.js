@@ -1,4 +1,5 @@
 // base-shadow-component.js
+import { removeElements } from '../utils/dom.js';
 import BaseComponent from './base-component.js';
 
 export default class BaseShadowComponent extends BaseComponent {
@@ -30,12 +31,12 @@ export default class BaseShadowComponent extends BaseComponent {
             // Clear container only if we have data
             if (!items || (Array.isArray(items) && items.length === 0)) {
                 console.log(`[${this.constructor.name}] No data to render, container cleared`);
-                container.innerHTML = '';
+                removeElements(container, 'template');
                 console.groupEnd();
                 return;
             }
 
-            container.innerHTML = '';
+            removeElements(container, 'template');
             const dataArray = Array.isArray(items) ? items : [items];
             console.log('Rendering data array:', dataArray);
 

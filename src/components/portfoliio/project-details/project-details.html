@@ -1,0 +1,21 @@
+<div class="project-details-container" data-container>
+    <template>
+        <div class="project-details">
+            <div class="detail-header">
+                <h3 data-field="title"></h3>
+                <div class="project-details-tags">
+                    <slot name="tags"></slot>
+                </div>
+            </div>
+
+            <div class="project-details-body">
+                <p><strong>Overview:</strong> <span data-field="overview"></span></p>
+
+                <p><strong>Key Features:</strong></p>
+                <slot name="keyFeatures"></slot>
+                <p><strong>Pros:</strong> <span data-field="pros"></span></p>
+                <p><strong>Cons:</strong> <span data-field="cons"></span></p>
+            </div>
+        </div>
+    </template>
+</div>

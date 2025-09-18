@@ -1,5 +1,6 @@
 // base-light-component.js
 import BaseComponent from './base-component.js';
+import { removeElements } from '../utils/dom.js';
 
 /**
  * BaseLightComponent
@@ -39,7 +40,7 @@ export default class BaseLightComponent extends BaseComponent {
             }
 
             // Clear only if rendering dynamic data
-            container.innerHTML = '';
+            removeElements(container, 'template');
 
             if (templateEl) {
                 items.forEach(item => {

@@ -1,0 +1,246 @@
+.projects-grid,
+.project-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+}
+
+.project-badge,
+.project-details-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
+    text-align: center;
+}
+
+.project-badge:hover,
+.project-details-card:hover {
+    transform: translateY(-3px);
+    color: white;
+}
+
+/* Skills grid */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.project-badge {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    height: 100px;
+    /* break long words */
+    word-break: break-word;
+    /* allow wrapping */
+    white-space: normal;
+    /* wrap words as needed */
+    overflow-wrap: break-word;
+}
+
+/* Gradient hover effect */
+.project-badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-gradient);
+    transition: left 0.5s ease;
+    z-index: -1;
+}
+
+/* Move the gradient in on hover */
+.project-badge:hover::before {
+    left: 0;
+}
+
+/* Lift the badge and change text color on hover */
+.project-badge:hover {
+    transform: translateY(-3px);
+    color: white;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+/* Favourite Tools Grid */
+.project-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+/* Favourite Tool Card - Square like project badges */
+.project-details-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    height: 100px;
+    /* square height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    word-break: break-word;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+
+/* Gradient hover effect */
+.project-details-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-gradient);
+    transition: left 0.5s ease;
+    z-index: -1;
+}
+
+.project-details-card:hover::before {
+    left: 0;
+}
+
+.project-details-card:hover {
+    transform: translateY(-3px);
+    color: white;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+/* Title inside card */
+.project-details-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+}
+
+/* Optional summary inside card */
+.project-details-summary {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+/* Favourite Tool Details Panel */
+.project-details-container {
+    position: relative;
+    min-height: 200px;
+}
+
+.project-detail {
+    position: relative;
+    width: 100%;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.4s ease;
+    pointer-events: none;
+    display: none;
+}
+
+.project-detail.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+    display: block;
+}
+
+.detail-header h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+}
+
+.project-details-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.project-details-tags .tag {
+    background: var(--primary-gradient);
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Details content */
+.project-details {
+    line-height: 1.7;
+}
+
+.project-details p {
+    margin-bottom: 1rem;
+}
+
+.project-details strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+
+.project-details ul {
+    margin: 0.5rem 0 1rem 1.5rem;
+    list-style: none;
+    padding-left: 0;
+}
+
+.project-details li {
+    margin-bottom: 0.5rem;
+    position: relative;
+    padding-left: 1.2rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+.project-details li::marker {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--text-accent);
+    font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .project-details-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+
+    .project-details-card {
+        height: 90px;
+    }
+}
+
+/* Hacks */
+p {
+    color: var(--text-secondary);
+}

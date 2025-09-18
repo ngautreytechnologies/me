@@ -1,15 +1,14 @@
-import templateHtml from './summary.html'; // HTML file with your profile + contacts
-import css from './summary.css'; // your CSS
+import templateHtml from './summary.html';
+import css from './summary.css';
 import BaseLightComponent from '../base-light-component.js';
 
 class Summary extends BaseLightComponent {
     constructor() {
-        super(templateHtml, css); // Inject HTML and CSS into shadow DOM
+        super(templateHtml, css);
     }
 
     connectedCallback() {
         super.connectedCallback();
-        // For static HTML, nothing else is needed
     }
 }
 

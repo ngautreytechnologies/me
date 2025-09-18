@@ -1,5 +1,6 @@
 import { GLOBAL_SHEETS, ensureGlobalStyleInjected } from '../utils/styles.js';
 import { ReactiveValue } from '../utils/reactive.js';
+import { removeElements } from '../utils/dom.js';
 
 export default class BaseComponent extends HTMLElement {
     static debug = true;
@@ -165,7 +166,7 @@ export default class BaseComponent extends HTMLElement {
 
         // Clear previous content
         this._log(`[${this.constructor.name}] Clearing target for template injection`, target);
-        target.innerHTML = '';
+        removeElements(target, 'template');
 
         // If the template string already has a <template> tag, preserve it
         if (temp.content.querySelector('template')) {
