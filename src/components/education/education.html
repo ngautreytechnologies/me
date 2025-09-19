@@ -1,0 +1,11 @@
+<div class="education-timeline" data-container>
+    <template id="education-item-template">
+        <div class="education-item">
+            <div class="education-degree" data-field="degree"></div>
+            <div class="education-institution" data-field="institution"></div>
+            <div class="education-period" data-field="period"></div>
+            <div class="education-grade" data-field="grade"></div>
+            <slot name="description" class="education-description"></slot>
+        </div>
+    </template>
+</div>

@@ -1,0 +1,148 @@
+/* === NAVBAR BASE === */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem 2rem;
+    z-index: 1000;
+    transition: background 0.3s ease, box-shadow 0.3s ease, border-bottom 0.3s ease;
+}
+
+/* Frosty glass state (applied on scroll) */
+.navbar.scrolled {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* === NAV CONTAINER === */
+.navbar .nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 1rem;
+    transition: justify-content 0.5s ease;
+}
+
+.navbar.scrolled .nav-container {
+    justify-content: space-between;
+}
+
+/* === BRAND === */
+.nav-brand {
+    font-weight: 700;
+    color: #fff;
+    margin-right: auto;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.navbar.scrolled .nav-brand {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* === LINKS === */
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+    transition: margin 0.5s ease, transform 0.5s ease;
+}
+
+.navbar.scrolled .nav-links {
+    margin-right: 1.5rem;
+}
+
+.nav-link {
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: var(--text-accent);
+    border-radius: 1px;
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+/* === ICONS === */
+.nav-icons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    opacity: 0;
+    max-width: 0;
+    /* collapsed state */
+    overflow: hidden;
+    transform: scale(0.8) translateX(10px);
+    pointer-events: none;
+    transition: opacity 1.2s ease,
+        max-width 1.2s ease,
+        transform 1.2s ease;
+}
+
+.nav-icons.visible {
+    opacity: 1;
+    max-width: 500px;
+    /* enough for all icons */
+    transform: scale(1) translateX(0);
+    pointer-events: auto;
+}
+
+
+/* === ICON BUTTONS === */
+.nav-icons .nav-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(75, 85, 99, 0.25);
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+/* Email icon → orange gradient */
+.nav-icons .nav-icon.email {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+}
+
+.nav-icons .nav-icon.email:hover {
+    background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(75, 85, 99, 0.35);
+}
+
+/* PDF icon → gray gradient */
+.nav-icons .nav-icon.pdf {
+    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+}
+
+.nav-icons .nav-icon.pdf:hover {
+    background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(75, 85, 99, 0.35);
+}

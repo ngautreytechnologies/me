@@ -1,0 +1,206 @@
+/* === Project Details Section === */
+
+/* Container for all project details */
+.project-details-container {
+    position: relative;
+    min-height: 200px;
+}
+
+/* Individual project detail card */
+.project-detail {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    transform: translateX(20px);
+    pointer-events: none;
+    display: none;
+}
+
+/* Active state (fade in + slide in) */
+.project-detail.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+    display: block;
+}
+
+/* Gradient hover sweep effect */
+.project-detail::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-gradient);
+    transition: left 0.5s ease;
+    z-index: -1;
+}
+
+.project-detail:hover::before {
+    left: 0;
+}
+
+/* Hover lift + glow */
+.project-detail:hover {
+    transform: translateY(-3px);
+    color: white;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+/* Keep content above gradient sweep */
+.project-detail p,
+.project-detail li,
+.project-detail strong,
+.project-details-header,
+.project-details-body {
+    position: relative;
+    z-index: 1;
+}
+
+/* === Header === */
+.project-details-header h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: color 0.3s ease;
+}
+
+/* Font Awesome icons in titles */
+.project-details-header h3 i {
+    font-size: 1.1rem;
+    color: inherit;
+}
+
+/* Tags inside project header */
+.project-details-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.project-details-tags .tag {
+    background: var(--primary-gradient);
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.project-details-tags .tag:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+/* === Body Content === */
+.project-details-body {
+    line-height: 1.7;
+}
+
+.project-details-body p {
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+}
+
+.project-details-body strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Unordered lists inside project details */
+.project-details-body ul {
+    margin: 0.5rem 0 1rem 1.5rem;
+    list-style: none;
+    padding-left: 0;
+}
+
+.project-details-body li {
+    margin-bottom: 0.5rem;
+    position: relative;
+    padding-left: 1.2rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+.project-details-body li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--text-accent);
+    font-weight: bold;
+}
+
+/* === Code Viewer Tabs === */
+.code-viewer {
+    margin-top: 1rem;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+    border: 1px solid var(--border-glass);
+}
+
+.code-tabs {
+    display: flex;
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid var(--border-glass);
+}
+
+.code-tabs button {
+    flex: 1;
+    padding: 0.6rem 1rem;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.code-tabs button.active {
+    background: var(--primary-gradient);
+    color: white;
+}
+
+.code-content {
+    padding: 1rem;
+    font-family: "Fira Code", monospace;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #eee;
+    white-space: pre-wrap;
+    overflow-x: auto;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+    .project-detail {
+        padding: 1rem;
+    }
+
+    .project-details-header h3 {
+        font-size: 1rem;
+    }
+
+    .code-tabs button {
+        font-size: 0.75rem;
+        padding: 0.5rem;
+    }
+}

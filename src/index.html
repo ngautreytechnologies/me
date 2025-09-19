@@ -10,45 +10,15 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet">
-
-    <!-- Variables + Reset -->
-    <link href="./styles/variables.css" rel="stylesheet">
-    <link href="./styles/reset.css" rel="stylesheet">
-
-    <!-- Base + Typography -->
-    <link href="./styles/base.css" rel="stylesheet">
-    <link href="./styles/typography.css" rel="stylesheet">
-
-    <!-- Animations -->
-    <link href="./styles/animations.css" rel="stylesheet">
-
-    <!-- Components -->
-    <link href="./styles/components/navbar.css" rel="stylesheet">
-    <link href="./styles/components/header.css" rel="stylesheet">
-    <link href="./styles/components/hero.css" rel="stylesheet">
-    <link href="./styles/components/profile.css" rel="stylesheet">
-    <link href="./styles/components/skills.css" rel="stylesheet">
-    <link href="./styles/components/experience.css" rel="stylesheet">
-    <link href="./styles/components/education.css" rel="stylesheet">
-    <link href="./styles/components/certifications.css" rel="stylesheet">
-    <link href="./styles/components/portfolio.css" rel="stylesheet">
-    <link href="./styles/components/buttons.css" rel="stylesheet">
-    <link href="./styles/components/cta.css" rel="stylesheet">
-
-    <!-- Base JS file with cross-cutting concerns -->
-    <script src="./js/base.js"></script>
-    <script src="./js/animations.js"></script>
-    <script src="./js/cta.js"></script>
-    <script src="./js/portfolio.js"></script>
-    <script src="./js/sections.js"></script>
-    <script src="./js/utils.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
 
     <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon/apple-touch-icon.png">
 
     <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon/favicon-16x16.png">
     <link rel="manifest" href="./images/favicon/site.webmanifest">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
+    <!-- Global styles -->
 
 </head>
 
@@ -104,375 +74,64 @@
             <!-- Navigation Links -->
             <div class="nav-links">
                 <a href="#skills" class="nav-link" data-section="skills">Core Skills</a>
-                <a href="#skills-expertise" class="nav-link" data-section="tools">Skills Expertise</a>
-                <a href="#portfolio" class="nav-link" data-section="portfolio">Portfolio</a>
                 <a href="#experience" class="nav-link" data-section="experience">Experience</a>
+                <a href="#portfolio" class="nav-link" data-section="portfolio">Portfolio</a>
                 <a href="#education" class="nav-link" data-section="education">Education</a>
                 <a href="#certifications" class="nav-link" data-section="certifications">Certifications</a>
+            </div>
+
+            <div class="nav-icons hidden">
+                <a href="mailto:youremail@example.com" class="nav-icon" title="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="#download-pdf" class="nav-icon" title="Generate PDF">
+                    <i class="fas fa-file-pdf"></i>
+                </a>
             </div>
         </div>
     </nav>
     <header>
-        <div class="header-content">
-            <div class="profile-section">
-                <div class="profile-image">
-                    <img src="./images/profile.jfif" alt="Nicholas Simon Gautrey">
-                </div>
-                <div class="profile-info">
-                    <h1>Nicholas Gautrey</h1>
-                    <div class="role">Principal Engineer</div>
-                    <div class="company">DendriFlow</div>
-                    <div class="company">AI Innovator</div>
-                </div>
-            </div>
-            <div class="contact-links">
-                <a href="mailto:ngautreytechnologies@gmail.com">
-                    <i class="fa-solid fa-envelope"></i> ngautreytechnologies@gmail.com
-                </a>
-
-                <a href="https://github.com/ngautreytechnologies/DendriFlow">
-                    <i class="fa-brands fa-github"></i> ngautreytechnologies/DendriFlow
-                </a>
-
-                <a href="https://www.linkedin.com/in/nicholas-gautrey-5b0b17378/">
-                    <i class="fa-brands fa-linkedin"></i> linkedin.com/in/nicholas-gautrey-5b0b17378/
-                </a>
-            </div>
-            <div class="export-buttons">
-                <button id="pdf-btn" onclick="exportPDF()">📄 Export PDF</button>
-                <button id="cta-btn" onclick="contactMe()">📞 Contact Me</button>
-            </div>
-        </div>
+        <header-content></header-content>
     </header>
     <main>
         <div id="summary" class="section-card full-width">
             <h2>Summary</h2>
-            <p>
-                I am a results-driven Principal Software Engineer with over 13 years of experience working in a variety
-                of environments, ranging from extremely fast-paced startups to process-focused corporate cultures. My
-                expertise is centered on backend and full-stack development, with a strong emphasis on building
-                scalable, maintainable, and high-performance systems. I am passionate about leveraging technology to
-                solve complex problems and drive business growth.
-                <br><br>
-                My technical skills include designing and developing microservices and event-driven architectures in
-                cloud-native serverless functions, using a range of programming languages and frameworks such as Python,
-                C#, and the .NET Framework.
-                <br><br>
-                I am passionate about advancing AI technologies and apply methodologies like machine learning and
-                natural language processing to solve real-world problems while ensuring ethical AI development, focused
-                on data privacy and transparency. I am also exploring adaptive workflow tools like
-                <strong>DendriFlow</strong> to enhance developer productivity and maintain trust in AI-driven systems.
-                <br><br>
-                Throughout my career, I have delivered measurable improvements to mission-critical systems. For example,
-                I led a complete rearchitecture of a company's tiered rebate calculation engine, reducing processing
-                time from approximately 2 hours to 18 minutes—an improvement of over <strong>85%</strong> significantly
-                enhancing calculation speed and user satisfaction.
-            </p>
+            <cv-summary></cv-summary>
         </div>
 
         <div id="skills" class="section-card">
             <h2>🚀 Core Skills</h2>
-            <div class="skills-grid">
-                <!-- Programming languages and frameworks -->
-                <div class="skill-badge">Python</div>
-                <div class="skill-badge">C#</div>
-                <div class="skill-badge">AWS</div>
-                <div class="skill-badge">Angular</div>
-                <div class="skill-badge">Full Stack Development</div>
-                <div class="skill-badge">CI/CD</div>
-                <div class="skill-badge">SQL</div>
-                <div class="skill-badge">NoSQL</div>
-                <div class="skill-badge">Neo4j</div>
-            </div>
+            <skills-grid></skills-grid>
         </div>
 
-        <div id="skills-expertise" class="section-card">
-            <h2>📋 Skills Expertise</h2>
-            <div id="skill-expertise-details-container" class="skill-expertise-details-container">
-                <div class="skill-expertise-detail active" id="Python-details">
-                    <div class="detail-header">
-                        <h3>Python / AI</h3>
-                        <div class="skill-expertise-tags">
-                            <span class="tag">AI</span>
-                            <span class="tag">Automation</span>
-                            <span class="tag">LLM</span>
-                        </div>
-                    </div>
-                    <div class="skill-expertise-details">
-                        <p><strong>Overview:</strong> Python is my primary language for AI-enhanced workflows and API
-                            development.
-                            I leverage FastAPI and Flask for web services, and LangChain for building modular AI
-                            components.
-                        </p>
+        <div id="skill-details" class="section-card">
+            <h2>📋 Skill Details</h2>
+            <skill-details></skill-details>
+        </div>
 
-                        <p><strong>Key Features / Strengths:</strong></p>
-                        <ul>
-                            <li>FastAPI and Flask for lightweight, scalable APIs</li>
-                            <li>LangChain for modular LLM workflows and automation</li>
-                            <li>AI sidecar patterns for orchestration and task delegation</li>
-                            <li>Rapid prototyping with Python and AI libraries</li>
-                        </ul>
-
-                        <p><strong>Pros:</strong> Highly versatile, strong ecosystem, great for AI/ML workflows, quick
-                            development cycles.</p>
-                        <p><strong>Cons:</strong> Some runtime performance overhead, requires careful dependency
-                            management, async complexity in large projects.</p>
-                    </div>
-                </div>
-            </div>
+        <div id="experience" class="section-card full-width">
+            <h2>💼 Experience</h2>
+            <experience-timeline></experience-timeline>
         </div>
 
         <div id="projects" class="section-card">
             <h2>🎯 Featured Projects</h2>
-            <!-- Core Skills Tree -->
-            <div class="portfolio-grid">
-                <div class="portfolio-badge">AI Sidecar</div>
-                <div class="portfolio-badge">Telemetry Enrichment</div>
-                <div class="portfolio-badge">Serverless API</div>
-                <div class="portfolio-badge">Data Pipeline</div>
-                <div class="portfolio-badge">Graph DB Analytics</div>
-            </div>
-            <div id="skill-tree"></div>
-            <!-- Container for dynamically loaded GitHub projects -->
-            <div id="github-projects"></div>
+            <projects-search></projects-search>
         </div>
 
-        <div class="section-card">
+        <div id="project-details" class="section-card">
             <h2>📋 Project Details</h2>
-            <div id="project-details" class="project-details-container">
-
-                <!-- Static DendriFlow details -->
-                <div class="project-detail active" id="DendriFlow-details">
-                    <div class="detail-header">
-                        <h3>🔧 DendriFlow</h3>
-                        <div class="project-tags">
-                            <span class="tag">CLI</span>
-                            <span class="tag">AI</span>
-                            <span class="tag">Automation</span>
-                            <span class="tag">YAML</span>
-                        </div>
-                    </div>
-                    <div class="detail-content">
-                        <p><strong>Overview:</strong> DendriFlow is an advanced automation and orchestration platform
-                            inspired by the structure of the human brain. It empowers developers to streamline tasks by
-                            connecting modular AI-enhanced components—called <em>Neurons</em>—that mirror cognitive flow
-                            and decision-making patterns.</p>
-
-                        <p><strong>Key Features:</strong></p>
-                        <ul>
-                            <li>Neuron-based orchestration for adaptive, brain-inspired modular workflows</li>
-                            <li>Voice command interface for hands-free interaction and cognitive accessibility</li>
-                            <li>YAML-driven configuration for clear, declarative, and reproducible workflows</li>
-                            <li>Mission-based task system aligning automation with user goals and learning loops</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Container for dynamic GitHub project details -->
-                <div id="github-project-details"></div>
-            </div>
-        </div>
-
-
-        <div id="experience" class="section-card full-width">
-            <h2>💼 Experience</h2>
-            <div class="experience-timeline">
-                <div class="detail-content experience-item">
-                    <div class="job-title">Founder & Architect</div>
-                    <div class="job-company">DendriFlow (Open-Source Software Venture)</div>
-                    <div class="job-period">Jul 2025 - Present</div>
-                    <p>
-                        I have initiated <strong>DendriFlow</strong>, an experimental development tool and AI automation
-                        platform designed to adapt to individual needs.
-                    </p>
-
-                    <p>
-                        I will apply <strong>UNIX design philosophies</strong> to create developer-friendly abstractions
-                        for
-                        AI-driven workflows.
-                        This includes a declarative YAML configuration, a focus on local-first data privacy, and
-                        reflective learning tools.
-                    </p>
-
-                    <p>
-                        DendriFlow will be a <strong>polyglot system</strong> that integrates multiple programming
-                        languages
-                        and frameworks,
-                        emphasizing flexible architecture and composability for seamless workflow integration.
-                    </p>
-
-                    <p>
-                        Currently, the project is in <em>early development</em> with a focus on core architecture and
-                        foundational features.
-                    </p>
-
-                </div>
-
-                <div class="experience-item">
-                    <div class="job-title">Principal Software Engineer</div>
-                    <div class="job-company">Alchem Technologies Ltd</div>
-                    <div class="job-period">Mar 2024 - July 2025</div>
-                    <p>
-                        Leading solution architecture and software development initiatives using Python and design
-                        patterns.
-                        Providing platform and architectural guidance to drive technical excellence and innovation.
-                        <br><br>
-                        Focusing on scalable system design and mentoring engineering teams to adopt best practices
-                        in software architecture and development methodologies.
-                    </p>
-                </div>
-
-                <div class="experience-item">
-                    <div class="job-title">Principal Software Developer</div>
-                    <div class="job-company">E-bate Limited</div>
-                    <div class="job-period">Sep 2022 - Mar 2024</div>
-                    <p>
-                        Contributed to project planning by providing platform and architectural guidance. Led analysis
-                        and design
-                        of solutions that resulted in better quality software, increased customer satisfaction, and
-                        enhanced team knowledge.
-                        <br><br>
-                        Spearheaded innovation by re-architecting platform elements, improving security, reliability,
-                        scalability,
-                        and performance. Created DevOps tools that reduced tenant onboarding and migration time, helping
-                        secure
-                        new customers and increasing business revenue.
-                        <br><br>
-                        Mentored team members and established coding standards and guidelines, reducing knowledge silos
-                        and
-                        improving workload distribution across the engineering organization.
-                    </p>
-                </div>
-
-                <div class="experience-item">
-                    <div class="job-title">Senior Software Developer</div>
-                    <div class="job-company">E-bate Limited</div>
-                    <div class="job-period">Nov 2021 - Sep 2022</div>
-                    <p>
-                        Designed and developed new features focusing on clean code principles and unit testing best
-                        practices
-                        using .NET and C#. Led a rapid response team for analyzing and fixing critical business defects.
-                        <br><br>
-                        Created sample and template projects that increased developer productivity and set architectural
-                        standards for future microservices. Designed and developed an identity and access management
-                        solution
-                        that reduced operational overhead and costs.
-                    </p>
-                </div>
-
-                <div class="experience-item">
-                    <div class="job-title">Senior Software Engineer</div>
-                    <div class="job-company">Collision Management Systems (CMS)</div>
-                    <div class="job-period">Sep 2020 - Jul 2021</div>
-                    <p>
-                        Designed and developed new features while improving code quality, resulting in increased
-                        maintainability,
-                        extensibility, and testability. Mentored junior team members by sharing knowledge and best
-                        practices.
-                        <br><br>
-                        Implemented complex data ingestion requirements for new and existing customers. Conducted
-                        knowledge-sharing
-                        sessions that improved team synergy and increased overall software quality standards.
-                    </p>
-                </div>
-
-                <div class="experience-item">
-                    <div class="job-title">Software Engineer</div>
-                    <div class="job-company">Intamac Systems</div>
-                    <div class="job-period">Apr 2016 - Mar 2020</div>
-                    <p>
-                        Designed and developed new features for the IoT platform, involving refactoring and retrofitting
-                        unit tests
-                        that significantly reduced bug rates and improved code maintainability. Contributed to platform
-                        re-architecture
-                        by designing and implementing cloud solutions on AWS.
-                        <br><br>
-                        Led legacy system migrations from VB6/VB.Net to C#, and researched technology choices for the
-                        new platform.
-                        Developed microservices and established best practices, including design and development of a
-                        new image and
-                        video storage solution using AWS that achieved scalability, reliability, and high availability.
-                    </p>
-                </div>
-            </div>
+            <project-details></project-details>
         </div>
 
         <div id="education" class="section-card full-width">
             <h2>🎓 Education</h2>
-            <div class="education-timeline">
-
-                <div class="education-item">
-                    <div class="education-degree">Bachelor's Degree, Software Engineering</div>
-                    <div class="education-institution">University of Northampton</div>
-                    <div class="education-period">2009 - 2012</div>
-                    <div class="education-grade">Grade: First Honours</div>
-                    <div class="education-description">
-                        <ul>
-                            <li>Completed a 3-year programme with a focus on software engineering in the final two
-                                years
-                            </li>
-                            <li>Studied programming, systems design, software architecture, database technologies,
-                                and
-                                artificial intelligence</li>
-                            <li>Proactively learned C# outside of the curriculum to enhance employability.
-                            </li>
-                            <li>Recognised for strong academic performance, fast learning, and a passionate approach
-                                to
-                                software development</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="education-item">
-                    <div class="education-degree">A2 Level, Applied ICT Double Award</div>
-                    <div class="education-institution">Northampton College</div>
-                    <div class="education-period">2007 - 2009</div>
-                    <div class="education-grade">Grade: CC</div>
-                </div>
-            </div>
+            <education-list></education-list>
         </div>
 
         <div id="certifications" class="section-card full-width">
             <h2>🏆 Certifications</h2>
-            <div class="certifications-timeline">
-                <div class="certification-item">
-                    <div class="certification-name">Neo4j & LLM Fundamentals</div>
-                    <div class="certification-issuer">Neo4j</div>
-                    <div class="certification-date">Issued Apr 2024</div>
-                    <div class="certification-credential">Credential ID: 1729e21e-3334-44cd-ae65-63316aab624f</div>
-                    <div class="certification-status active">Current</div>
-                </div>
-
-                <div class="certification-item">
-                    <div class="certification-name">Graph Data Modeling Fundamentals</div>
-                    <div class="certification-issuer">Neo4j</div>
-                    <div class="certification-date">Issued Feb 2024</div>
-                    <div class="certification-credential">Credential ID: 6ee6f1bc-3fcd-48f1-853a-84eefa5b5f83</div>
-                    <div class="certification-status active">Current</div>
-                </div>
-
-                <div class="certification-item">
-                    <div class="certification-name">Neo4j Fundamentals</div>
-                    <div class="certification-issuer">Neo4j</div>
-                    <div class="certification-date">Issued Feb 2024</div>
-                    <div class="certification-credential">Credential ID: 0c5f2e9a-a3af-4ffd-b140-256cca71f4a7</div>
-                    <div class="certification-status active">Current</div>
-                </div>
-
-                <div class="certification-item">
-                    <div class="certification-name">AWS Certified Developer – Associate</div>
-                    <div class="certification-issuer">Amazon Web Services (AWS)</div>
-                    <div class="certification-date">Issued Oct 2019 · Expired Oct 2022</div>
-                    <div class="certification-status expired">Expired</div>
-                </div>
-
-                <div class="certification-item">
-                    <div class="certification-name">AWS Certified Solutions Architect – Associate</div>
-                    <div class="certification-issuer">Amazon Web Services (AWS)</div>
-                    <div class="certification-date">Issued Aug 2019 · Expired Aug 2022</div>
-                    <div class="certification-status expired">Expired</div>
-                </div>
-            </div>xx
+            <certification-list></certification-list>
         </div>
     </main>
 </body>

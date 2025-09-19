@@ -1,0 +1,148 @@
+.certifications-timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.certification-item {
+    position: relative;
+    margin-bottom: 3rem;
+    padding: 1.5rem 0 2rem 2rem;
+    border-radius: 12px;
+}
+
+.certification-status.current {
+    background: rgba(34, 197, 94, 0.2);
+}
+
+.certification-status.expired {
+    background: rgba(239, 68, 68, 0.2);
+}
+
+/* Certifications Timeline Styles */
+.certifications-timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.certification-item {
+    position: relative;
+    margin-bottom: 3rem;
+    padding: 1.5rem 0 2rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.certification-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 1.5rem;
+}
+
+.certification-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.certification-item::before {
+    content: '🏆';
+    position: absolute;
+    left: -1.8rem;
+    top: 1.8rem;
+    width: 24px;
+    height: 24px;
+    background: var(--secondary-gradient);
+    border-radius: 50%;
+    border: 2px solid var(--dark-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.certification-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-accent);
+    margin-bottom: 0.3rem;
+    line-height: 1.3;
+}
+
+.certification-issuer {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 0.3rem;
+}
+
+.certification-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    opacity: 0.8;
+    margin-bottom: 0.5rem;
+}
+
+.certification-credential {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    opacity: 0.7;
+    margin-bottom: 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.5rem 0.8rem;
+    border-radius: 6px;
+    border-left: 3px solid var(--text-accent);
+}
+
+.certification-status {
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.certification-status.current {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.4);
+}
+
+.certification-status.expired {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .certifications-timeline {
+        padding-left: 1.5rem;
+    }
+
+    .certification-item {
+        padding: 1.5rem 0 2rem 1.5rem;
+    }
+
+    .certification-item::before {
+        left: -1.5rem;
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+        top: 1.5rem;
+    }
+
+    .certification-name {
+        font-size: 1.1rem;
+    }
+
+    .certification-credential {
+        font-size: 0.75rem;
+        word-break: break-all;
+    }
+}

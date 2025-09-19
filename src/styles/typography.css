@@ -20,7 +20,7 @@ h2 {
 
 p {
     font-size: 1rem;
-    color: var(--text-secondary);
+    color: var(--text-secondary) !important;
 }
 
 h2 {

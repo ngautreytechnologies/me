@@ -1,0 +1,235 @@
+.skills-grid,
+.skill-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+}
+
+.skill-badge,
+.skill-details-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
+    text-align: center;
+}
+
+.skill-badge:hover,
+.skill-details-card:hover {
+    transform: translateY(-3px);
+    color: white;
+}
+
+/* Skills grid */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.skill-badge {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    height: 100px;
+    /* break long words */
+    word-break: break-word;
+    /* allow wrapping */
+    white-space: normal;
+    /* wrap words as needed */
+    overflow-wrap: break-word;
+}
+
+/* Gradient hover effect */
+.skill-badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-gradient);
+    transition: left 0.5s ease;
+    z-index: -1;
+}
+
+/* Move the gradient in on hover */
+.skill-badge:hover::before {
+    left: 0;
+}
+
+/* Lift the badge and change text color on hover */
+.skill-badge:hover {
+    transform: translateY(-3px);
+    color: white;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+/* Favourite Tools Grid */
+.skill-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+/* Favourite Tool Card - Square like skill badges */
+.skill-details-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    height: 100px;
+    /* square height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    word-break: break-word;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+
+/* Gradient hover effect */
+.skill-details-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-gradient);
+    transition: left 0.5s ease;
+    z-index: -1;
+}
+
+.skill-details-card:hover::before {
+    left: 0;
+}
+
+.skill-details-card:hover {
+    transform: translateY(-3px);
+    color: white;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+/* Title inside card */
+.skill-details-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+}
+
+/* Optional summary inside card */
+.skill-details-summary {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+/* Favourite Tool Details Panel */
+.skill-details-details-container {
+    position: relative;
+    min-height: 200px;
+}
+
+.skill-details-detail {
+    position: relative;
+    width: 100%;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.4s ease;
+    pointer-events: none;
+    display: none;
+}
+
+.skill-details-detail.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+    display: block;
+}
+
+.detail-header h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+}
+
+.skill-details-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.skill-details-tags .tag {
+    background: var(--primary-gradient);
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Details content */
+.skill-details-details {
+    line-height: 1.7;
+}
+
+.skill-details-details p {
+    margin-bottom: 1rem;
+}
+
+.skill-details-details strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.skill-details-details ul {
+    margin: 0.5rem 0 1rem 1.5rem;
+}
+
+.skill-details-details li {
+    margin-bottom: 0.5rem;
+    position: relative;
+}
+
+.skill-details-details li::before {
+    content: '▸';
+    position: absolute;
+    left: -1.2rem;
+    color: var(--text-accent);
+    font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .skill-details-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+
+    .skill-details-card {
+        height: 90px;
+    }
+}
