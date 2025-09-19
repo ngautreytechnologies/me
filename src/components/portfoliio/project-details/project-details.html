@@ -1,21 +1,115 @@
-<div class="project-details-container" data-container>
-    <template>
-        <div class="project-details">
-            <div class="detail-header">
-                <h3 data-field="title"></h3>
-                <div class="project-details-tags">
-                    <slot name="tags"></slot>
-                </div>
+<div class="project-showcase" data-container>
+    <template id="project-template">
+        <div class="project-content">
+            <div class="project-header">
+                <h3 class="project-title" data-field="title"></h3>
+                <div class="project-subtitle" data-field="summary"></div>
             </div>
 
-            <div class="project-details-body">
-                <p><strong>Overview:</strong> <span data-field="overview"></span></p>
+            <div class="tabs-container">
+                <button class="tab-button active" data-tab="overview">
+                    <span class="tab-icon">📋</span>
+                    Overview
+                </button>
+                <button class="tab-button" data-tab="technical">
+                    <span class="tab-icon">⚡</span>
+                    Technical
+                </button>
+                <button class="tab-button" data-tab="github">
+                    <span class="tab-icon">📁</span>
+                    Repository
+                </button>
+                <button class="tab-button" data-tab="impact">
+                    <span class="tab-icon">🎯</span>
+                    Impact
+                </button>
+            </div>
 
-                <p><strong>Key Features:</strong></p>
-                <slot name="keyFeatures"></slot>
-                <p><strong>Pros:</strong> <span data-field="pros"></span></p>
-                <p><strong>Cons:</strong> <span data-field="cons"></span></p>
+            <div class="tab-content">
+                <!-- Overview Tab -->
+                <div class="tab-pane active" data-pane="overview">
+                    <div class="problem-solution">
+                        <div class="info-card problem-card">
+                            <h4>🤔 Problem</h4>
+                            <p data-field="problem"></p>
+                        </div>
+                        <div class="info-card solution-card">
+                            <h4>💡 Solution</h4>
+                            <p data-field="solution"></p>
+                        </div>
+                    </div>
+
+                    <div class="timeline">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <strong>Project Timeline:</strong> <span data-field="timeline"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technical Tab -->
+                <div class="tab-pane" data-pane="technical">
+                    <div class="section-title">🛠️ Technology Stack</div>
+                    <div class="tech-stack" data-tech-stack></div>
+
+                    <div style="margin-top: 1.5rem;">
+                        <div class="section-title">🏷️ Project Tags</div>
+                        <div class="tech-stack" data-tags></div>
+                    </div>
+                </div>
+
+                <!-- GitHub Tab -->
+                <div class="tab-pane" data-pane="github">
+                    <div class="repo-header">
+                        <h4 class="repo-name">📁 <span data-field="repo_name"></span></h4>
+                        <p class="repo-description" data-field="repo_description"></p>
+                    </div>
+
+                    <div class="github-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">⭐ <span data-field="repo_stars"></span></div>
+                            <div class="stat-label">Stars</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">🍴 <span data-field="repo_forks"></span></div>
+                            <div class="stat-label">Forks</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">🐛 <span data-field="repo_issues"></span></div>
+                            <div class="stat-label">Issues</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" data-field="repo_language"></div>
+                            <div class="stat-label">Primary Lang</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 1rem;">
+                        <div class="info-card"
+                            style="background: rgba(255, 255, 255, 0.05); border-left: 3px solid #4facfe;">
+                            <h4>📝 License: <span data-field="repo_license"></span></h4>
+                            <p>Last updated: <span data-field="repo_updated"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Impact Tab -->
+                <div class="tab-pane" data-pane="impact">
+                    <div class="metrics-grid" data-metrics></div>
+
+                    <div class="info-card" style="background: rgba(34, 197, 94, 0.1); border-left: 3px solid #22c55e;">
+                        <h4>🎯 Business Impact</h4>
+                        <p data-field="business_outcome"></p>
+                    </div>
+                </div>
             </div>
         </div>
     </template>
+
+    <!-- No project selected state -->
+    <div class="no-project" data-no-project>
+        <div class="no-project-icon">🚀</div>
+        <h3>Select a Project</h3>
+        <p>Click on a project tile to view detailed information, technical stack, and repository data.</p>
+    </div>
 </div>

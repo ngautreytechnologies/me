@@ -41,53 +41,84 @@ export default class BaseShadowComponent extends BaseComponent {
             console.log('Rendering data array:', dataArray);
 
             dataArray.forEach((item, index) => {
-                const clone = templateEl.content.cloneNode(true);
+                console.groupCollapsed(`[Render] Item ${index} (${item?.id || 'no-id'})`);
+                console.log('Original item data:', item);
 
-                // ✅ If the item has an id, set it on the first element of the clone
+                const clone = templateEl.content.cloneNode(true);
+                console.log('Cloned template:', clone);
+
+                // ✅ Set ID on the first element if present
                 if (item && typeof item === 'object' && item.id) {
                     const firstEl = clone.firstElementChild;
                     if (firstEl) {
                         firstEl.id = item.id;
                         firstEl.setAttribute('id', item.id);
+                        console.log(`Assigned ID "${item.id}" to first element`);
+                    } else {
+                        console.warn('First element missing, cannot set ID');
                     }
                 }
 
+                // Process each [data-field]
                 clone.querySelectorAll('[data-field]').forEach(el => {
                     const field = el.dataset.field;
                     let value = null;
 
+                    console.log(`Field "${field}"`);
                     if (item == null) {
                         value = null;
+                        console.log('Item is null, field value set to null');
                     } else if (typeof item === 'object' && field in item) {
                         value = item[field];
+                        console.log(`Field found in item:`, value);
                     } else if (typeof item !== 'object' && field === 'value') {
                         value = item;
+                        console.log(`Primitive item, using value for field:`, value);
+                    } else {
+                        console.log('Field not found in item, value remains null');
                     }
 
-                    if (typeof value === 'function') value = value(item, index, el);
+                    // If value is a function, execute it
+                    if (typeof value === 'function') {
+                        value = value(item, index, el);
+                        console.log('Field value was function, executed result:', value);
+                    }
 
+                    // Apply the value to the element
                     if (value == null || value === false) {
                         el.remove();
+                        console.log('Value null or false → element removed');
                     } else if (typeof value === 'string' || typeof value === 'number') {
                         el.textContent = value;
+                        console.log('Set textContent:', value);
                     } else if (value instanceof Node) {
                         el.innerHTML = '';
                         el.appendChild(value);
+                        console.log('Appended Node:', value);
                     } else if (Array.isArray(value)) {
                         el.innerHTML = '';
                         value.forEach(v => el.appendChild(document.createTextNode(v + ' ')));
+                        console.log('Appended array values as text nodes:', value);
                     } else if (typeof value === 'object') {
                         el.textContent = JSON.stringify(value);
+                        console.log('Set JSON stringified object as textContent:', value);
                     } else {
                         el.textContent = String(value);
+                        console.log('Fallback string conversion:', value);
                     }
 
+                    // Special handling for status
                     if (field === 'status' && typeof value === 'string') {
                         el.classList.add(value.toLowerCase());
+                        console.log(`Added status class: ${value.toLowerCase()}`);
                     }
+
+                    console.groupEnd();
                 });
 
                 container.appendChild(clone);
+                console.log('Appended cloned element to container');
+                console.groupEnd();
             });
 
             console.log('Final container content:', container?.innerHTML);
@@ -103,5 +134,4 @@ export default class BaseShadowComponent extends BaseComponent {
             console.groupEnd();
         }
     }
-
 }
