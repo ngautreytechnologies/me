@@ -10,8 +10,8 @@ import 'utils/dom.js';
 
 import './globals.js';
 
-import './components/portfoliio/project-details/project-details.js';
-import './components/portfoliio/projects-search/projects-search.js';
+import './components/portfolio/project-details/project-details.js';
+import './components/portfolio/projects-search/projects-search.js';
 
 import './components/skills/skills-grid/skills-grid.js';
 import './components/skills/skill-details/skill-details.js';
