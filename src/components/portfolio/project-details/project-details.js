@@ -2,7 +2,7 @@ import BaseShadowComponent from '../../base-shadow-component.js';
 import css from './project-details.css';
 import templateHtml from './project-details.html';
 
-const data = {
+const defaultData = {
     title: "Contoso Energy - Serverless Event-Driven Architecture",
     overview: "Enterprise-grade event-driven platform for energy telemetry",
     keyFeatures: [
@@ -16,37 +16,79 @@ const data = {
     tech_stack: ["C#", "Python", "FastAPI", "AWS Lambda", "Amazon Kinesis"],
     tags: ['AWS', 'Python', 'C#', 'Serverless', 'Event-Driven'],
     problem: "Legacy systems were unable to handle real-time energy telemetry at scale.",
-    solution: "Serverless architecture using AWS Lambda and Kinesis for event-driven processing."
+    solution: "Serverless architecture using AWS Lambda and Kinesis for event-driven processing.",
+    timeline: "Q1 2025 - Q2 2025",
+    impact: {
+        metrics: {
+            "Processing Time Reduction": "40% faster",
+            "Cost Savings": "30% lower cost"
+        },
+        business_outcome: "Improved system reliability and reduced operational costs."
+    },
+    codeSnippets: {
+        html: `<div id="telemetry-dashboard"></div>`,
+        js: `const lambdaHandler = async (event) => { console.log(event); };`,
+        python: `def process_event(event): print("Processing", event)`
+    }
 };
 
 export default class ProjectDetails extends BaseShadowComponent {
     constructor(debug = true) {
         super(templateHtml, css);
-        this.activePage = 1;
+        this.activePageIndex = 0;
+        this.pages = []; // Will store all project-detail-card elements
         this.debug = debug;
         if (this.debug) console.log('[ProjectDetails] Constructor initialized');
     }
 
     connectedCallback() {
-        this.data.set(data);
+        this.data.set(defaultData);
         super.connectedCallback();
-        this.setupNavigation();
+        this.setupEventListeners();
+        this.collectPages();
+        this.showPage(0); // Show first page by default
     }
 
-    setupNavigation() {
-        const prevBtn = this.root.querySelector('.page-prev');
-        const nextBtn = this.root.querySelector('.page-next');
+    setupEventListeners() {
+        // Listen for code tab clicks
+        this.root.addEventListener('click', (e) => {
+            const tabButton = e.target.closest('[data-tab]');
+            if (tabButton) this.switchCodeTab(tabButton.dataset.tab);
+        });
 
-        prevBtn?.addEventListener('click', () => this.showPage(this.activePage - 1));
-        nextBtn?.addEventListener('click', () => this.showPage(this.activePage + 1));
+        // Listen for project selection events
+        document.addEventListener('project-selected', (e) => {
+            if (this.debug) console.log('[ProjectDetails] project-selected', e.detail);
+            this.renderData(e.detail);
+        });
+
+        // Page navigation
+        const nextBtn = this.root.querySelector('[data-page-next]');
+        const prevBtn = this.root.querySelector('[data-page-prev]');
+        if (nextBtn) nextBtn.addEventListener('click', () => this.showPage(this.activePageIndex + 1));
+        if (prevBtn) prevBtn.addEventListener('click', () => this.showPage(this.activePageIndex - 1));
+    }
+
+    collectPages() {
+        this.pages = Array.from(this.root.querySelectorAll('.project-detail-card'));
+    }
+
+    showPage(index) {
+        if (!this.pages || this.pages.length === 0) return;
+        if (index < 0) index = 0;
+        if (index >= this.pages.length) index = this.pages.length - 1;
+        this.pages.forEach((el, i) => el.classList.toggle('active', i === index));
+        this.activePageIndex = index;
     }
 
     renderData(items) {
-        // First, let BaseShadowComponent populate [data-field] automatically
-        super.renderData(items);
+        const root = this.root;
+        if (!items) return;
 
-        // Key Features -> <ul><li>…</li></ul>
-        const keyFeaturesEl = this.root.querySelector('[data-field="keyFeatures"]');
+        super.renderData(items); // BaseShadowComponent handles data-field injection
+
+        // Key Features
+        const keyFeaturesEl = root.querySelector('[data-field="keyFeatures"]');
         if (keyFeaturesEl && items.keyFeatures?.length) {
             keyFeaturesEl.innerHTML = '';
             const ul = document.createElement('ul');
@@ -58,8 +100,8 @@ export default class ProjectDetails extends BaseShadowComponent {
             keyFeaturesEl.appendChild(ul);
         }
 
-        // Tech Stack badges
-        const techEl = this.root.querySelector('[data-field="tech_stack"]');
+        // Tech Stack
+        const techEl = root.querySelector('[data-field="tech_stack"]');
         if (techEl && items.tech_stack?.length) {
             techEl.innerHTML = '';
             items.tech_stack.forEach((t, i) => {
@@ -71,16 +113,81 @@ export default class ProjectDetails extends BaseShadowComponent {
             });
         }
 
-        // Setup pages
-        this.pages = Array.from(this.root.querySelectorAll('.project-detail-card'));
+        // Tags
+        const tagEl = root.querySelector('[data-field="tags"]');
+        if (tagEl && items.tags?.length) {
+            tagEl.innerHTML = '';
+            items.tags.forEach((t, i) => {
+                const badge = document.createElement('span');
+                badge.className = 'tag';
+                badge.textContent = t;
+                badge.style.animationDelay = `${i * 0.1}s`;
+                tagEl.appendChild(badge);
+            });
+        }
+
+        // Impact Metrics
+        const metricsEl = root.querySelector('[data-field="metrics"]');
+        if (metricsEl && items.impact?.metrics) {
+            metricsEl.innerHTML = '';
+            Object.entries(items.impact.metrics).forEach(([k, v]) => {
+                const card = document.createElement('div');
+                card.className = 'metric-card';
+                card.innerHTML = `
+                    <div class="metric-value">${v}</div>
+                    <div class="metric-title">${k}</div>
+                `;
+                metricsEl.appendChild(card);
+            });
+        }
+
+        // Code Viewer
+        if (items.codeSnippets) this.setupCodeViewer(items.codeSnippets);
+
+        // Update pages reference & show first page
+        this.collectPages();
         this.showPage(0);
     }
 
-    showPage(index) {
-        if (!this.pages || index < 0 || index >= this.pages.length) return;
+    setupCodeViewer(snippets) {
+        const codeContainer = this.root.querySelector('[data-field="codeSnippets"]');
+        if (!codeContainer) return;
 
-        this.pages.forEach((p, i) => p.classList.toggle('active', i === index));
-        this.activePage = index;
+        codeContainer.innerHTML = '';
+        const tabsNav = document.createElement('div');
+        tabsNav.className = 'code-tabs-nav';
+        const codeContent = document.createElement('div');
+        codeContent.className = 'code-tabs-content';
+
+        Object.entries(snippets).forEach(([lang, code], i) => {
+            const btn = document.createElement('button');
+            btn.textContent = lang.toUpperCase();
+            btn.className = i === 0 ? 'active' : '';
+            btn.dataset.tab = lang;
+            btn.addEventListener('click', () => this.switchCodeTab(lang));
+            tabsNav.appendChild(btn);
+
+            const pre = document.createElement('pre');
+            pre.className = `code-block ${i === 0 ? 'active' : ''}`;
+            pre.dataset.lang = lang;
+            pre.textContent = code;
+            codeContent.appendChild(pre);
+        });
+
+        codeContainer.appendChild(tabsNav);
+        codeContainer.appendChild(codeContent);
+    }
+
+    switchCodeTab(lang) {
+        const codeContainer = this.root.querySelector('[data-field="codeSnippets"]');
+        if (!codeContainer) return;
+
+        codeContainer.querySelectorAll('.code-tabs-nav button').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.tab === lang);
+        });
+        codeContainer.querySelectorAll('.code-block').forEach(block => {
+            block.classList.toggle('active', block.dataset.lang === lang);
+        });
     }
 }
 

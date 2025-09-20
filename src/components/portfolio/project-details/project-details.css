@@ -1,20 +1,55 @@
+/* ===========================
+   Project Details Container
+=========================== */
 .project-details-container {
     position: relative;
     min-height: 200px;
-    padding: 1rem;
 }
 
 .project-details {
     line-height: 1.7;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Header */
+/* ===========================
+   Each project detail card (pages)
+=========================== */
+.project-detail-card {
+    position: relative;
+    width: 100%;
+    background: var(--card-bg);
+    border: 1px solid var(--border-glass);
+    border-radius: 16px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.4s ease;
+    display: none;
+    /* initially hidden, JS will show active page */
+}
+
+.project-detail-card.active {
+    opacity: 1;
+    transform: translateX(0);
+    display: block;
+}
+
+/* Hover effect */
+.project-detail-card:hover {
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-3px);
+}
+
+/* ===========================
+   Header & Tags
+=========================== */
 .detail-header h3 {
     font-size: 1.2rem;
     font-weight: 600;
     background: var(--primary-gradient);
     -webkit-background-clip: text;
-    background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 0.5rem;
     display: flex;
@@ -39,7 +74,34 @@
     letter-spacing: 0.5px;
 }
 
-/* Body grid */
+/* ===========================
+   Page Navigation Buttons
+=========================== */
+.project-details-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.page-nav-btn {
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.page-nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+}
+
+/* ===========================
+   Body Grid (content inside page)
+=========================== */
 .project-details-body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -47,46 +109,17 @@
     margin-top: 1rem;
 }
 
-/* Project detail cards */
-.project-detail-card {
-    position: relative;
-    width: 100%;
-    background: var(--card-bg);
-    border: 1px solid var(--border-glass);
-    border-radius: 16px;
-    padding: 1rem;
-    opacity: 0;
-    transform: translateX(20px);
-    transition: all 0.4s ease;
-    display: none;
-}
-
-.project-detail-card.active {
-    display: block;
-    opacity: 1;
-    transform: translateX(0);
-}
-
-/* Paragraphs */
 .project-detail-card p {
     margin: 0.5rem 0;
     color: var(--text-secondary);
     font-size: 0.95rem;
 }
 
-/* Lists */
+/* Lists, metrics, tech badges (existing styles) */
 .project-detail-card ul {
     margin: 0.5rem 0 1rem 1.5rem;
     list-style: none;
     padding-left: 0;
-}
-
-.project-detail-card li {
-    margin-bottom: 0.5rem;
-    position: relative;
-    padding-left: 1.2rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
 }
 
 .project-detail-card li::before {
@@ -97,29 +130,28 @@
     font-weight: bold;
 }
 
-/* Navigation buttons */
-.project-page-nav {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 1rem;
+.metric-card {
+    /* existing metric styles */
 }
 
-.project-page-nav button {
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    border: 1px solid var(--border-glass);
-    background: var(--card-bg);
-    cursor: pointer;
-    font-weight: 600;
+.tech-badge {
+    /* existing badge styles */
 }
 
-.project-page-nav button:hover {
-    box-shadow: var(--shadow-glow);
-}
-
-/* Responsive */
+/* ===========================
+   Responsive
+=========================== */
 @media (max-width: 768px) {
     .project-details-body {
         grid-template-columns: 1fr;
+    }
+
+    .project-details-nav {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .page-nav-btn {
+        width: 100%;
     }
 }

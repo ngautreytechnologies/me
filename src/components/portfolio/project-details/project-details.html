@@ -5,55 +5,71 @@
             <div class="detail-header">
                 <h3 data-field="title">Project Title</h3>
                 <div class="project-details-tags" data-field="tags">
-                    <!-- Tags dynamically injected -->
+                    <!-- tags injected here -->
                 </div>
             </div>
 
             <!-- Body Grid -->
             <div class="project-details-body">
                 <!-- Overview -->
-                <div class="project-detail-card" data-page="overview">
+                <div class="project-detail-card">
                     <h4><i class="fas fa-info-circle"></i> Overview</h4>
                     <p data-field="overview">Project overview text</p>
                 </div>
 
                 <!-- Problem -->
-                <div class="project-detail-card" data-page="problem">
+                <div class="project-detail-card">
                     <h4><i class="fas fa-exclamation-triangle"></i> Problem</h4>
                     <p data-field="problem">Problem description</p>
                 </div>
 
                 <!-- Solution -->
-                <div class="project-detail-card" data-page="solution">
+                <div class="project-detail-card">
                     <h4><i class="fas fa-lightbulb"></i> Solution</h4>
                     <p data-field="solution">Solution description</p>
                 </div>
 
                 <!-- Key Features -->
-                <div class="project-detail-card" data-page="keyFeatures">
+                <div class="project-detail-card">
                     <h4><i class="fas fa-list"></i> Key Features</h4>
-                    <div data-field="keyFeatures">
-                        <!-- Injected as <ul><li>…</li></ul> -->
-                    </div>
+                    <div data-field="keyFeatures"></div>
                 </div>
 
                 <!-- Pros -->
-                <div class="project-detail-card" data-page="pros">
+                <div class="project-detail-card">
                     <h4><i class="fas fa-thumbs-up"></i> Pros</h4>
                     <p data-field="pros"></p>
                 </div>
 
                 <!-- Cons -->
-                <div class="project-detail-card" data-page="cons">
+                <div class="project-detail-card">
                     <h4><i class="fas fa-thumbs-down"></i> Cons</h4>
                     <p data-field="cons"></p>
                 </div>
+
+                <!-- Impact Metrics -->
+                <div class="project-detail-card">
+                    <h4><i class="fas fa-chart-line"></i> Impact Metrics</h4>
+                    <div data-field="metrics"></div>
+                </div>
+
+                <!-- Tech Stack -->
+                <div class="project-detail-card">
+                    <h4><i class="fas fa-tools"></i> Tech Stack</h4>
+                    <div data-field="tech_stack"></div>
+                </div>
+
+                <!-- Code Viewer -->
+                <div class="project-detail-card">
+                    <h4><i class="fas fa-code"></i> Code Snippets</h4>
+                    <div data-field="codeSnippets"></div>
+                </div>
             </div>
 
-            <!-- Navigation Buttons -->
-            <div class="project-page-nav">
-                <button class="page-prev">&larr; Previous</button>
-                <button class="page-next">Next &rarr;</button>
+            <!-- Page Navigation -->
+            <div class="project-details-nav">
+                <button class="page-nav-btn" data-page-prev>&larr; Previous</button>
+                <button class="page-nav-btn" data-page-next>Next &rarr;</button>
             </div>
         </div>
     </template>
