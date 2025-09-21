@@ -21,27 +21,23 @@ class SkillsGrid extends BaseShadowComponent {
     }
 
     connectedCallback() {
-        this.data.set(data);
         super.connectedCallback();
+        super.triggerRender(data);
 
-        // ------------------------------
-        // Register click handlers on tiles
-        // ------------------------------
-        const tiles = this.root.querySelectorAll('.skill-badge');
-        console.log('Found tiles:', tiles);
+        // Wait until render has run
+        Promise.resolve().then(() => {
+            const tiles = this.root.querySelectorAll('.skill-badge');
+            console.log('Found tiles after render:', tiles);
 
-        tiles.forEach(tile => {
-            tile.addEventListener('click', () => {
-                console.log('Tile clicked', tile);
+            tiles.forEach(tile => {
+                console.log('Tile click handler registrered', tile);
 
-                const skillId = tile.getAttribute('id');
-                const skill = data.find(s => s.id === skillId);
-                console.log('Found skill data:', skillId, skill);
-
-                if (skill) {
+                tile.addEventListener('click', () => {
+                    const skillId = tile.getAttribute('id');
+                    const skill = data.find(s => s.id === skillId);
                     console.log('Tile clicked, setting selected skill:', skillId);
                     setSelectedSkill(skill);
-                }
+                });
             });
         });
     }

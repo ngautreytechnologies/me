@@ -46,6 +46,7 @@ export default class BaseComponent extends HTMLElement {
         this._trackDisposable(this.data.subscribe(val => {
             this._log('Reactive data updated', val);
         }));
+
         this._trackDisposable(this.events.subscribe(events => {
             this._log('Events updated', events);
             for (const key in events) {
@@ -55,12 +56,7 @@ export default class BaseComponent extends HTMLElement {
                 }
             }
         }));
-
-        this.addEventListener('render-data', () => {
-            this._log('render-data event received, triggering render');
-            this.triggerRender();
-        });
-
+        
         const container = this.root.querySelector('[data-container]');
         if (container && container.childNodes.length === 0 && this.templateHtml) {
             this._log('Injecting template on connectedCallback');
@@ -112,6 +108,7 @@ export default class BaseComponent extends HTMLElement {
                 this.data.set(result);
                 this._triggerInternalRender();
             }
+
             return;
         }
 

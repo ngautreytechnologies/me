@@ -1,3 +1,4 @@
+import { subscribeSelectedTechnologyTag } from '../../../utils/signal-store.js';
 import BaseShadowComponent from '../../base-shadow-component.js';
 import css from './project-details.css';
 import templateHtml from './project-details.html';
@@ -43,18 +44,30 @@ class ProjectDetails extends BaseShadowComponent {
     connectedCallback() {
         this.data.set(data);
         super.connectedCallback();
-        this.setupEventListeners();
-        // Show first project immediately
-        this.renderData(data);
+
+        // Subscribe to selected skill
+        subscribeSelectedTechnologyTag(selectedTag => {
+            if (!selectedTag) {
+                console.log('[SkillDetails] No skill selected');
+                this.renderData([]); // clear
+                return;
+            }
+            console.log('[SkillDetails] Selected skill:', selectedTag);
+
+            const tag = data.find(s => s.id.toLowerCase() === selectedTag.id.toLowerCase());
+            if (!tag) {
+                console.warn('[SkillDetails] Skill not found:', selectedTag.id);
+                this.renderData([]); // clear
+                return;
+            }
+            console.log('[SkillDetails] Rendering skill details for:', tag);
+
+            this.renderData([tag]);
+        });
+
         this.togglePlaceholder(false);
     }
 
-    setupEventListeners() {
-        document.addEventListener('project-selected', (e) => {
-            if (this.debug) console.log('[ProjectDetails] project-selected event', e.detail);
-            this.renderData(e.detail);
-        });
-    }
 
     renderData(items) {
         if (!items) return;

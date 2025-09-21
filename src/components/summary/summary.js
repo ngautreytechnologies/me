@@ -9,6 +9,7 @@ class Summary extends BaseLightComponent {
 
     connectedCallback() {
         super.connectedCallback();
+        // This component is purely static html
     }
 }
 

@@ -8,3 +8,6 @@ export const [getToast, setToast, subscribeToast] = createSignal(null);
 
 // Selected skill signal
 export const [getSelectedSkill, setSelectedSkill, subscribeSelectedSkill] = createSignal(null);
+
+// Technology tags
+export const [getSelectedTechnologyTag, setSelectedTechnologyTag, subscribeSelectedTechnologyTag] = createSignal(null);
