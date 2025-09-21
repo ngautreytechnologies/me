@@ -1,15 +1,15 @@
-/* Projects grid */
-.projects-grid,
-.project-details-grid {
+/* technologies grid */
+.technologies-grid,
+.technology-details-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 1rem;
     margin-top: 1.5rem;
 }
 
-/* Project badge (matches skill badges) */
-.project-tag,
-.project-details-card {
+/* technology badge (matches skill badges) */
+.technology-tag,
+.technology-details-card {
     background: var(--glass-bg);
     border: 1px solid var(--border-glass);
     border-radius: 12px;
@@ -31,8 +31,8 @@
 }
 
 /* Gradient hover effect */
-.project-tag::before,
-.project-details-card::before {
+.technology-tag::before,
+.technology-details-card::before {
     content: '';
     position: absolute;
     top: 0;
@@ -44,37 +44,37 @@
     z-index: -1;
 }
 
-.project-tag:hover::before,
-.project-details-card:hover::before {
+.technology-tag:hover::before,
+.technology-details-card:hover::before {
     left: 0;
 }
 
-.project-tag:hover,
-.project-details-card:hover {
+.technology-tag:hover,
+.technology-details-card:hover {
     transform: translateY(-3px);
     color: white;
     box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
 }
 
-/* Project detail titles and content */
-.project-details-title {
+/* technology detail titles and content */
+.technology-details-title {
     font-size: 1rem;
     font-weight: 600;
     margin-bottom: 0.3rem;
 }
 
-.project-details-summary {
+.technology-details-summary {
     font-size: 0.75rem;
     color: var(--text-secondary);
 }
 
 /* Detail container and tags */
-.project-details-details-container {
+.technology-details-details-container {
     position: relative;
     min-height: 200px;
 }
 
-.project-details-detail {
+.technology-details-detail {
     position: relative;
     width: 100%;
     opacity: 0;
@@ -84,20 +84,20 @@
     display: none;
 }
 
-.project-details-detail.active {
+.technology-details-detail.active {
     opacity: 1;
     transform: translateX(0);
     pointer-events: auto;
     display: block;
 }
 
-.project-details-tags {
+.technology-details-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
 }
 
-.project-details-tags .tag {
+.technology-details-tags .tag {
     background: var(--primary-gradient);
     color: white;
     padding: 0.3rem 0.8rem;
@@ -109,29 +109,29 @@
 }
 
 /* Detail content */
-.project-details-details {
+.technology-details-details {
     line-height: 1.7;
 }
 
-.project-details-details p {
+.technology-details-details p {
     margin-bottom: 1rem;
 }
 
-.project-details-details strong {
+.technology-details-details strong {
     color: var(--text-primary);
     font-weight: 600;
 }
 
-.project-details-details ul {
+.technology-details-details ul {
     margin: 0.5rem 0 1rem 1.5rem;
 }
 
-.project-details-details li {
+.technology-details-details li {
     margin-bottom: 0.5rem;
     position: relative;
 }
 
-.project-details-details li::before {
+.technology-details-details li::before {
     content: '▸';
     position: absolute;
     left: -1.2rem;
@@ -153,13 +153,67 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
 
-    .projects-grid,
-    .project-details-grid {
+    .technologies-grid,
+    .technology-details-grid {
         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     }
 
-    .project-tag,
-    .project-details-card {
+    .technology-tag,
+    .technology-details-card {
         height: 90px;
     }
+}
+
+.technologies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.technology-tile {
+    background: var(--card-bg);
+    border: 1px solid var(--border-glass);
+    border-radius: 16px;
+    padding: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.technology-tile:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-glow);
+}
+
+.technology-name {
+    font-weight: 600;
+    font-size: 1.1rem;  
+    background: var(--primary-gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+}
+
+.technology-summary {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+/* Breadcrumb */
+.technologies-breadcrumb {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.breadcrumb-link {
+    cursor: pointer;
+    color: var(--text-accent);
+    transition: color 0.2s ease;
+}
+
+.breadcrumb-link:hover {
+    color: #fff;
 }

@@ -10,92 +10,130 @@ export default class BaseComponent extends HTMLElement {
     constructor(template = '', componentCss = '', dataAttrs = null, useShadow = true) {
         super();
 
-        // Shadow or Light DOM
+        this._log('Constructor start', { template, componentCss, dataAttrs, useShadow });
+
         this.useShadow = useShadow;
         this.root = this.useShadow ? this.attachShadow({ mode: 'open' }) : this;
 
-        // Observed attributes
         this.dataAttrs = Array.isArray(dataAttrs) ? dataAttrs : [dataAttrs].filter(Boolean);
         BaseComponent._observedAttrs = [...new Set([...BaseComponent._observedAttrs, ...this.dataAttrs])];
 
-        // Logging
-        this._log('Constructor start', { template, componentCss, dataAttrs, useShadow });
-
-        // Apply styles, fonts, template
         this._applyStyles(componentCss);
         this._applyFonts();
         this._injectTemplate(template);
 
-        // Reactive state
         this.data = new ReactiveValue([]);
         this.events = new ReactiveValue({});
         this._disposables = new Set();
+
+        this.templateHtml = template;
+
+        this._log('Constructor complete', { observedAttrs: BaseComponent._observedAttrs });
     }
 
-    // -----------------------
-    // Lifecycle
-    // -----------------------
     static get observedAttributes() { return this._observedAttrs; }
 
     connectedCallback() {
-        // Prevent multiple initializations
-        if (this._initialized) return;
+        this._log('connectedCallback start');
+
+        if (this._initialized) {
+            this._log('Already initialized, skipping connectedCallback');
+            return;
+        }
         this._initialized = true;
 
-        // Subscribe to reactive state
-        this._trackDisposable(
-            this.data.subscribe(value => this.renderData(value))
-        );
-        this._trackDisposable(
-            this.events.subscribe(events => {
-                for (const key in events) {
-                    if (typeof this[key] === 'function') this[key](events[key]);
+        this._log('Setting up subscriptions');
+        this._trackDisposable(this.data.subscribe(val => {
+            this._log('Reactive data updated', val);
+        }));
+        this._trackDisposable(this.events.subscribe(events => {
+            this._log('Events updated', events);
+            for (const key in events) {
+                if (typeof this[key] === 'function') {
+                    this._log(`Calling event handler ${key}`, events[key]);
+                    this[key](events[key]);
                 }
-            })
-        );
+            }
+        }));
 
-        // Load initial data
-        this.dataAttrs.forEach(attr => this.loadData(attr));
+        this.addEventListener('render-data', () => {
+            this._log('render-data event received, triggering render');
+            this.triggerRender();
+        });
 
-        // Inject template only if container exists and is empty
         const container = this.root.querySelector('[data-container]');
         if (container && container.childNodes.length === 0 && this.templateHtml) {
+            this._log('Injecting template on connectedCallback');
             this._injectTemplate(this.templateHtml);
         }
 
-        // Call hook
-        if (typeof this.onConnect === 'function') this.onConnect();
+        if (typeof this.onConnect === 'function') {
+            this._log('Calling onConnect hook');
+            this.onConnect();
+        }
+
+        this._log('connectedCallback complete');
     }
 
     disconnectedCallback() {
+        this._log('disconnectedCallback called, disposing all');
         this._disposeAll();
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        if (this.dataAttrs.includes(name) && oldValue !== newValue) this.loadData(name);
+        this._log(`attributeChangedCallback: ${name}`, { oldValue, newValue });
+        if (this.dataAttrs.includes(name) && oldValue !== newValue) {
+            this._log(`Attribute ${name} changed, loading data`);
+            this.loadData(name);
+        }
     }
 
     // -----------------------
     // Data + Rendering
     // -----------------------
-    loadData(attr = this.dataAttrs[0]) {
-        // Can be overridden in subclasses
-        const attrValue = this.getAttribute(attr);
-        if (!attrValue) return;
+    triggerRender(itemsOrLoader = null) {
+        this._log('triggerRender start', itemsOrLoader);
 
-        if (attrValue.startsWith('http')) {
-            fetch(attrValue)
-                .then(res => res.json())
-                .then(data => this.data.set(data))
-                .catch(err => console.error(err));
-        } else {
-            try {
-                const parsed = JSON.parse(attrValue);
-                this.data.set(parsed);
-            } catch (err) {
-                console.error('Invalid JSON', err);
+        if (typeof itemsOrLoader === 'function') {
+            const loaderFn = itemsOrLoader;
+            const result = loaderFn();
+            this._log('Loader function called', result);
+
+            if (result instanceof Promise) {
+                result
+                    .then(data => {
+                        this._log('Loader Promise resolved', data);
+                        this.data.set(data);
+                        this._triggerInternalRender();
+                    })
+                    .catch(err => console.error('Loader function failed', err));
+            } else {
+                this._log('Loader function returned data synchronously', result);
+                this.data.set(result);
+                this._triggerInternalRender();
             }
+            return;
         }
+
+        if (itemsOrLoader !== null) {
+            this._log('Setting data from triggerRender param', itemsOrLoader);
+            this.data.set(itemsOrLoader);
+        }
+
+        this._triggerInternalRender();
+    }
+
+    _triggerInternalRender() {
+        Promise.resolve().then(() => {
+            const items = this.data.get();
+            this._log('Internal render triggered', items);
+
+            if (typeof this.renderData === 'function') {
+                this.renderData(items);
+            } else {
+                console.warn(`[${this.constructor.name}] renderData not implemented`, items);
+            }
+        });
     }
 
     renderData(items) {
@@ -105,102 +143,110 @@ export default class BaseComponent extends HTMLElement {
     // -----------------------
     // Helpers
     // -----------------------
-    _log(...args) { if (this.constructor.debug) console.log(`[${this.constructor.name}]`, ...args); }
+    _log(...args) {
+        if (this.constructor.debug) console.log(`[${this.constructor.name}]`, ...args);
+    }
 
     _applyStyles(componentCss) {
+        this._log('_applyStyles start', componentCss);
         const sheets = [...GLOBAL_SHEETS];
-
         if (componentCss && typeof CSSStyleSheet !== 'undefined') {
             try {
                 const sheet = this.constructor.getComponentSheet(componentCss);
                 sheets.push(sheet);
+                this._log('CSSStyleSheet created and added', sheet);
             } catch (err) {
                 this._log('❌ Failed to create component CSSStyleSheet', err);
             }
         }
 
         if (this.useShadow && 'adoptedStyleSheets' in this.root) {
-            // Shadow DOM: use adoptedStyleSheets
             this.root.adoptedStyleSheets = sheets;
-        } else {
-            // Light DOM: inject <style> into <head> for global effect
-            if (componentCss) {
-                this._log('⚠️ Injecting light DOM styles into <head>');
-                const styleId = `component-style-${this.constructor.name}`;
-                if (!document.getElementById(styleId)) {
-                    const style = document.createElement('style');
-                    style.id = styleId;
-                    style.textContent = componentCss;
-                    document.head.appendChild(style);
-                }
+            this._log('Applied styles to shadowRoot adoptedStyleSheets', sheets);
+        } else if (componentCss) {
+            this._log('⚠️ Injecting light DOM styles into <head>');
+            const styleId = `component-style-${this.constructor.name}`;
+            if (!document.getElementById(styleId)) {
+                const style = document.createElement('style');
+                style.id = styleId;
+                style.textContent = componentCss;
+                document.head.appendChild(style);
+                this._log('Injected style element into <head>', style);
             }
             ensureGlobalStyleInjected();
         }
+
+        this._log('_applyStyles complete');
     }
 
     _applyFonts() {
+        this._log('_applyFonts start');
+        if (!this.useShadow) return;
+
         const fonts = [
             'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap',
             'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
         ];
-
-        if (!this.useShadow) return;
 
         fonts.forEach(href => {
             const link = document.createElement('link');
             link.rel = 'stylesheet';
             link.href = href;
             this.root.appendChild(link);
+            this._log('Font link appended', href);
         });
+
+        this._log('_applyFonts complete');
     }
 
     _injectTemplate(template, containerSelector = null) {
+        this._log('_injectTemplate start', containerSelector);
         if (!template) return;
 
         const temp = document.createElement('template');
         temp.innerHTML = template.trim();
 
-        const target = containerSelector
-            ? this.root.querySelector(containerSelector)
-            : this.root;
+        const target = containerSelector ? this.root.querySelector(containerSelector) : this.root;
+        this._log('Target for template injection', target);
 
-        // Clear previous content
-        this._log(`[${this.constructor.name}] Clearing target for template injection`, target);
         removeElements(target, 'template');
+        this._log('Previous templates removed from target');
 
-        // If the template string already has a <template> tag, preserve it
         if (temp.content.querySelector('template')) {
-            this._log(`[${this.constructor.name}] Preserving <template> element`);
-            Array.from(temp.content.childNodes).forEach(node => {
-                target.appendChild(node.cloneNode(true));
-            });
+            this._log('Preserving <template> element');
+            Array.from(temp.content.childNodes).forEach(node => target.appendChild(node.cloneNode(true)));
         } else {
-            this._log(`[${this.constructor.name}] Injecting as raw HTML`);
+            this._log('Injecting raw HTML template');
             target.appendChild(temp.content.cloneNode(true));
         }
 
-        // Hook for subclasses
         if (typeof this.onTemplateInjected === 'function') {
+            this._log('Calling onTemplateInjected hook');
             this.onTemplateInjected(target);
         }
+
+        this._log('_injectTemplate complete');
     }
 
-    // -----------------------
-    // Disposables / events
-    // -----------------------
     _disposeAll() {
+        this._log('_disposeAll start', this._disposables);
         for (const unsub of this._disposables) if (typeof unsub === 'function') unsub();
         this._disposables.clear();
+        this._log('_disposeAll complete');
     }
 
     _trackDisposable(disposable) {
-        if (disposable) this._disposables.add(disposable);
+        if (disposable) {
+            this._log('_trackDisposable', disposable);
+            this._disposables.add(disposable);
+        }
         return disposable;
     }
 
     trigger(key, payload) {
         const events = { ...this.events.get() };
         events[key] = payload;
+        this._log('trigger event', key, payload);
         this.events.set(events);
     }
 
@@ -208,14 +254,12 @@ export default class BaseComponent extends HTMLElement {
         this._trackDisposable(disposable);
     }
 
-    // -----------------------
-    // CSS helper
-    // -----------------------
     static getComponentSheet(cssText) {
         if (!this._componentSheets.has(cssText)) {
             const sheet = new CSSStyleSheet();
             sheet.replaceSync(cssText);
             this._componentSheets.set(cssText, sheet);
+            if (this.debug) console.log(`[${this.name}] CSSStyleSheet created for text`, cssText);
         }
         return this._componentSheets.get(cssText);
     }

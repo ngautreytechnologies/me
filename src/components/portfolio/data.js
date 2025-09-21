@@ -1,321 +1,367 @@
 // config.js
-export const tags = {
-    tags: [
-        {
-            name: "Artificial Intelligence",
-            summary: "AI systems that learn, adapt, and create value across domains.",
-            children: [
-                {
-                    name: "Generative AI",
-                    children: [
-                        {
-                            name: "Large Language Models",
-                            children: [
-                                { name: "Fine-Tuning & PEFT" },
-                                { name: "Prompt Engineering" },
-                                { name: "Evaluation Harnesses" }
-                            ]
-                        },
-                        {
-                            name: "Retrieval-Augmented Generation (RAG)",
-                            children: [
-                                { name: "Vector DB Integration" },
-                                { name: "Embedding Models" },
-                                { name: "Caching Strategies" }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    name: "AI Agents",
-                    children: [
-                        {
-                            name: "Planning & Reasoning",
-                            children: [
-                                { name: "Task Decomposition" },
-                                { name: "Tool Selection" }
-                            ]
-                        },
-                        {
-                            name: "Memory",
-                            children: [
-                                { name: "Short-term Memory" },
-                                { name: "Long-term Memory" }
-                            ]
-                        },
-                        {
-                            name: "Company Copilot",
-                            summary: "Enterprise copilots embedded into workflows.",
-                            children: [
-                                {
-                                    name: "Workflow Automation",
-                                    children: [
-                                        {
-                                            name: "IT Ops Copilot",
-                                            children: [
-                                                { name: "Incident Summaries" },
-                                                { name: "Root Cause Analysis" }
-                                            ]
-                                        },
-                                        {
-                                            name: "DevOps Copilot",
-                                            children: [
-                                                { name: "IaC Assist" },
-                                                { name: "Release Notes Generation" }
-                                            ]
-                                        },
-                                        {
-                                            name: "Business Copilot",
-                                            children: [
-                                                { name: "Sales Playbook Guidance" },
-                                                { name: "Customer Insights" }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            name: "AWS",
-            children: [
-                {
-                    name: "Databases",
-                    children: [
-                        {
-                            name: "Relational (RDS)",
-                            children: [
-                                { name: "Aurora" },
-                                { name: "PostgreSQL on RDS" }
-                            ]
-                        },
-                        {
-                            name: "NoSQL (DynamoDB)",
-                            children: [
-                                { name: "Streams" },
-                                { name: "Global Tables" }
-                            ]
-                        },
-                        {
-                            name: "Graph (Neptune)",
-                            children: [
-                                { name: "RDF/SPARQL" },
-                                { name: "Property Graphs" }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            name: "Solution Architecture",
-            summary: "Designing scalable, secure, resilient systems.",
-            children: [
-                {
-                    name: "Cloud-Native Patterns",
-                    children: [
-                        {
-                            name: "Microservices",
-                            children: [
-                                { name: "API Gateway Pattern" },
-                                { name: "Service Mesh" }
-                            ]
-                        },
-                        {
-                            name: "Event-Driven",
-                            children: [
-                                { name: "Pub/Sub" },
-                                { name: "CQRS" }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    name: "Integration",
-                    children: [
-                        {
-                            name: "Messaging",
-                            children: [
-                                { name: "Kafka" },
-                                { name: "SQS/SNS" }
-                            ]
-                        },
-                        {
-                            name: "API Management",
-                            children: [
-                                { name: "REST APIs" },
-                                { name: "GraphQL" }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    name: "Resilience & Scalability",
-                    children: [
-                        {
-                            name: "Resilience",
-                            children: [
-                                { name: "Circuit Breaker" },
-                                { name: "Bulkhead" }
-                            ]
-                        },
-                        {
-                            name: "Scalability",
-                            children: [
-                                { name: "Auto-scaling" },
-                                { name: "Sharding" }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    name: "Observability",
-                    children: [
-                        {
-                            name: "Metrics",
-                            children: [
-                                { name: "Prometheus" },
-                                { name: "CloudWatch" }
-                            ]
-                        },
-                        {
-                            name: "Tracing",
-                            children: [
-                                { name: "OpenTelemetry" },
-                                { name: "X-Ray" }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    name: "Governance & Security",
-                    children: [
-                        {
-                            name: "IAM",
-                            children: [
-                                { name: "RBAC" },
-                                { name: "ABAC" }
-                            ]
-                        },
-                        {
-                            name: "Compliance",
-                            children: [
-                                { name: "GDPR" },
-                                { name: "SOC2" }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            name: "Programming Languages",
-            children: [
-                {
-                    name: "Python",
-                    children: [
-                        {
-                            name: "Data",
-                            children: [
-                                { name: "Pandas / NumPy" },
-                                { name: "PySpark" }
-                            ]
-                        },
-                        {
-                            name: "AI",
-                            children: [
-                                { name: "TensorFlow" },
-                                { name: "PyTorch" }
-                            ]
-                        },
-                        {
-                            name: "Web/Backend",
-                            children: [
-                                { name: "Django" },
-                                { name: "FastAPI" }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    name: "C#",
-                    children: [
-                        {
-                            name: ".NET Core",
-                            children: [
-                                { name: "ASP.NET Core" },
-                                { name: "Minimal APIs" }
-                            ]
-                        },
-                        {
-                            name: "Data Access",
-                            children: [
-                                { name: "Entity Framework" },
-                                { name: "LINQ" }
-                            ]
-                        },
-                        {
-                            name: "Cloud Integration",
-                            children: [
-                                { name: "AWS SDK for .NET" },
-                                { name: "Azure SDK for .NET" }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    name: "JavaScript/TypeScript",
-                    children: [
-                        {
-                            name: "Frontend",
-                            children: [
-                                { name: "React" },
-                                { name: "Next.js" }
-                            ]
-                        },
-                        {
-                            name: "Backend",
-                            children: [
-                                { name: "Node.js" },
-                                { name: "Express" }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    name: "SQL & NoSQL",
-                    children: [
-                        {
-                            name: "Relational",
-                            children: [
-                                { name: "PostgreSQL" },
-                                { name: "MySQL" }
-                            ]
-                        },
-                        {
-                            name: "NoSQL",
-                            children: [
-                                { name: "MongoDB" },
-                                { name: "Cassandra" }
-                            ]
-                        },
-                        {
-                            name: "Graph",
-                            children: [
-                                { name: "Neo4j" },
-                                { name: "Gremlin" }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
-};
-
+export const tags = [
+    {
+        id: "tag-1",
+        name: "Artificial Intelligence",
+        summary: "AI systems that learn, adapt, and create value across domains.",
+        children: [
+            {
+                id: "tag-2",
+                name: "Generative AI",
+                children: [
+                    {
+                        id: "tag-3",
+                        name: "Large Language Models",
+                        children: [
+                            { id: "tag-4", name: "Fine-Tuning & PEFT" },
+                            { id: "tag-5", name: "Prompt Engineering" },
+                            { id: "tag-6", name: "Evaluation Harnesses" }
+                        ]
+                    },
+                    {
+                        id: "tag-7",
+                        name: "Retrieval-Augmented Generation (RAG)",
+                        children: [
+                            { id: "tag-8", name: "Vector DB Integration" },
+                            { id: "tag-9", name: "Embedding Models" },
+                            { id: "tag-10", name: "Caching Strategies" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "tag-11",
+                name: "AI Agents",
+                children: [
+                    {
+                        id: "tag-12",
+                        name: "Planning & Reasoning",
+                        children: [
+                            { id: "tag-13", name: "Task Decomposition" },
+                            { id: "tag-14", name: "Tool Selection" }
+                        ]
+                    },
+                    {
+                        id: "tag-15",
+                        name: "Memory",
+                        children: [
+                            { id: "tag-16", name: "Short-term Memory" },
+                            { id: "tag-17", name: "Long-term Memory" }
+                        ]
+                    },
+                    {
+                        id: "tag-18",
+                        name: "Company Copilot",
+                        summary: "Enterprise copilots embedded into workflows.",
+                        children: [
+                            {
+                                id: "tag-19",
+                                name: "Workflow Automation",
+                                children: [
+                                    {
+                                        id: "tag-20",
+                                        name: "IT Ops Copilot",
+                                        children: [
+                                            { id: "tag-21", name: "Incident Summaries" },
+                                            { id: "tag-22", name: "Root Cause Analysis" }
+                                        ]
+                                    },
+                                    {
+                                        id: "tag-23",
+                                        name: "DevOps Copilot",
+                                        children: [
+                                            { id: "tag-24", name: "IaC Assist" },
+                                            { id: "tag-25", name: "Release Notes Generation" }
+                                        ]
+                                    },
+                                    {
+                                        id: "tag-26",
+                                        name: "Business Copilot",
+                                        children: [
+                                            { id: "tag-27", name: "Sales Playbook Guidance" },
+                                            { id: "tag-28", name: "Customer Insights" }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        id: "tag-29",
+        name: "AWS",
+        children: [
+            {
+                id: "tag-30",
+                name: "Databases",
+                children: [
+                    {
+                        id: "tag-31",
+                        name: "Relational (RDS)",
+                        children: [
+                            { id: "tag-32", name: "Aurora" },
+                            { id: "tag-33", name: "PostgreSQL on RDS" }
+                        ]
+                    },
+                    {
+                        id: "tag-34",
+                        name: "NoSQL (DynamoDB)",
+                        children: [
+                            { id: "tag-35", name: "Streams" },
+                            { id: "tag-36", name: "Global Tables" }
+                        ]
+                    },
+                    {
+                        id: "tag-37",
+                        name: "Graph (Neptune)",
+                        children: [
+                            { id: "tag-38", name: "RDF/SPARQL" },
+                            { id: "tag-39", name: "Property Graphs" }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        id: "tag-40",
+        name: "Solution Architecture",
+        summary: "Designing scalable, secure, resilient systems.",
+        children: [
+            {
+                id: "tag-41",
+                name: "Cloud-Native Patterns",
+                children: [
+                    {
+                        id: "tag-42",
+                        name: "Microservices",
+                        children: [
+                            { id: "tag-43", name: "API Gateway Pattern" },
+                            { id: "tag-44", name: "Service Mesh" }
+                        ]
+                    },
+                    {
+                        id: "tag-45",
+                        name: "Event-Driven",
+                        children: [
+                            { id: "tag-46", name: "Pub/Sub" },
+                            { id: "tag-47", name: "CQRS" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "tag-48",
+                name: "Integration",
+                children: [
+                    {
+                        id: "tag-49",
+                        name: "Messaging",
+                        children: [
+                            { id: "tag-50", name: "Kafka" },
+                            { id: "tag-51", name: "SQS/SNS" }
+                        ]
+                    },
+                    {
+                        id: "tag-52",
+                        name: "API Management",
+                        children: [
+                            { id: "tag-53", name: "REST APIs" },
+                            { id: "tag-54", name: "GraphQL" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "tag-55",
+                name: "Resilience & Scalability",
+                children: [
+                    {
+                        id: "tag-56",
+                        name: "Resilience",
+                        children: [
+                            { id: "tag-57", name: "Circuit Breaker" },
+                            { id: "tag-58", name: "Bulkhead" }
+                        ]
+                    },
+                    {
+                        id: "tag-59",
+                        name: "Scalability",
+                        children: [
+                            { id: "tag-60", name: "Auto-scaling" },
+                            { id: "tag-61", name: "Sharding" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "tag-62",
+                name: "Observability",
+                children: [
+                    {
+                        id: "tag-63",
+                        name: "Metrics",
+                        children: [
+                            { id: "tag-64", name: "Prometheus" },
+                            { id: "tag-65", name: "CloudWatch" }
+                        ]
+                    },
+                    {
+                        id: "tag-66",
+                        name: "Tracing",
+                        children: [
+                            { id: "tag-67", name: "OpenTelemetry" },
+                            { id: "tag-68", name: "X-Ray" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "tag-69",
+                name: "Governance & Security",
+                children: [
+                    {
+                        id: "tag-70",
+                        name: "IAM",
+                        children: [
+                            { id: "tag-71", name: "RBAC" },
+                            { id: "tag-72", name: "ABAC" }
+                        ]
+                    },
+                    {
+                        id: "tag-73",
+                        name: "Compliance",
+                        children: [
+                            { id: "tag-74", name: "GDPR" },
+                            { id: "tag-75", name: "SOC2" }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        id: "tag-76",
+        name: "Programming Languages",
+        children: [
+            {
+                id: "tag-77",
+                name: "Python",
+                children: [
+                    {
+                        id: "tag-78",
+                        name: "Data",
+                        children: [
+                            { id: "tag-79", name: "Pandas / NumPy" },
+                            { id: "tag-80", name: "PySpark" }
+                        ]
+                    },
+                    {
+                        id: "tag-81",
+                        name: "AI",
+                        children: [
+                            { id: "tag-82", name: "TensorFlow" },
+                            { id: "tag-83", name: "PyTorch" }
+                        ]
+                    },
+                    {
+                        id: "tag-84",
+                        name: "Web/Backend",
+                        children: [
+                            { id: "tag-85", name: "Django" },
+                            { id: "tag-86", name: "FastAPI" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "tag-87",
+                name: "C#",
+                children: [
+                    {
+                        id: "tag-88",
+                        name: ".NET Core",
+                        children: [
+                            { id: "tag-89", name: "ASP.NET Core" },
+                            { id: "tag-90", name: "Minimal APIs" }
+                        ]
+                    },
+                    {
+                        id: "tag-91",
+                        name: "Data Access",
+                        children: [
+                            { id: "tag-92", name: "Entity Framework" },
+                            { id: "tag-93", name: "LINQ" }
+                        ]
+                    },
+                    {
+                        id: "tag-94",
+                        name: "Cloud Integration",
+                        children: [
+                            { id: "tag-95", name: "AWS SDK for .NET" },
+                            { id: "tag-96", name: "Azure SDK for .NET" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "tag-97",
+                name: "JavaScript/TypeScript",
+                children: [
+                    {
+                        id: "tag-98",
+                        name: "Frontend",
+                        children: [
+                            { id: "tag-99", name: "React" },
+                            { id: "tag-100", name: "Next.js" }
+                        ]
+                    },
+                    {
+                        id: "tag-101",
+                        name: "Backend",
+                        children: [
+                            { id: "tag-102", name: "Node.js" },
+                            { id: "tag-103", name: "Express" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "tag-104",
+                name: "SQL & NoSQL",
+                children: [
+                    {
+                        id: "tag-105",
+                        name: "Relational",
+                        children: [
+                            { id: "tag-106", name: "PostgreSQL" },
+                            { id: "tag-107", name: "MySQL" }
+                        ]
+                    },
+                    {
+                        id: "tag-108",
+                        name: "NoSQL",
+                        children: [
+                            { id: "tag-109", name: "MongoDB" },
+                            { id: "tag-110", name: "Cassandra" }
+                        ]
+                    },
+                    {
+                        id: "tag-111",
+                        name: "Graph",
+                        children: [
+                            { id: "tag-112", name: "Neo4j" },
+                            { id: "tag-113", name: "Gremlin" }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]
 
 export const data = [
     {

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "local": "npm run build && npm start",
     "start": "serve dist -p 3000",
     "dev": "rollup -c -w & serve dist -p 3000",
     "build": "rollup -c",

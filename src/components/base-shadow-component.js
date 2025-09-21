@@ -117,7 +117,7 @@ export default class BaseShadowComponent extends BaseComponent {
                 });
 
                 container.appendChild(clone);
-                console.log('Appended cloned element to container');
+                console.log('Appended cloned element to container', container, clone);
                 console.groupEnd();
             });
 

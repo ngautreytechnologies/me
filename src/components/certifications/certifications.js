@@ -16,8 +16,8 @@ class Certifications extends BaseShadowComponent {
     }
 
     connectedCallback() {
-        this.data.set(data);
         super.connectedCallback();
+        super.triggerRender(data);
     }
 }
 

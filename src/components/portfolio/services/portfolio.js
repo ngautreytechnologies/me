@@ -200,7 +200,7 @@ class ProjectRenderer {
     /**
      * Render projects filtered by tag.
      * Logic:
-     *   - Clear project + details containers.
+     *   - Clear project + details containers.  
      *   - Filter stories by selected tag.
      *   - Create a horizontal scrollable list of cards.
      *   - On card click, show project details.
@@ -285,66 +285,6 @@ class ProjectRenderer {
         </div>
         `;
         detailsContainer.appendChild(cardHtml);
-    }
-}
-
-// -------------------- Tag Tree Renderer --------------------
-class TagTreeRenderer {
-    /**
-     * Recursively builds tag tree UI.
-     * @param {HTMLElement} container - Parent DOM container
-     * @param {Array<object>} nodes - Tag nodes to render
-     * @returns {void}
-     */
-    static createTree(container, nodes) {
-        const fragment = document.createDocumentFragment();
-
-        nodes.forEach((node) => {
-            const skillNode = document.createElement("div");
-            skillNode.className = "skill-node";
-
-            const badge = document.createElement("span");
-            badge.className = "tag-badge";
-            badge.textContent = node.name;
-            badge.title = `${node.summary || ""}\n${node.problem || ""}\n${node.solution || ""}`;
-            skillNode.appendChild(badge);
-
-            if (!node.children?.length) {
-                // Leaf → render projects
-                badge.addEventListener("click", () =>
-                    ProjectRenderer.renderProjectsForTag(node.name)
-                );
-            }
-
-            if (node.children?.length) {
-                // Non-leaf → recurse into children
-                const childrenContainer = document.createElement("div");
-                childrenContainer.className = "children";
-                this.createTree(childrenContainer, node.children);
-                skillNode.appendChild(childrenContainer);
-
-                // Toggle expand/collapse
-                badge.addEventListener("click", () => {
-                    skillNode.classList.toggle("expanded");
-                });
-            }
-
-            fragment.appendChild(skillNode);
-        });
-
-        container.appendChild(fragment);
-    }
-
-    /**
-     * Render root tag tree.
-     * Clears container and builds fresh tree.
-     * @returns {void}
-     */
-    static render() {
-        const container = document.getElementById("skill-tree");
-        if (!container) return;
-        container.textContent = "";
-        this.createTree(container, Config.TAG_HIERARCHY.tags);
     }
 }
 
