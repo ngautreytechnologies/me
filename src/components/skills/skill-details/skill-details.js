@@ -11,14 +11,14 @@ class SkillDetails extends BaseShadowComponent {
     }
 
     connectedCallback() {
-        this.renderData([data[0]]);
+        this.renderTemplateData([data[0]]);
         super.connectedCallback();
 
         // Subscribe to selected skill
         subscribeSelectedSkill(selectedSkill => {
             if (!selectedSkill) {
                 console.log('[SkillDetails] No skill selected');
-                this.renderData([]); // clear
+                this.renderTemplateData([]); // clear
                 return;
             }
             console.log('[SkillDetails] Selected skill:', selectedSkill);
@@ -26,23 +26,23 @@ class SkillDetails extends BaseShadowComponent {
             const skill = data.find(s => s.id.toLowerCase() === selectedSkill.id.toLowerCase());
             if (!skill) {
                 console.warn('[SkillDetails] Skill not found:', selectedSkill.id);
-                this.renderData([]); // clear
+                this.renderTemplateData([]); // clear
                 return;
             }
             console.log('[SkillDetails] Rendering skill details for:', skill);
 
-            this.renderData([skill]);
+            this.renderTemplateData([skill]);
         });
     }
 
-    // Extend the base renderData for tags and keyFeatures only
-    renderData(items) {
+    // Extend the base renderTemplateData for tags and keyFeatures only
+    renderTemplateData(items) {
 
         if (!items || items.length === 0) return;
         // We only expect one item for details -- default to the first
         const skill = items[0];
 
-        super.renderData([skill]); // populate standard [data-field] fields
+        super.renderTemplateData([skill]); // populate standard [data-field] fields
 
         // Render tags
         const tagsContainer = this.root.querySelector('.skill-details-tags');

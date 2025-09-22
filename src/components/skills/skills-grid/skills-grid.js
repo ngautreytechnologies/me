@@ -22,7 +22,7 @@ class SkillsGrid extends BaseShadowComponent {
 
     connectedCallback() {
         super.connectedCallback();
-        super.triggerRender(data);
+        super.triggerTemplateRender(data);
 
         // Wait until render has run
         Promise.resolve().then(() => {

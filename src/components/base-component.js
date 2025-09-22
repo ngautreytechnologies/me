@@ -9,7 +9,6 @@ export default class BaseComponent extends HTMLElement {
 
     constructor(template = '', componentCss = '', dataAttrs = null, useShadow = true) {
         super();
-
         this._log('Constructor start', { template, componentCss, dataAttrs, useShadow });
 
         this.useShadow = useShadow;
@@ -18,15 +17,15 @@ export default class BaseComponent extends HTMLElement {
         this.dataAttrs = Array.isArray(dataAttrs) ? dataAttrs : [dataAttrs].filter(Boolean);
         BaseComponent._observedAttrs = [...new Set([...BaseComponent._observedAttrs, ...this.dataAttrs])];
 
-        this._applyStyles(componentCss);
-        this._applyFonts();
-        this._injectTemplate(template);
-
+        this.templateHtml = template;
         this.data = new ReactiveValue([]);
+        this.supplementaryData = new ReactiveValue([]);
         this.events = new ReactiveValue({});
         this._disposables = new Set();
 
-        this.templateHtml = template;
+        this._applyStyles(componentCss);
+        this._applyFonts();
+        this._injectTemplate(template);
 
         this._log('Constructor complete', { observedAttrs: BaseComponent._observedAttrs });
     }
@@ -40,12 +39,17 @@ export default class BaseComponent extends HTMLElement {
             this._log('Already initialized, skipping connectedCallback');
             return;
         }
-        this._initialized = true;
 
-        this._log('Setting up subscriptions');
+        this._initialized = true;
+        this._log('Setting up reactive subscriptions');
+
         this._trackDisposable(this.data.subscribe(val => {
             this._log('Reactive data updated', val);
         }));
+        this._trackDisposable(this.supplementaryData.subscribe(val => {
+            this._log('Reactive data updated', val);
+        }));
+
 
         this._trackDisposable(this.events.subscribe(events => {
             this._log('Events updated', events);
@@ -56,10 +60,10 @@ export default class BaseComponent extends HTMLElement {
                 }
             }
         }));
-        
+
         const container = this.root.querySelector('[data-container]');
         if (container && container.childNodes.length === 0 && this.templateHtml) {
-            this._log('Injecting template on connectedCallback');
+            this._log('Injecting initial template on connectedCallback');
             this._injectTemplate(this.templateHtml);
         }
 
@@ -87,12 +91,11 @@ export default class BaseComponent extends HTMLElement {
     // -----------------------
     // Data + Rendering
     // -----------------------
-    triggerRender(itemsOrLoader = null) {
-        this._log('triggerRender start', itemsOrLoader);
+    triggerTemplateRender(itemsOrLoader = null) {
+        this._log('triggerTemplateRender start', itemsOrLoader);
 
         if (typeof itemsOrLoader === 'function') {
-            const loaderFn = itemsOrLoader;
-            const result = loaderFn();
+            const result = itemsOrLoader();
             this._log('Loader function called', result);
 
             if (result instanceof Promise) {
@@ -102,7 +105,9 @@ export default class BaseComponent extends HTMLElement {
                         this.data.set(data);
                         this._triggerInternalRender();
                     })
-                    .catch(err => console.error('Loader function failed', err));
+                    .catch(err => {
+                        console.error('Loader function failed', err);
+                    });
             } else {
                 this._log('Loader function returned data synchronously', result);
                 this.data.set(result);
@@ -113,7 +118,7 @@ export default class BaseComponent extends HTMLElement {
         }
 
         if (itemsOrLoader !== null) {
-            this._log('Setting data from triggerRender param', itemsOrLoader);
+            this._log('Setting data from triggerTemplateRender param', itemsOrLoader);
             this.data.set(itemsOrLoader);
         }
 
@@ -125,23 +130,81 @@ export default class BaseComponent extends HTMLElement {
             const items = this.data.get();
             this._log('Internal render triggered', items);
 
-            if (typeof this.renderData === 'function') {
-                this.renderData(items);
+            if (typeof this.renderTemplateData === 'function') {
+                this.renderTemplateData(items);
             } else {
-                console.warn(`[${this.constructor.name}] renderData not implemented`, items);
+                console.warn(`[${this.constructor.name}] renderTemplateData not implemented`, items);
             }
         });
     }
 
-    renderData(items) {
-        console.warn(`[${this.constructor.name}] renderData not implemented`, items);
+    // -----------------------
+    // Data + Rendering
+    // -----------------------
+    triggerSupplementaryDataRender(itemsOrLoader = null) {
+        this._log('triggerSupplementaryDataRender start', itemsOrLoader);
+
+        if (typeof itemsOrLoader === 'function') {
+            const result = itemsOrLoader();
+            this._log('Loader function called', result);
+
+            if (result instanceof Promise) {
+                result
+                    .then(data => {
+                        this._log('Loader Promise resolved', data);
+                        this.supplementaryData.set(data);
+                        this._triggerSupplementaryDataRender();
+                    })
+                    .catch(err => {
+                        console.error('Loader function failed', err);
+                    });
+            } else {
+                this._log('Loader function returned data synchronously', result);
+                this.supplementaryData.set(result);
+                this._triggerSupplementaryDataRender();
+            }
+
+            return;
+        }
+
+        if (itemsOrLoader !== null) {
+            this._log('Setting data from triggerTemplateRender param', itemsOrLoader);
+            this.supplementaryData.set(itemsOrLoader);
+        }
+
+        this._triggerSupplementaryDataRender();
+    }
+
+    _triggerSupplementaryDataRender() {
+        Promise.resolve().then(() => {
+            const items = this.supplementaryData.get();
+            this._log('Internal supplementary render triggered', items);
+
+            if (typeof this.renderSupplementaryData === 'function') {
+                this.renderSupplementaryData(items);
+            } else {
+                console.warn(`[${this.constructor.name}] renderSupplementaryData not implemented`, items);
+            }
+        });
+    }
+
+    renderTemplateData(items) {
+        this._log(`[${this.constructor.name}] renderTemplateData placeholder`, items);
+    }
+
+    // TODO: Make more secure etc
+    renderSupplementaryData(html) {
+        this._log(`[${this.constructor.name}] renderSupplementaryData placeholder`, html);
     }
 
     // -----------------------
     // Helpers
     // -----------------------
     _log(...args) {
-        if (this.constructor.debug) console.log(`[${this.constructor.name}]`, ...args);
+        if (this.constructor.debug) {
+            console.groupCollapsed(`[${this.constructor.name}]`, ...args);
+            console.groupEnd();
+        }
     }
 
     _applyStyles(componentCss) {
@@ -153,22 +216,20 @@ export default class BaseComponent extends HTMLElement {
                 sheets.push(sheet);
                 this._log('CSSStyleSheet created and added', sheet);
             } catch (err) {
-                this._log('❌ Failed to create component CSSStyleSheet', err);
+                this._log('❌ Failed to create CSSStyleSheet', err);
             }
         }
 
         if (this.useShadow && 'adoptedStyleSheets' in this.root) {
             this.root.adoptedStyleSheets = sheets;
-            this._log('Applied styles to shadowRoot adoptedStyleSheets', sheets);
         } else if (componentCss) {
-            this._log('⚠️ Injecting light DOM styles into <head>');
             const styleId = `component-style-${this.constructor.name}`;
             if (!document.getElementById(styleId)) {
                 const style = document.createElement('style');
                 style.id = styleId;
                 style.textContent = componentCss;
                 document.head.appendChild(style);
-                this._log('Injected style element into <head>', style);
+                this._log('Injected style element into <head>');
             }
             ensureGlobalStyleInjected();
         }
@@ -178,7 +239,9 @@ export default class BaseComponent extends HTMLElement {
 
     _applyFonts() {
         this._log('_applyFonts start');
-        if (!this.useShadow) return;
+        if (!this.useShadow) {
+            return;
+        }
 
         const fonts = [
             'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap',
@@ -198,27 +261,24 @@ export default class BaseComponent extends HTMLElement {
 
     _injectTemplate(template, containerSelector = null) {
         this._log('_injectTemplate start', containerSelector);
-        if (!template) return;
+        if (!template) {
+            return;
+        }
 
         const temp = document.createElement('template');
         temp.innerHTML = template.trim();
 
         const target = containerSelector ? this.root.querySelector(containerSelector) : this.root;
-        this._log('Target for template injection', target);
-
         removeElements(target, 'template');
-        this._log('Previous templates removed from target');
 
-        if (temp.content.querySelector('template')) {
-            this._log('Preserving <template> element');
+        const hasNestedTemplate = !!temp.content.querySelector('template');
+        if (hasNestedTemplate) {
             Array.from(temp.content.childNodes).forEach(node => target.appendChild(node.cloneNode(true)));
         } else {
-            this._log('Injecting raw HTML template');
             target.appendChild(temp.content.cloneNode(true));
         }
 
         if (typeof this.onTemplateInjected === 'function') {
-            this._log('Calling onTemplateInjected hook');
             this.onTemplateInjected(target);
         }
 
@@ -226,15 +286,16 @@ export default class BaseComponent extends HTMLElement {
     }
 
     _disposeAll() {
-        this._log('_disposeAll start', this._disposables);
-        for (const unsub of this._disposables) if (typeof unsub === 'function') unsub();
+        this._disposables.forEach(fn => {
+            if (typeof fn === 'function') {
+                fn();
+            }
+        });
         this._disposables.clear();
-        this._log('_disposeAll complete');
     }
 
     _trackDisposable(disposable) {
         if (disposable) {
-            this._log('_trackDisposable', disposable);
             this._disposables.add(disposable);
         }
         return disposable;
@@ -243,7 +304,6 @@ export default class BaseComponent extends HTMLElement {
     trigger(key, payload) {
         const events = { ...this.events.get() };
         events[key] = payload;
-        this._log('trigger event', key, payload);
         this.events.set(events);
     }
 
@@ -256,7 +316,6 @@ export default class BaseComponent extends HTMLElement {
             const sheet = new CSSStyleSheet();
             sheet.replaceSync(cssText);
             this._componentSheets.set(cssText, sheet);
-            if (this.debug) console.log(`[${this.name}] CSSStyleSheet created for text`, cssText);
         }
         return this._componentSheets.get(cssText);
     }

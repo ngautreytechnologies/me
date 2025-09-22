@@ -45,37 +45,34 @@ class ProjectDetails extends BaseShadowComponent {
         this.data.set(data);
         super.connectedCallback();
 
-        // Subscribe to selected skill
         subscribeSelectedTechnologyTag(selectedTag => {
+            const arr = Array.isArray(data) ? data : data?.get?.() ?? [];
             if (!selectedTag) {
-                console.log('[SkillDetails] No skill selected');
-                this.renderData([]); // clear
+                this.renderTemplateData([]);
                 return;
             }
-            console.log('[SkillDetails] Selected skill:', selectedTag);
 
-            const tag = data.find(s => s.id.toLowerCase() === selectedTag.id.toLowerCase());
+            const tag = arr.find(s => s.id.toLowerCase() === selectedTag.id.toLowerCase());
             if (!tag) {
-                console.warn('[SkillDetails] Skill not found:', selectedTag.id);
-                this.renderData([]); // clear
+                this.renderTemplateData([]);
                 return;
             }
-            console.log('[SkillDetails] Rendering skill details for:', tag);
 
-            this.renderData([tag]);
+            this.renderTemplateData([tag]);
         });
+
 
         this.togglePlaceholder(false);
     }
 
 
-    renderData(items) {
+    renderTemplateData(items) {
         if (!items) return;
-        super.renderData(items);
+        super.renderTemplateData(items);
 
         const root = this.root;
 
-        // 🔥 Hide placeholder once real project data comes in
+        // Hide placeholder once real project data comes in
         this.togglePlaceholder(false);
 
         // Key Features

@@ -38,12 +38,12 @@ class Education extends BaseShadowComponent {
 
     connectedCallback() {
         super.connectedCallback();
-        super.triggerRender(data);
+        super.triggerTemplateRender(data);
     }
 
-    renderData(items) {
+    renderTemplateData(items) {
         // Call parent method first
-        super.renderData(items);
+        super.renderTemplateData(items);
 
         // Then handle custom rendering (slot replacement)
         const container = this.root.querySelector('[data-container]');
