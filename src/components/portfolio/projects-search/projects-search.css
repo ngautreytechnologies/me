@@ -259,3 +259,162 @@
     margin: 0 0.25rem;
     color: var(--text-secondary);
 }
+
+/* Project Card (results of repo search */
+/* Project Card Base */
+.project-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-glass);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Project Card Top Border Animation */
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--secondary-gradient);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover::before {
+    transform: scaleX(1);
+}
+
+/* Hover & Active Effects */
+.project-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    border-color: var(--text-accent);
+}
+
+.project-card.active {
+    border-color: var(--text-accent);
+    box-shadow: 0 8px 25px rgba(0, 242, 254, 0.2);
+}
+
+.project-card.active::before {
+    transform: scaleX(1);
+}
+
+/* Project Title Inside Card */
+.project-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-accent);
+    margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.project-card:hover .project-title {
+    color: #fff;
+}
+
+/* Project Details Container */
+.project-details-container {
+    position: relative;
+    min-height: 200px;
+}
+
+.project-detail {
+    position: relative;
+    width: 100%;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.4s ease;
+    pointer-events: none;
+    box-sizing: border-box;
+    display: none;
+}
+
+.project-detail.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+    display: block;
+}
+
+/* Detail Header inside Project Detail */
+.detail-header {
+    margin-bottom: 1.5rem;
+}
+
+.detail-header h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+}
+
+/* Project Tags */
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.project-tags .tag {
+    background: var(--primary-gradient);
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Detail Content */
+.detail-content {
+    line-height: 1.7;
+}
+
+.detail-content p {
+    margin-bottom: 1rem;
+}
+
+.detail-content strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.detail-content ul {
+    margin: 0.5rem 0 1rem 1.5rem;
+}
+
+.detail-content li {
+    margin-bottom: 0.5rem;
+    position: relative;
+}
+
+.detail-content li::before {
+    content: '▸';
+    position: absolute;
+    left: -1.2rem;
+    color: var(--text-accent);
+    font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .project-details-container {
+        min-height: 150px;
+    }
+
+    .project-card {
+        padding: 1rem;
+    }
+}
