@@ -187,7 +187,7 @@
 
 .technology-name {
     font-weight: 600;
-    font-size: 1.1rem;  
+    font-size: 1.1rem;
     background: var(--primary-gradient);
     background-clip: text;
     -webkit-background-clip: text;
@@ -202,18 +202,60 @@
 }
 
 /* Breadcrumb */
-.technologies-breadcrumb {
-    margin-top: 1rem;
-    font-size: 0.9rem;
+/* Technologies grid */
+.technologies-grid {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    /* First row = breadcrumbs, second row = tiles */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+/* Breadcrumb container spans full width and always on top */
+.technologies-breadcrumbs-container {
+    grid-column: 1 / -1;
+    margin-bottom: 1rem;
+}
+
+/* Breadcrumbs: allow wrapping */
+.breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    /* allow wrapping to multiple lines */
+    align-items: center;
+    font-size: 0.8rem;
     color: var(--text-secondary);
+    gap: 0.25rem;
+    /* space between items and separators */
 }
 
-.breadcrumb-link {
+.breadcrumb-item {
+    display: inline-flex;
+    align-items: center;
     cursor: pointer;
-    color: var(--text-accent);
     transition: color 0.2s ease;
+    font-weight: 500;
 }
 
-.breadcrumb-link:hover {
+.breadcrumb-item a {
+    color: var(--text-accent);
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
     color: #fff;
+    text-decoration: underline;
+}
+
+.breadcrumb-item.current {
+    color: var(--text-primary);
+    font-weight: 600;
+    cursor: default;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+    content: "›";
+    margin: 0 0.25rem;
+    color: var(--text-secondary);
 }

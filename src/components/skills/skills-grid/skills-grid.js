@@ -1,7 +1,8 @@
-import BaseShadowComponent from '../../base-shadow-component.js';
+import BaseShadowComponent from '../../base-shadow-component';
+import { setSelectedSkill } from '../../../modules/reactivity/signal-store'
+
 import css from './skills-grid.css';
 import templateHtml from './skills-grid.html';
-import { setSelectedSkill } from '../../../utils/signal-store.js'; // signal for selected skill
 
 const data = [
     { id: "python", label: "Python" },

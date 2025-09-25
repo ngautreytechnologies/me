@@ -1,6 +1,7 @@
+import BaseLightComponent from '../base-light-component';
+
 import templateHtml from './header.html'; // HTML file with your profile + contacts
 import css from './header.css'; // your CSS
-import BaseLightComponent from '../base-light-component.js';
 
 class HeaderContent extends BaseLightComponent {
     constructor() {

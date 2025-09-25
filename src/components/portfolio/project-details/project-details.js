@@ -1,5 +1,6 @@
-import { subscribeSelectedTechnologyTag } from '../../../utils/signal-store.js';
-import BaseShadowComponent from '../../base-shadow-component.js';
+import { subscribeSelectedTechnologyTopic } from '../../../modules/reactivity/signal-store';
+import BaseShadowComponent from '../../base-shadow-component';
+
 import css from './project-details.css';
 import templateHtml from './project-details.html';
 
@@ -45,7 +46,7 @@ class ProjectDetails extends BaseShadowComponent {
         this.data.set(data);
         super.connectedCallback();
 
-        subscribeSelectedTechnologyTag(selectedTag => {
+        subscribeSelectedTechnologyTopic(selectedTag => {
             const arr = Array.isArray(data) ? data : data?.get?.() ?? [];
             if (!selectedTag) {
                 this.renderTemplateData([]);

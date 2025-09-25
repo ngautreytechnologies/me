@@ -10,4 +10,4 @@ export const [getToast, setToast, subscribeToast] = createSignal(null);
 export const [getSelectedSkill, setSelectedSkill, subscribeSelectedSkill] = createSignal(null);
 
 // Technology tags
-export const [getSelectedTechnologyTag, setSelectedTechnologyTag, subscribeSelectedTechnologyTag] = createSignal(null);
+export const [getSelectedTechnologyTopic, setSelectedTechnologyTopic, subscribeSelectedTechnologyTopic] = createSignal(null);

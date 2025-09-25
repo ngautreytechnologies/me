@@ -1,17 +1,20 @@
 <div class="technologies-grid" data-container data-tag-tree>
+    <!-- Breadcrumbs always on top -->
+    <div class="technologies-breadcrumbs-container" data-supplementary-container>
+        <nav class="breadcrumbs" aria-label="Project tag breadcrumbs">
+            <ol class="breadcrumb-list" data-field="breadcrumb-list"></ol>
+        </nav>
+    </div>
+
+    <!-- Technology tiles -->
     <template id="technologies-item-template">
         <div data-field="name" data-tag-tree-item class="technology-tag"></div>
     </template>
-    <div data-supplementary-container>
-        <!-- Breadcrumb HTML only -->
-        <nav class="breadcrumbs" aria-label="Project tag breadcrumbs">
-            <button type="button" class="breadcrumb-back" data-action="back" aria-hidden="true" title="Go back" hidden>
-                ←
-            </button>
 
-            <ol class="breadcrumb-list" data-field="breadcrumb-list">
-                <!-- Here they go < -->
-            </ol>
-        </nav>
+    <!-- Project list container -->
+    <div class="project-repositories-container" data-supplementary-container>
+        <div id="projects-list"></div>
+        <div id="project-details"></div>
     </div>
+
 </div>

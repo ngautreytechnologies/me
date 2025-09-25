@@ -1,6 +1,4 @@
-// base-shadow-component.js
-import { removeElements } from '../utils/dom.js';
-import BaseComponent from './base-component.js';
+import BaseComponent from './base-component';
 
 export default class BaseShadowComponent extends BaseComponent {
     constructor(template = '', componentCss = '', dataAttrs = null) {
@@ -66,7 +64,7 @@ export default class BaseShadowComponent extends BaseComponent {
                     const field = el.dataset.field;
                     let value = null;
 
-                    if (item == null) {
+                    if (item === null) {
                         value = null;
                     } else if (typeof item === 'object' && field in item) {
                         value = item[field];
@@ -78,7 +76,7 @@ export default class BaseShadowComponent extends BaseComponent {
                         value = value(item, index, el);
                     }
 
-                    if (value == null || value === false) {
+                    if (value === null || value === false) {
                         el.remove();
                     } else if (typeof value === 'string' || typeof value === 'number') {
                         el.textContent = value;
@@ -150,7 +148,7 @@ export default class BaseShadowComponent extends BaseComponent {
 
                         if (typeof value === 'function') value = value(item, index, el);
 
-                        if (value == null || value === false) {
+                        if (value === null || value === false) {
                             el.remove();
                         } else if (typeof value === 'string' || typeof value === 'number') {
                             el.textContent = value;

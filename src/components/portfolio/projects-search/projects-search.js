@@ -1,131 +1,136 @@
-import BaseShadowComponent from '../../base-shadow-component.js';
-import css from './projects-search.css';
+import { tags } from '../data';
+import BaseShadowComponent from '../../base-shadow-component';
+import { setSelectedTechnologyTopic } from '../../../modules/reactivity/signal-store';
+import { ProjectRenderer } from '../services/project';
+
 import templateHtml from './projects-search.html';
-import { tags } from '../data.js';
-import { setSelectedTechnologyTag } from '../../../utils/signal-store.js';
+import css from './projects-search.css';
 
 class ProjectsSearch extends BaseShadowComponent {
     constructor() {
         super(templateHtml, css);
-        this.currentLevel = tags;   // start with root level
-        this.path = [];             // stack for breadcrumb/back
+        this.rootTags = tags;
+        this.currentLevel = tags;
+        this.path = [];
     }
 
     connectedCallback() {
         super.connectedCallback();
-        this._renderLevel(this.currentLevel);
+        this._renderLevel(this.rootTags);
     }
 
     _renderLevel(levelData) {
-        // Replace with new level
         this.currentLevel = levelData;
         super.triggerTemplateRender(levelData);
-        super.triggerSupplementaryDataRender(levelData)
 
-        // Wait until render is done
+        // Handle tile clicks
         Promise.resolve().then(() => {
             const tiles = this.root.querySelectorAll('.technology-tag');
-            console.log('Found tiles after render:', tiles);
-
             tiles.forEach(tile => {
-                tile.addEventListener('click', () => {
+                tile.addEventListener('click', async () => {
                     const id = tile.getAttribute('id');
-                    const tag = this.currentLevel.find(s => s.id == id);
+                    const tag = this.currentLevel.find(t => t.id === id);
+                    if (!tag) return;
 
-                    if (tag) {
-                        console.log('Tile clicked, id:', id, tag);
-                        setSelectedTechnologyTag(tag);
+                    setSelectedTechnologyTopic(tag);
 
-                        // If tag has children → drill down
-                        if (tag.children && tag.children.length > 0) {
-                            this.path.push(this.currentLevel);
-                            this._renderLevel(tag.children);
-                        } else {
-                            console.log('Reached leaf tag:', tag);
-                        }
+                    if (tag.children && tag.children.length > 0) {
+                        this.path.push(tag);
+                        this._renderLevel(tag.children);
+                    } else {
+                        // Leaf node — just add tag to path
+                        if (!this.path.includes(tag)) this.path.push(tag);
                     }
+
+                    this.renderSupplementaryData();
                 });
             });
         });
+
+        this.renderSupplementaryData();
     }
 
-    renderSupplementaryData(pathItems) {
-        console.group(`[${this.constructor.name}] renderSupplementaryData (override)`);
-
-        // Run base rendering first (if needed)
-        super.renderSupplementaryData(pathItems);
-
+    renderSupplementaryData() {
+        console.group(`[${this.constructor.name}] renderSupplementaryData`);
         try {
             const breadcrumbList = this.root.querySelector('[data-field="breadcrumb-list"]');
             const backButton = this.root.querySelector('[data-action="back"]');
+            const projectsContainer = this.root.querySelector('.project-repositories-container');
+            const projectsList = this.root.querySelector('#projects-list');
+            const projectDetails = this.root.querySelector('#project-details');
 
-            if (!breadcrumbList) {
-                console.warn(`[${this.constructor.name}] No breadcrumb list found`);
-                return;
-            }
+            if (!breadcrumbList) return;
 
-            // Normalize to array: pathItems must represent the path from root to current
-            const dataArray = Array.isArray(pathItems) ? pathItems : [pathItems];
-
-            // Clear breadcrumbs
             breadcrumbList.innerHTML = '';
+            const depth = this.path.length;
 
-            // Always prepend "Home"
-            const homeItem = { name: "Home", id: "root" };
-            const fullPath = [homeItem, ...dataArray];
+            const homeLi = document.createElement('li');
+            homeLi.classList.add('breadcrumb-item');
+            if (depth === 0) {
+                homeLi.textContent = 'Home';
+            } else {
+                const homeLink = document.createElement('a');
+                homeLink.href = '#';
+                homeLink.textContent = 'Home';
+                homeLink.addEventListener('click', e => {
+                    e.preventDefault();
+                    this.path = [];
+                    this._renderLevel(this.rootTags);
+                });
+                homeLi.appendChild(homeLink);
+            }
+            breadcrumbList.appendChild(homeLi);
 
-            fullPath.forEach((item, index) => {
+            this.path.forEach((tag, i) => {
                 const li = document.createElement('li');
                 li.classList.add('breadcrumb-item');
 
-                const isLast = index === fullPath.length - 1;
-                const isHome = index === 0;
-
-                if (isLast) {
-                    // Last item → plain text
-                    li.textContent = item.name;
-                } else if (isHome && fullPath.length === 1) {
-                    // Home only, no link
-                    li.textContent = item.name;
+                if (i === this.path.length - 1) {
+                    li.textContent = tag.name;
                 } else {
-                    // Clickable link
-                    const a = document.createElement('a');
-                    a.href = '#';
-                    a.textContent = item.name;
-                    a.dataset.id = item.id || '';
-                    a.addEventListener('click', (e) => {
+                    const link = document.createElement('a');
+                    link.href = '#';
+                    link.textContent = tag.name;
+                    link.addEventListener('click', e => {
                         e.preventDefault();
-                        this.dispatchEvent(new CustomEvent('breadcrumbClick', {
-                            detail: { item, index },
-                            bubbles: true,
-                            composed: true
-                        }));
+                        this.path = this.path.slice(0, i + 1);
+                        this._renderLevel(tag.children || []);
                     });
-                    li.appendChild(a);
+                    li.appendChild(link);
                 }
-
                 breadcrumbList.appendChild(li);
             });
 
-            // Back button only visible beyond root
             if (backButton) {
-                backButton.hidden = fullPath.length <= 1;
+                backButton.hidden = depth === 0;
+                if (!backButton.hidden) {
+                    backButton.onclick = () => {
+                        this.path.pop();
+                        if (this.path.length === 0) {
+                            this._renderLevel(this.rootTags);
+                        } else {
+                            const last = this.path[this.path.length - 1];
+                            this._renderLevel(last.children || []);
+                        }
+                    };
+                }
             }
 
-            console.log(`[${this.constructor.name}] Breadcrumbs rendered:`, fullPath);
+            const topics = this.path.map(tag => tag.name);
+            console.log('Topics for repo query:', topics);
+
+            if (projectsContainer && projectsList && projectDetails) {
+                ProjectRenderer.renderProjectsForTopics(
+                    projectsList,
+                    projectDetails,
+                    topics
+                );
+            }
+
         } catch (err) {
-            console.error(`[${this.constructor.name}] renderSupplementaryData breadcrumb error:`, err);
+            console.error(`[${this.constructor.name}] renderSupplementaryData error:`, err);
         } finally {
             console.groupEnd();
-        }
-    }
-
-
-    // Optional: navigate back up
-    goBack() {
-        if (this.path.length > 0) {
-            const prevLevel = this.path.pop();
-            this._renderLevel(prevLevel);
         }
     }
 }

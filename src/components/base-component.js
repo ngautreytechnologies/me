@@ -1,6 +1,7 @@
-import { GLOBAL_SHEETS, ensureGlobalStyleInjected } from '../utils/styles.js';
-import { ReactiveValue } from '../utils/reactive.js';
-import { removeElements } from '../utils/dom.js';
+import { } from '../styles/styles'
+import { GLOBAL_SHEETS, ensureGlobalStyleInjected } from '../styles/styles';
+import { ReactiveValue } from '../modules/reactivity/reactive';
+import { removeElements } from '../modules/dom/dom';
 
 export default class BaseComponent extends HTMLElement {
     static debug = true;

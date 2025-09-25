@@ -27,3 +27,17 @@ export function withTimeout(promise, ms) {
     const timeout = setTimeout(() => controller.abort(), ms);
     return promise.finally(() => clearTimeout(timeout));
 }
+
+export function retryStep({ retries = 3, delayMs = 200 }) {
+    return async (ctx, next) => {
+        let attempt = 0;
+        while (attempt <= retries) {
+            try { return await next(); }
+            catch (err) {
+                attempt++;
+                if (attempt > retries) throw err;
+                await new Promise(res => setTimeout(res, delayMs * Math.pow(2, attempt)));
+            }
+        }
+    };
+}

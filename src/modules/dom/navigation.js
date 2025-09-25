@@ -5,7 +5,6 @@
 export function setupNavigation() {
     const navbar = document.getElementById("navbar");
     const brand = navbar.querySelector(".nav-brand");
-    const links = navbar.querySelector(".nav-links");
     const icons = navbar.querySelector(".nav-icons");
     const sections = document.querySelectorAll("section");
     const navLinks = document.querySelectorAll(".nav-link");

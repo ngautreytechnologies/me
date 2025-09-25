@@ -1,9 +1,10 @@
-import BaseShadowComponent from '../../base-shadow-component.js';
-import templateHtml from './skill-details.html';
+import BaseShadowComponent from '../../base-shadow-component';
+import { subscribeSelectedSkill } from '../../../modules/reactivity/signal-store';
+import { data } from '../data';
+import { removeElements } from '../../../modules/dom/dom';
+
 import css from './skill-details.css';
-import { subscribeSelectedSkill } from '../../../utils/signal-store.js';
-import { data } from '../data.js';
-import { removeElements } from '../../../utils/dom.js';
+import templateHtml from './skill-details.html';
 
 class SkillDetails extends BaseShadowComponent {
     constructor() {

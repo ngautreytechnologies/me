@@ -1,4 +1,5 @@
 import BaseShadowComponent from '../base-shadow-component';
+
 import css from './certifications.css';
 import templateHtml from './certifications.html';
 

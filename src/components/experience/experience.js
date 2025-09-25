@@ -1,4 +1,5 @@
-import BaseShadowComponent from '../base-shadow-component.js';
+import BaseShadowComponent from '../base-shadow-component';
+
 import css from './experience.css';
 import templateHtml from './experience.html'; // optional template file
 

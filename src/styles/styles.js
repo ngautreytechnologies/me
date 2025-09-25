@@ -1,8 +1,8 @@
-import resetCss from '../styles/reset.css';
-import globalsCss from '../styles/globals.css';
-import animationsCss from '../styles/animations.css';
-import typographyCss from '../styles/typography.css';
-import navbarCss from '../styles/navigation.css';
+import resetCss from './reset.css';
+import globalsCss from './globals.css';
+import animationsCss from './animations.css';
+import typographyCss from './typography.css';
+import navbarCss from './navigation.css';
 
 // -----------------------
 // Combine CSS for constructible sheets or <style> fallback

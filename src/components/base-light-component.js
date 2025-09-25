@@ -1,6 +1,7 @@
-// base-light-component.js
-import BaseComponent from './base-component.js';
-import { removeElements } from '../utils/dom.js';
+// base-light-component
+import { removeElements } from '../modules/dom/dom';
+
+import BaseComponent from './base-component';
 
 /**
  * BaseLightComponent
