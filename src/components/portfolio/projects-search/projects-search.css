@@ -1,13 +1,72 @@
-/* technologies grid */
-.technologies-grid,
-.technology-details-grid {
+.technologies-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 1rem;
-    margin-top: 1.5rem;
+    grid-template-rows: auto auto 1fr;
+    /* breadcrumbs, tiles, projects */
+    gap: 1.5rem;
 }
 
-/* technology badge (matches skill badges) */
+/* Breadcrumb container spans full width and always on top */
+.technologies-breadcrumbs-container {
+    grid-column: 1 / -1;
+    margin-bottom: 1rem;
+}
+
+/* Technology tiles container */
+.technology-tiles-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* force 2 columns */
+    gap: 1rem;
+}
+
+/* Breadcrumbs: allow wrapping */
+.breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    gap: 0.25rem;
+}
+
+.breadcrumb-item {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    font-weight: 500;
+}
+
+.breadcrumb-item a {
+    color: var(--text-accent);
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.breadcrumb-item.current {
+    color: var(--text-primary);
+    font-weight: 600;
+    cursor: default;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+    content: "›";
+    margin: 0 0.25rem;
+    color: var(--text-secondary);
+}
+
+/* Technology tiles container */
+.technology-tiles-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+/* Technology badge (matches skill badges) */
 .technology-tag,
 .technology-details-card {
     background: var(--glass-bg);
@@ -56,7 +115,7 @@
     box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
 }
 
-/* technology detail titles and content */
+/* Technology detail titles and content */
 .technology-details-title {
     font-size: 1rem;
     font-weight: 600;
@@ -150,117 +209,29 @@
     margin-bottom: 0.5rem;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
+/* ==============================
+   Projects Container & Cards
+============================== */
 
-    .technologies-grid,
-    .technology-details-grid {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    }
-
-    .technology-tag,
-    .technology-details-card {
-        height: 90px;
-    }
-}
-
-.technologies-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1.5rem;
-}
-
-.technology-tile {
-    background: var(--card-bg);
-    border: 1px solid var(--border-glass);
-    border-radius: 16px;
-    padding: 1.2rem;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.technology-tile:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-glow);
-}
-
-.technology-name {
-    font-weight: 600;
-    font-size: 1.1rem;
-    background: var(--primary-gradient);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 0.5rem;
-}
-
-.technology-summary {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    line-height: 1.4;
-}
-
-/* Breadcrumb */
-/* Technologies grid */
-.technologies-grid {
-    display: grid;
-    grid-template-rows: auto 1fr;
-    /* First row = breadcrumbs, second row = tiles */
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1.5rem;
-}
-
-/* Breadcrumb container spans full width and always on top */
-.technologies-breadcrumbs-container {
+/* Project container stacked below tiles, vertical scroll */
+.project-repositories-container {
     grid-column: 1 / -1;
-    margin-bottom: 1rem;
-}
-
-/* Breadcrumbs: allow wrapping */
-.breadcrumbs {
+    max-height: 400px;
+    overflow-y: auto;
     display: flex;
-    flex-wrap: wrap;
-    /* allow wrapping to multiple lines */
-    align-items: center;
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    gap: 0.25rem;
-    /* space between items and separators */
+    flex-direction: column;
+    gap: 1rem;
 }
 
-.breadcrumb-item {
-    display: inline-flex;
-    align-items: center;
-    cursor: pointer;
-    transition: color 0.2s ease;
-    font-weight: 500;
+.project-repositories-container::-webkit-scrollbar {
+    width: 8px;
 }
 
-.breadcrumb-item a {
-    color: var(--text-accent);
-    text-decoration: none;
+.project-repositories-container::-webkit-scrollbar-thumb {
+    background-color: rgba(102, 126, 234, 0.5);
+    border-radius: 4px;
 }
 
-.breadcrumb-item a:hover {
-    color: #fff;
-    text-decoration: underline;
-}
-
-.breadcrumb-item.current {
-    color: var(--text-primary);
-    font-weight: 600;
-    cursor: default;
-}
-
-.breadcrumb-item+.breadcrumb-item::before {
-    content: "›";
-    margin: 0 0.25rem;
-    color: var(--text-secondary);
-}
-
-/* Project Card (results of repo search */
 /* Project Card Base */
 .project-card {
     background: var(--glass-bg);
@@ -408,8 +379,21 @@
     font-weight: bold;
 }
 
-/* Responsive adjustments */
+/* ==============================
+   Responsive Adjustments
+============================== */
 @media (max-width: 768px) {
+
+    .technologies-grid,
+    .technology-details-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+
+    .technology-tag,
+    .technology-details-card {
+        height: 90px;
+    }
+
     .project-details-container {
         min-height: 150px;
     }

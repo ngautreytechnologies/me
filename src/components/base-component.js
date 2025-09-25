@@ -92,7 +92,7 @@ export default class BaseComponent extends HTMLElement {
     // -----------------------
     // Data + Rendering
     // -----------------------
-    triggerTemplateRender(itemsOrLoader = null) {
+    triggerTemplateRender(itemsOrLoader = null, containerSelector = '[data-container]') {
         this._log('triggerTemplateRender start', itemsOrLoader);
 
         if (typeof itemsOrLoader === 'function') {
@@ -104,7 +104,7 @@ export default class BaseComponent extends HTMLElement {
                     .then(data => {
                         this._log('Loader Promise resolved', data);
                         this.data.set(data);
-                        this._triggerInternalRender();
+                        this._triggerInternalRender(containerSelector);
                     })
                     .catch(err => {
                         console.error('Loader function failed', err);
@@ -112,7 +112,7 @@ export default class BaseComponent extends HTMLElement {
             } else {
                 this._log('Loader function returned data synchronously', result);
                 this.data.set(result);
-                this._triggerInternalRender();
+                this._triggerInternalRender(containerSelector);
             }
 
             return;
@@ -123,16 +123,16 @@ export default class BaseComponent extends HTMLElement {
             this.data.set(itemsOrLoader);
         }
 
-        this._triggerInternalRender();
+        this._triggerInternalRender(containerSelector);
     }
 
-    _triggerInternalRender() {
+    _triggerInternalRender(containerSelector = '[data-container]') {
         Promise.resolve().then(() => {
             const items = this.data.get();
             this._log('Internal render triggered', items);
 
             if (typeof this.renderTemplateData === 'function') {
-                this.renderTemplateData(items);
+                this.renderTemplateData(items, containerSelector);
             } else {
                 console.warn(`[${this.constructor.name}] renderTemplateData not implemented`, items);
             }
@@ -189,7 +189,7 @@ export default class BaseComponent extends HTMLElement {
         });
     }
 
-    renderTemplateData(items) {
+    renderTemplateData(items, containerSelector = '[data-container]') {
         this._log(`[${this.constructor.name}] renderTemplateData placeholder`, items);
     }
 

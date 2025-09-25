@@ -1,4 +1,4 @@
-import { subscribeSelectedTechnologyTopic } from '../../../modules/reactivity/signal-store';
+import { subscribeSelectedProject } from '../../../modules/reactivity/signal-store';
 import BaseShadowComponent from '../../base-shadow-component';
 
 import css from './project-details.css';
@@ -46,26 +46,19 @@ class ProjectDetails extends BaseShadowComponent {
         this.data.set(data);
         super.connectedCallback();
 
-        subscribeSelectedTechnologyTopic(selectedTag => {
-            const arr = Array.isArray(data) ? data : data?.get?.() ?? [];
-            if (!selectedTag) {
+        // Subscribe to selected project instead of technology topic
+        subscribeSelectedProject(project => {
+            if (!project) {
                 this.renderTemplateData([]);
                 return;
             }
 
-            const tag = arr.find(s => s.id.toLowerCase() === selectedTag.id.toLowerCase());
-            if (!tag) {
-                this.renderTemplateData([]);
-                return;
-            }
-
-            this.renderTemplateData([tag]);
+            // For now, using the static `data`; you can replace with fetch logic
+            this.renderTemplateData([data]);
         });
-
 
         this.togglePlaceholder(false);
     }
-
 
     renderTemplateData(items) {
         if (!items) return;
@@ -73,7 +66,6 @@ class ProjectDetails extends BaseShadowComponent {
 
         const root = this.root;
 
-        // Hide placeholder once real project data comes in
         this.togglePlaceholder(false);
 
         // Key Features
@@ -174,3 +166,4 @@ class ProjectDetails extends BaseShadowComponent {
 }
 
 customElements.define('project-details', ProjectDetails);
+    

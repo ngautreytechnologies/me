@@ -5,12 +5,12 @@ export default class BaseShadowComponent extends BaseComponent {
         super(template, componentCss, dataAttrs, true);
     }
 
-    renderTemplateData(items) {
+    renderTemplateData(items, containerSelector = '[data-container]') {
         console.group(`[${this.constructor.name}] renderTemplateData (shadow)`);
         console.log('Input items:', items);
 
         try {
-            const container = this.root.querySelector('[data-container]');
+            const container = this.root.querySelector(containerSelector);
             const templateEl = this.root.querySelector('template');
 
             if (!container) {

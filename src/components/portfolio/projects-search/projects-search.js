@@ -21,7 +21,7 @@ class ProjectsSearch extends BaseShadowComponent {
 
     _renderLevel(levelData) {
         this.currentLevel = levelData;
-        super.triggerTemplateRender(levelData);
+        super.triggerTemplateRender(levelData, '.technology-tiles-container');
 
         // Handle tile clicks
         Promise.resolve().then(() => {
@@ -119,10 +119,9 @@ class ProjectsSearch extends BaseShadowComponent {
             const topics = this.path.map(tag => tag.name);
             console.log('Topics for repo query:', topics);
 
-            if (projectsContainer && projectsList && projectDetails) {
+            if (projectsContainer && projectsList) {
                 ProjectRenderer.renderProjectsForTopics(
                     projectsList,
-                    projectDetails,
                     topics
                 );
             }

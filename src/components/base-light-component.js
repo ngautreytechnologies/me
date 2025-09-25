@@ -22,11 +22,11 @@ export default class BaseLightComponent extends BaseComponent {
      * - Still handles [data-container] + <template> if present
      * - Falls back gracefully if no template is used
      */
-    renderTemplateData(items) {
+    renderTemplateData(items, containerSelector = '[data-container]') {
         console.log(`[${this.constructor.name}] renderTemplateData (light DOM)`, items);
 
         try {
-            const container = this.querySelector('[data-container]') || this;
+            const container = this.querySelector(containerSelector) || this;
             const templateEl = this.querySelector('template');
 
             if (!container) {

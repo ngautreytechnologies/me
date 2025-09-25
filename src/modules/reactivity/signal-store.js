@@ -11,3 +11,6 @@ export const [getSelectedSkill, setSelectedSkill, subscribeSelectedSkill] = crea
 
 // Technology tags
 export const [getSelectedTechnologyTopic, setSelectedTechnologyTopic, subscribeSelectedTechnologyTopic] = createSignal(null);
+
+// Selected project signal (new)
+export const [getSelectedProject, setSelectedProject, subscribeSelectedProject] = createSignal(null);
