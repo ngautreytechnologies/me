@@ -57,7 +57,6 @@ class ProjectsSearch extends BaseShadowComponent {
             const backButton = this.root.querySelector('[data-action="back"]');
             const projectsContainer = this.root.querySelector('.project-repositories-container');
             const projectsList = this.root.querySelector('#projects-list');
-            const projectDetails = this.root.querySelector('#project-details');
 
             if (!breadcrumbList) return;
 

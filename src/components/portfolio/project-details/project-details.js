@@ -1,63 +1,59 @@
 import { subscribeSelectedProject } from '../../../modules/reactivity/signal-store';
 import BaseShadowComponent from '../../base-shadow-component';
+import { GitHubClient } from '../services/github';
 
 import css from './project-details.css';
 import templateHtml from './project-details.html';
 
-const data = {
-    title: "Contoso Energy - Serverless Event-Driven Architecture",
-    overview: "Enterprise-grade event-driven platform for energy telemetry",
-    keyFeatures: [
-        "Real-time telemetry ingestion using AWS Kinesis",
-        "Serverless compute with AWS Lambda for scalable processing",
-        "Python & C# microservices orchestrated via FastAPI",
-        "Event-driven alerts and logging for operational insight"
-    ],
-    pros: "Highly scalable, low operational cost, real-time processing",
-    cons: "Requires AWS expertise, vendor lock-in risk",
-    techStack: ["C#", "Python", "FastAPI", "AWS Lambda", "Amazon Kinesis"],
-    tags: ['AWS', 'Python', 'C#', 'Serverless', 'Event-Driven'],
-    problem: "Legacy systems were unable to handle real-time energy telemetry at scale.",
-    solution: "Serverless architecture using AWS Lambda and Kinesis for event-driven processing.",
-    timeline: "Q1 2025 - Q2 2025",
-    impact: {
-        metrics: {
-            "Processing Time Reduction": "40% faster",
-            "Cost Savings": "30% lower cost"
-        },
-        business_outcome: "Improved system reliability and reduced operational costs."
-    },
-    codeSnippets: {
-        html: `<div id="telemetry-dashboard"></div>`,
-        js: `const lambdaHandler = async (event) => { console.log(event); };`,
-        python: `def process_event(event): print("Processing", event)`
-    }
-};
-
 class ProjectDetails extends BaseShadowComponent {
     constructor(debug = true) {
         super(templateHtml, css);
-        this.activeTab = 'overview';
         this.debug = debug;
+        this.client = new GitHubClient();
         if (this.debug) console.log('[ProjectDetails] Constructor initialized');
     }
 
     connectedCallback() {
-        this.data.set(data);
         super.connectedCallback();
+        this.togglePlaceholder(true); // show placeholder initially
 
-        // Subscribe to selected project instead of technology topic
-        subscribeSelectedProject(project => {
+        subscribeSelectedProject(async project => {
             if (!project) {
                 this.renderTemplateData([]);
                 return;
             }
 
-            // For now, using the static `data`; you can replace with fetch logic
-            this.renderTemplateData([data]);
-        });
+            this.togglePlaceholder(true);
 
-        this.togglePlaceholder(false);
+            try {
+                // Destructure project object
+                const { username, repo, file = 'story.json' } = project;
+
+                // Fetch story.json from GitHub
+                const raw = await this.client.fetchCodeFile(repo, file, username);
+
+                // Parse JSON safely
+                let story;
+                try {
+                    story = JSON.parse(raw);
+                } catch (err) {
+                    console.warn('Failed to parse story.json, using minimal fallback', err);
+                    story = {
+                        title: repo,
+                        overview: `Repository by ${username}`
+                    };
+                }
+
+                // Map story.json to ProjectDetails data
+                const data = this.mapStoryToData(story);
+
+                // Render mapped data
+                this.renderTemplateData(data);
+            } catch (err) {
+                console.error('Failed to fetch story.json:', err);
+                this.renderTemplateData({ title: project.repo, overview: 'Failed to load project details' });
+            }
+        });
     }
 
     renderTemplateData(items) {
@@ -65,7 +61,6 @@ class ProjectDetails extends BaseShadowComponent {
         super.renderTemplateData(items);
 
         const root = this.root;
-
         this.togglePlaceholder(false);
 
         // Key Features
@@ -163,7 +158,37 @@ class ProjectDetails extends BaseShadowComponent {
         if (placeholder) placeholder.style.display = show ? 'flex' : 'none';
         if (detailsContent) detailsContent.style.display = show ? 'none' : 'grid';
     }
+
+    mapStoryToData(story) {
+        if (!story) return {};
+
+        return {
+            title: story.title || story.summary || 'Untitled Project',
+            overview: story.summary || story.overview?.architecture?.key_components?.join(', ') || '',
+            keyFeatures: story.overview?.architecture?.key_components || [],
+            pros: 'See impact metrics',
+            cons: story.challenges?.join('; ') || '',
+            techStack: story.tech_stack || [],
+            tags: story.tags?.map(t => t.name) || [],
+            problem: story.problem || '',
+            solution: story.solution || '',
+            timeline: story.timeline
+                ? `${story.timeline.start || ''} - ${story.timeline.end || ''}`
+                : '',
+            impact: {
+                metrics: story.impact?.metrics
+                    ? Object.fromEntries(
+                        Object.entries(story.impact.metrics).map(([k, v]) => [
+                            k.replace(/_/g, ' '),
+                            v
+                        ])
+                    )
+                    : {},
+                business_outcome: story.impact?.business_outcome || ''
+            },
+            codeSnippets: story.codeSnippets || {}
+        };
+    }
 }
 
 customElements.define('project-details', ProjectDetails);
-    

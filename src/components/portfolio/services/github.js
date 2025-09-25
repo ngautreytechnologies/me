@@ -31,8 +31,8 @@ export class GitHubClient {
         );
     }
 
-    async fetchCodeFile(repoName, filePath, branch = Config.DEFAULT_BRANCH) {
-        const url = `https://raw.githubusercontent.com/${Config.GITHUB_USERNAME}/${repoName}/${branch}/${filePath}`;
+    async fetchCodeFile(repoName, filePath) {
+        const url = `https://raw.githubusercontent.com/${Config.GITHUB_USERNAME}/${repoName}/main/${filePath}`;
 
         const ctx = {
             action: 'github-fetch-code-file',
