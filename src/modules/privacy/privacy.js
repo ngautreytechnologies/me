@@ -18,6 +18,7 @@ export function anonymizationStep({ userIdKey = 'userId' } = {}) {
 }
 
 export function piiRedactionStep({ patterns = [] } = {}) {
+
     const defaultPatterns = [
         { regex: /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i, replacement: '[REDACTED_EMAIL]' },
         { regex: /\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b/g, replacement: '[REDACTED_PHONE]' },

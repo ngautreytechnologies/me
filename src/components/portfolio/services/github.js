@@ -11,11 +11,7 @@ export class GitHubClient {
         }
     }
 
-    async searchRepositoriesByTopics(prefixes = ["portfolio-", "codesample-"]) {
-        if (!Array.isArray(prefixes) || prefixes.length === 0) {
-            throw new Error("At least one prefix is required for filtering");
-        }
-
+    async searchRepositoriesByTopics() {
         const url = `https://api.github.com/users/${Config.GITHUB_USERNAME}/repos`;
 
         // Fetch all repos
@@ -25,10 +21,18 @@ export class GitHubClient {
         if (!res.ok) throw new Error(`Failed to fetch repos: ${res.status}`);
         const repos = await res.json();
 
-        // Filter by name prefixes
-        return repos.filter(repo =>
-            prefixes.some(prefix => repo.name.startsWith(prefix))
-        );
+        // Filter by name prefixes using for loop
+        const filteredRepos = [];
+        for (let i = 0; i < repos.length; i++) {
+            const repo = repos[i];
+            if (repo.name.startsWith('portfolio') || repo.name.startsWith('codesample')) {
+                filteredRepos.push(repo);
+                break; // stop checking other prefixes for this repo
+            }
+        }
+
+        return filteredRepos;
+
     }
 
     async fetchCodeFile(repoName, filePath) {

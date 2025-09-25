@@ -1,6 +1,7 @@
 import { escapeHtml } from '../../../modules/security/security';
 import { GitHubClient } from './github';
 import { setSelectedProject } from '../../../modules/reactivity/signal-store';
+import { networkPipeline } from '../../../globals';
 
 export class ProjectRenderer {
     /**
@@ -18,10 +19,11 @@ export class ProjectRenderer {
             return;
         }
 
-        const client = new GitHubClient();
+        // TODO: Make mandatory
+        const client = new GitHubClient(networkPipeline);
         let repos = [];
         try {
-            repos = await client.searchRepositoriesByTopics(topics);
+            repos = await client.searchRepositoriesByTopics();
         } catch (err) {
             console.error('Failed to fetch repos from GitHub', err);
             listContainer.innerHTML = "<p>Error fetching projects from GitHub.</p>";
@@ -44,6 +46,7 @@ export class ProjectRenderer {
 
             // Add click listener to set the selected project
             card.addEventListener('click', () => {
+
                 setSelectedProject({
                     username: repo.owner.login,
                     repo: repo.name,

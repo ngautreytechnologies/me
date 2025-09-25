@@ -15,44 +15,75 @@ class ProjectDetails extends BaseShadowComponent {
 
     connectedCallback() {
         super.connectedCallback();
-        this.togglePlaceholder(true); // show placeholder initially
+        this.togglePlaceholder(true);
 
         subscribeSelectedProject(async project => {
-            if (!project) {
-                this.renderTemplateData([]);
+            console.group('[ProjectDetails] Selected project update');
+            console.log('Received project:', project);
+
+            // ✅ EARLY EXIT: Invalid project payload
+            if (!project || !project.username || !project.repo) {
+                console.warn('No valid project selected, clearing display.');
+                this.clearProjectDetails();
+                this.togglePlaceholder(true);
+                console.groupEnd();
                 return;
             }
 
+            // ✅ Reset UI before loading new data
+            this.clearProjectDetails();
             this.togglePlaceholder(true);
 
             try {
-                // Destructure project object
                 const { username, repo, file = 'story.json' } = project;
+                console.log(`Fetching ${file} from "${username}/${repo}"`);
 
-                // Fetch story.json from GitHub
+                // ✅ Defensive: ensure fetch result is a string
                 const raw = await this.client.fetchCodeFile(repo, file, username);
+                if (!raw || typeof raw !== 'string') {
+                    throw new Error('Invalid file content returned');
+                }
+                console.log('Raw story.json content (preview):', raw.slice(0, 200), '...');
 
-                // Parse JSON safely
                 let story;
                 try {
                     story = JSON.parse(raw);
+                    console.log('Parsed story.json successfully');
                 } catch (err) {
-                    console.warn('Failed to parse story.json, using minimal fallback', err);
-                    story = {
-                        title: repo,
-                        overview: `Repository by ${username}`
-                    };
+                    console.warn('Failed to parse story.json, falling back.', err);
+                    story = { title: repo, overview: `Repository by ${username}` };
                 }
 
-                // Map story.json to ProjectDetails data
                 const data = this.mapStoryToData(story);
+                console.log('Mapped data for rendering:', data);
 
-                // Render mapped data
                 this.renderTemplateData(data);
             } catch (err) {
                 console.error('Failed to fetch story.json:', err);
-                this.renderTemplateData({ title: project.repo, overview: 'Failed to load project details' });
+                this.renderTemplateData({
+                    title: project.repo,
+                    overview: 'Failed to load project details',
+                });
             }
+
+            console.groupEnd();
+        });
+    }
+
+    /**
+     * ✅ Clears all previously rendered project content
+     */
+    clearProjectDetails() {
+        const root = this.root;
+        [
+            '[data-field="keyFeatures"]',
+            '[data-field="techStack"]',
+            '[data-field="tags"]',
+            '[data-field="metrics"]',
+            '[data-field="codeSnippets"]',
+        ].forEach(sel => {
+            const el = root.querySelector(sel);
+            if (el) el.innerHTML = '';
         });
     }
 
@@ -60,13 +91,13 @@ class ProjectDetails extends BaseShadowComponent {
         if (!items) return;
         super.renderTemplateData(items);
 
-        const root = this.root;
         this.togglePlaceholder(false);
 
-        // Key Features
+        const root = this.root;
+
+        // ✅ Key Features
         const keyFeaturesEl = root.querySelector('[data-field="keyFeatures"]');
-        if (keyFeaturesEl && items.keyFeatures?.length) {
-            keyFeaturesEl.innerHTML = '';
+        if (keyFeaturesEl && Array.isArray(items.keyFeatures)) {
             const ul = document.createElement('ul');
             items.keyFeatures.forEach(f => {
                 const li = document.createElement('li');
@@ -76,10 +107,9 @@ class ProjectDetails extends BaseShadowComponent {
             keyFeaturesEl.appendChild(ul);
         }
 
-        // Tech Stack
+        // ✅ Tech Stack
         const techEl = root.querySelector('[data-field="techStack"]');
-        if (techEl && items.techStack?.length) {
-            techEl.innerHTML = '';
+        if (techEl && Array.isArray(items.techStack)) {
             items.techStack.forEach((t, i) => {
                 const badge = document.createElement('span');
                 badge.className = 'tech-badge';
@@ -89,10 +119,9 @@ class ProjectDetails extends BaseShadowComponent {
             });
         }
 
-        // Tags
+        // ✅ Tags
         const tagEl = root.querySelector('[data-field="tags"]');
-        if (tagEl && items.tags?.length) {
-            tagEl.innerHTML = '';
+        if (tagEl && Array.isArray(items.tags)) {
             items.tags.forEach((t, i) => {
                 const badge = document.createElement('span');
                 badge.className = 'tag';
@@ -102,10 +131,9 @@ class ProjectDetails extends BaseShadowComponent {
             });
         }
 
-        // Metrics
+        // ✅ Metrics
         const metricsEl = root.querySelector('[data-field="metrics"]');
         if (metricsEl && items.impact?.metrics) {
-            metricsEl.innerHTML = '';
             Object.entries(items.impact.metrics).forEach(([k, v]) => {
                 const card = document.createElement('div');
                 card.className = 'metric-card';
@@ -114,8 +142,10 @@ class ProjectDetails extends BaseShadowComponent {
             });
         }
 
-        // Code Viewer
-        if (items.codeSnippets) this.setupCodeViewer(items.codeSnippets);
+        // ✅ Code Viewer
+        if (items.codeSnippets) {
+            this.setupCodeViewer(items.codeSnippets);
+        }
     }
 
     setupCodeViewer(snippets) {
@@ -172,21 +202,19 @@ class ProjectDetails extends BaseShadowComponent {
             tags: story.tags?.map(t => t.name) || [],
             problem: story.problem || '',
             solution: story.solution || '',
-            timeline: story.timeline
-                ? `${story.timeline.start || ''} - ${story.timeline.end || ''}`
-                : '',
+            timeline: story.timeline ? `${story.timeline.start || ''} - ${story.timeline.end || ''}` : '',
             impact: {
                 metrics: story.impact?.metrics
                     ? Object.fromEntries(
                         Object.entries(story.impact.metrics).map(([k, v]) => [
                             k.replace(/_/g, ' '),
-                            v
+                            v,
                         ])
                     )
                     : {},
-                business_outcome: story.impact?.business_outcome || ''
+                business_outcome: story.impact?.business_outcome || '',
             },
-            codeSnippets: story.codeSnippets || {}
+            codeSnippets: story.codeSnippets || {},
         };
     }
 }
