@@ -1,4 +1,5 @@
 import BaseShadowComponent from '../base-shadow-component';
+
 import css from './certifications.css';
 import templateHtml from './certifications.html';
 
@@ -16,8 +17,8 @@ class Certifications extends BaseShadowComponent {
     }
 
     connectedCallback() {
-        this.data.set(data);
         super.connectedCallback();
+        super.triggerTemplateRender(data);
     }
 }
 

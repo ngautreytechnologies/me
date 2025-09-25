@@ -1,25 +1,55 @@
-// Javascript
-import 'utils/reactive.js';
-import 'utils/signal-store.js';
-import 'utils/signals.js';
-import 'utils/navigation.js';
-import 'utils/styles.js';
-import 'utils/resilience.js';
-import 'utils/animations.js';
-import 'utils/dom.js';
+// ----- Globals -----
+import './globals';
 
-import './globals.js';
+// ----- Core Modules -----
+import './modules/logging/logger';
+import './modules/pipeline/request-pipeline';
+import './modules/http/http-client';
+import './modules/enrichment/environment';
+import './modules/enrichment/timestamp';
+import './modules/hooks/global';
+import './modules/hooks/component';
+import './modules/dom/dom';
+import './modules/dom/navigation';
+import './modules/animation/animation';
+import './modules/reactivity/reactive';
+import './modules/reactivity/signals';
+import './modules/reactivity/signal-store';
+import './modules/reactivity/event-hub';
+import './modules/cache/cache';
+import './modules/enrichment/enrichment';
+import './modules/http/http';
+import './modules/privacy/privacy';
+import './modules/resilience/resilience';
+import './modules/security/security';
+import './modules/storage/storage';
+import './modules/transformation/transformation';
 
-import './components/portfoliio/project-details/project-details.js';
-import './components/portfoliio/projects-search/projects-search.js';
+// ----- Styles -----
+import './styles/styles'
 
-import './components/skills/skills-grid/skills-grid.js';
-import './components/skills/skill-details/skill-details.js';
+// ----- Components -----
+// Base components first
+import './components/base-component';
+import './components/base-light-component';
+import './components/base-shadow-component';
 
-import './components/certifications/certifications.js';
-import './components/education/education.js';
-import './components/experience/experience.js';
-import './components/header/header.js';
-import './components/summary/summary.js';
+// Feature components
+import './components/header/header';
+import './components/summary/summary';
+import './components/certifications/certifications';
+import './components/education/education';
+import './components/experience/experience';
 
-console.log('JavaScript is working!');
+// Portfolio
+import './components/portfolio/data';
+import './components/portfolio/project-details/project-details';
+import './components/portfolio/projects-search/projects-search';
+import './components/portfolio/services/github';
+import './components/portfolio/services/project';
+import './components/portfolio/services/tag';
+
+// Skills
+import './components/skills/data';
+import './components/skills/skill-details/skill-details';
+import './components/skills/skills-grid/skills-grid';

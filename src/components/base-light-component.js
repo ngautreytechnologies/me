@@ -1,6 +1,7 @@
-// base-light-component.js
-import BaseComponent from './base-component.js';
-import { removeElements } from '../utils/dom.js';
+// base-light-component
+import { removeElements } from '../modules/dom/dom';
+
+import BaseComponent from './base-component';
 
 /**
  * BaseLightComponent
@@ -17,15 +18,15 @@ export default class BaseLightComponent extends BaseComponent {
     }
 
     /**
-     * Override renderData for light components.
+     * Override renderTemplateData for light components.
      * - Still handles [data-container] + <template> if present
      * - Falls back gracefully if no template is used
      */
-    renderData(items) {
-        console.log(`[${this.constructor.name}] renderData (light DOM)`, items);
+    renderTemplateData(items, containerSelector = '[data-container]') {
+        console.log(`[${this.constructor.name}] renderTemplateData (light DOM)`, items);
 
         try {
-            const container = this.querySelector('[data-container]') || this;
+            const container = this.querySelector(containerSelector) || this;
             const templateEl = this.querySelector('template');
 
             if (!container) {
@@ -76,7 +77,7 @@ export default class BaseLightComponent extends BaseComponent {
                 this.onRender(items);
             }
         } catch (err) {
-            console.error(`[${this.constructor.name}] renderData error:`, err);
+            console.error(`[${this.constructor.name}] renderTemplateData error:`, err);
         }
     }
 

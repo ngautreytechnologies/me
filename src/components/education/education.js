@@ -1,4 +1,5 @@
-import BaseShadowComponent from '../base-shadow-component.js';
+import BaseShadowComponent from '../base-shadow-component';
+
 import css from './education.css';
 import templateHtml from './education.html';
 
@@ -37,13 +38,13 @@ class Education extends BaseShadowComponent {
     }
 
     connectedCallback() {
-        this.data.set(data);
         super.connectedCallback();
+        super.triggerTemplateRender(data);
     }
 
-    renderData(items) {
+    renderTemplateData(items) {
         // Call parent method first
-        super.renderData(items);
+        super.renderTemplateData(items);
 
         // Then handle custom rendering (slot replacement)
         const container = this.root.querySelector('[data-container]');

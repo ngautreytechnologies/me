@@ -1,0 +1,129 @@
+<div class="project-details-container" data-container>
+    <template>
+        <!-- Page 1 -->
+        <div id="project-details-page-1" class="project-details" data-page="1">
+            <!-- Header -->
+            <div class="detail-header">
+                <h3 data-field="title">Project Title</h3>
+                <div class="project-details-tags" data-field="tags">
+                    <!-- tags injected here -->
+                </div>
+            </div>
+
+            <!-- Body Grid -->
+            <div class="project-details-body">
+                <!-- Overview -->
+                <div class="project-detail-card">
+                    <h4><i class="fas fa-info-circle"></i> Overview</h4>
+                    <p data-field="overview">Project overview text</p>
+                </div>
+
+                <!-- Problem -->
+                <div class="project-detail-card">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Problem</h4>
+                    <p data-field="problem">Problem description</p>
+                </div>
+
+                <!-- Solution -->
+                <div class="project-detail-card">
+                    <h4><i class="fas fa-lightbulb"></i> Solution</h4>
+                    <p data-field="solution">Solution description</p>
+                </div>
+
+                <!-- Key Features -->
+                <div class="project-detail-card">
+                    <h4><i class="fas fa-list"></i> Key Features</h4>
+                    <div data-field="keyFeatures"></div>
+                </div>
+
+                <!-- Pros -->
+                <div class="project-detail-card">
+                    <h4><i class="fas fa-thumbs-up"></i> Pros</h4>
+                    <p data-field="pros"></p>
+                </div>
+
+                <!-- Cons -->
+                <div class="project-detail-card">
+                    <h4><i class="fas fa-thumbs-down"></i> Cons</h4>
+                    <p data-field="cons"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 2 -->
+        <div id="project-details-page-2" class="project-details" data-page="2">
+            <!-- Header -->
+            <div class="detail-header">
+                <h3 data-field="title">Project Title</h3>
+            </div>
+
+            <!-- Body Grid -->
+            <div class="project-details-body">
+                <!-- Tech Stack -->
+                <div class="project-detail-card">
+                    <h4><i class="fas fa-tools"></i> Tech Stack</h4>
+                    <div data-field="techStack"></div>
+                </div>
+
+                <!-- Impact Metrics -->
+                <div class="project-detail-card">
+                    <h4><i class="fas fa-chart-line"></i> Impact Metrics</h4>
+                    <div data-field="metrics"></div>
+                </div>
+
+                <!-- Stack Benefits -->
+                <div class="project-detail-card">
+                    <h4><i class="fas fa-check-circle"></i> Stack Benefits</h4>
+                    <p data-field="stackBenefits">Why this stack was chosen and its advantages.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 3 -->
+        <div id="project-details-page-3" class="project-details" data-page="3">
+            <!-- Header -->
+            <div class="detail-header">
+                <h3 data-field="title">Project Title</h3>
+            </div>
+
+            <!-- Body Grid -->
+            <div class="project-details-body">
+                <!-- Media Viewer -->
+                <div class="project-detail-card">
+                    <h4><i class="fas fa-images"></i> Gallery</h4>
+                    <div data-field="gallery"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 4 -->
+        <div id="project-details-page-4" class="project-details" data-page="4">
+            <!-- Header -->
+            <div class="detail-header">
+                <h3 data-field="title">Project Title</h3>
+            </div>
+
+            <!-- Body Grid -->
+            <div class="project-details-body">
+                <!-- Code Viewer -->
+                <div class="project-detail-card">
+                    <h4><i class="fas fa-code"></i> Code Examples</h4>
+                    <div data-field="codeSnippets"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Placeholder when no project is selected -->
+        <div class="project-placeholder">
+            <i class="fas fa-hand-pointer"></i>
+            <p>Select a project to view details</p>
+            <small>Click a project card on the left to get started</small>
+        </div>
+
+        <!-- Page Navigation -->
+        <div class="project-details-nav">
+            <button class="page-nav-btn" data-page-prev disabled>&larr; Previous</button>
+            <button class="page-nav-btn" data-page-next>Next &rarr;</button>
+        </div>
+    </template>
+</div>

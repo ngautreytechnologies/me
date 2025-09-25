@@ -2,19 +2,21 @@
     <template>
         <div class="skill-details">
             <div class="detail-header">
-                <h3 data-field="title"></h3>
+                <h3 data-field="title" data-export-pdf-field="title"></h3>
                 <div class="skill-details-tags">
-                    <slot name="tags"></slot>
+                    <slot name="tags"></slot> <!-- Excluded from PDF -->
                 </div>
             </div>
 
             <div class="skill-details-body">
-                <p><strong>Overview:</strong> <span data-field="overview"></span></p>
+                <p><strong>Overview:</strong> <span data-field="overview" data-export-pdf-field="overview"></span></p>
 
                 <p><strong>Key Features:</strong></p>
-                <slot name="keyFeatures"></slot>
-                <p><strong>Pros:</strong> <span data-field="pros"></span></p>
-                <p><strong>Cons:</strong> <span data-field="cons"></span></p>
+                <slot name="keyFeatures" data-export-pdf-ignore></slot>
+                <!-- Excluded from PDF unless explicitly needed -->
+
+                <p><strong>Pros:</strong> <span data-field="pros" data-export-pdf-field="pros"></span></p>
+                <p><strong>Cons:</strong> <span data-field="cons" data-export-pdf-field="cons"></span></p>
             </div>
         </div>
     </template>

@@ -3,11 +3,11 @@
         <div class="profile-image">
             <img src="./images/profile.jfif" alt="Nicholas Simon Gautrey">
         </div>
-        <div class="profile-info">
-            <h1>Nicholas Gautrey</h1>
-            <div class="role">Principal Engineer</div>
-            <div class="company">DendriFlow</div>
-            <div class="company">AI Innovator</div>
+        <div class="profile-info" data-export-pdf>
+            <h1 data-export-pdf-field="name">Nicholas Gautrey</h1>
+            <div class="role" data-export-pdf-field="role">Principal Engineer</div>
+            <div class="company" data-export-pdf-field="company1">DendriFlow</div>
+            <div class="company" data-export-pdf-field="company2">AI Innovator</div>
         </div>
     </div>
     <div class="contact-links">
@@ -22,7 +22,7 @@
         </a>
     </div>
     <div class="export-buttons">
-        <button id="pdf-btn" onclick="exportPDF()">📄 Export PDF</button>
-        <button id="cta-btn" onclick="contactMe()">📞 Contact Me</button>
+        <button id="pdf-btn">📄 Export PDF</button>
+        <button id="cta-btn">📞 Contact Me</button>
     </div>
 </div>
