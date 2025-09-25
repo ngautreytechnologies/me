@@ -21,10 +21,10 @@ export class ProjectRenderer {
             return;
         }
 
-        const client = new GitHubClient(); // assume no pipeline needed, or inject as needed
+        const client = new GitHubClient();
         let repos = [];
         try {
-            repos = await client.searchRepositoriesByTopics(topics);
+            repos = await client.searchRepositoriesByTopics();
         } catch (err) {
             console.error('Failed to fetch repos from GitHub', err);
             listContainer.innerHTML = "<p>Error fetching projects from GitHub.</p>";

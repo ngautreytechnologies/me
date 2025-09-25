@@ -11,33 +11,23 @@ export class GitHubClient {
         }
     }
 
-    async searchRepositoriesByTopics(topics = []) {
-        if (!Array.isArray(topics) || topics.length === 0) {
-            throw new Error("At least one topic is required for search");
+    async searchRepositoriesByTopics(prefixes = ["portfolio-", "codesample-"]) {
+        if (!Array.isArray(prefixes) || prefixes.length === 0) {
+            throw new Error("At least one prefix is required for filtering");
         }
 
-        // Use list user repos endpoint to ensure only your repos are fetched
         const url = `https://api.github.com/users/${Config.GITHUB_USERNAME}/repos`;
 
-        const ctx = {
-            action: 'github-search-repos',
-            url,
-            request: {},
-            userConsent: true,
-            correlationId: crypto.randomUUID()
-        };
+        // Fetch all repos
+        const res = await fetch(url, {
+            headers: { 'Accept': 'application/vnd.github+json' }
+        });
+        if (!res.ok) throw new Error(`Failed to fetch repos: ${res.status}`);
+        const repos = await res.json();
 
-        await this.pipeline.execute(ctx);
-
-        if (!ctx.response) {
-            const res = await fetch(url);
-            if (!res.ok) throw new Error(`Failed to fetch user repos: ${res.status}`);
-            ctx.response = await res.json();
-        }
-
-        // Filter by topics locally if needed
-        return ctx.response.filter(repo =>
-            topics.every(t => repo.topics.includes(t))
+        // Filter by name prefixes
+        return repos.filter(repo =>
+            prefixes.some(prefix => repo.name.startsWith(prefix))
         );
     }
 
