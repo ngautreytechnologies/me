@@ -73,9 +73,9 @@ class Experience extends BaseShadowComponent {
         super.triggerTemplateRender(data);
     }
 
-    renderTemplateData(items) {
+    renderTemplateData(items, containerSelector = '[data-container]') {
         // Call parent method first
-        super.renderTemplateData(items);
+        super.renderTemplateData(items, container);
 
         // Then handle custom rendering (slot replacement)
         const container = this.root.querySelector('[data-container]');

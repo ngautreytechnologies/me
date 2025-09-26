@@ -44,7 +44,8 @@ import './components/experience/experience';
 // Portfolio
 import './components/portfolio/data';
 import './components/portfolio/project-details/project-details';
-import './components/portfolio/projects-search/projects-search';
+import './components/portfolio/projects-filter/projects-filter';
+import './components/portfolio/projects-list/projects-list';
 import './components/portfolio/services/github';
 import './components/portfolio/services/project';
 import './components/portfolio/services/tag';

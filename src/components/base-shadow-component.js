@@ -101,8 +101,6 @@ export default class BaseShadowComponent extends BaseComponent {
                 console.groupEnd();
             });
 
-            console.log('Final container content:', container?.innerHTML);
-
             if (typeof this.onRender === 'function') {
                 this.onRender(dataArray);
             }

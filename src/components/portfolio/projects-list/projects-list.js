@@ -3,8 +3,8 @@ import BaseShadowComponent from '../../base-shadow-component';
 import { setSelectedTechnologyTopic } from '../../../modules/reactivity/signal-store';
 import { ProjectRenderer } from '../services/project';
 
-import templateHtml from './projects-search.html';
-import css from './projects-search.css';
+import templateHtml from './projects-list.html';
+import css from './projects-list.css';
 
 class ProjectsSearch extends BaseShadowComponent {
     constructor() {
@@ -133,4 +133,4 @@ class ProjectsSearch extends BaseShadowComponent {
     }
 }
 
-customElements.define('projects-search', ProjectsSearch);
+customElements.define('projects-list', ProjectsSearch);

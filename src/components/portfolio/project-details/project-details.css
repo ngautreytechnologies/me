@@ -1,20 +1,67 @@
+/* ===========================
+   Container & Layout
+=========================== */
+
 .project-details-container {
     position: relative;
     min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* ===========================
+   Carousel Layout
+=========================== */
+
+.project-details-carousel {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+    width: 100%;
+}
+
+.carousel-track {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    scroll-snap-type: x mandatory;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
 }
 
 .project-details {
+    flex: 0 0 auto;
+    /* instead of 0 0 100% */
+    width: 100%;
+    /* stays 100%, but now relative to container */
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 2rem;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
     line-height: 1.7;
 }
 
-/* Detail Cards */
+/* ===========================
+   Detail Cards
+=========================== */
+
 .project-detail-card {
     position: relative;
     width: 100%;
     background: var(--card-bg);
     border: 1px solid var(--border-glass);
     border-radius: 20px;
-    /* match site cards */
     padding: 1.5rem;
     margin-bottom: 1rem;
     opacity: 0;
@@ -34,7 +81,20 @@
     transform: translateY(-5px);
 }
 
-/* Header */
+/* ===========================
+   Header & Tags
+=========================== */
+
+.detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 0.5rem;
+}
+
 .detail-header h3 {
     font-size: 1.3rem;
     font-weight: 600;
@@ -71,7 +131,10 @@
     box-shadow: var(--shadow-glow);
 }
 
-/* Body Grid */
+/* ===========================
+   Body Grid & Typography
+=========================== */
+
 .project-details-body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -90,7 +153,10 @@
     font-weight: 600;
 }
 
-/* Lists */
+/* ===========================
+   Lists
+=========================== */
+
 .project-detail-card ul {
     margin: 0.5rem 0 1rem 1.5rem;
     list-style: none;
@@ -113,7 +179,10 @@
     font-weight: bold;
 }
 
-/* Metrics Cards */
+/* ===========================
+   Metrics
+=========================== */
+
 .metric-card {
     background: var(--card-bg);
     border: 1px solid var(--border-glass);
@@ -140,7 +209,10 @@
     color: var(--text-secondary);
 }
 
-/* Tech Stack Badges */
+/* ===========================
+   Tech Stack Badges
+=========================== */
+
 .tech-badge {
     background: var(--primary-gradient);
     color: #fff;
@@ -155,7 +227,10 @@
     animation: fadeInUp 0.3s ease forwards;
 }
 
-/* Code Viewer */
+/* ===========================
+   Code Viewer
+=========================== */
+
 .code-viewer-container {
     margin-top: 2rem;
     border: 1px solid var(--border-glass);
@@ -205,9 +280,144 @@
     display: block;
 }
 
-/* Responsive */
+/* ===========================
+   Placeholder
+=========================== */
+
+.project-placeholder {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #777;
+}
+
+.project-placeholder i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.project-placeholder p {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.project-placeholder small {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+}
+
+/* ===========================
+   Navigation
+=========================== */
+
+.project-details-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: var(--card-bg);
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+}
+
+.page-nav-btn {
+    background: var(--btn-bg, #222);
+    color: var(--btn-text, #fff);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background 0.25s ease;
+}
+
+.page-nav-btn:hover:not(:disabled) {
+    background: var(--btn-bg-hover, #444);
+}
+
+.page-nav-btn:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
 @media (max-width: 768px) {
     .project-details-body {
         grid-template-columns: 1fr;
     }
+
+    .detail-header h3 {
+        font-size: 1.1rem;
+    }
+
+    .project-details-nav {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .page-nav-btn {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+}
+
+/* ===========================
+   Animations
+=========================== */
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* === Carousel Layout Fix === */
+
+/* Carousel wrapper stays the same */
+.project-details-carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Track no longer controls width — we rely on .active pages */
+.carousel-track {
+    display: block;
+    width: 100%;
+    transition: none;
+    /* No transform sliding needed */
+}
+
+/* Each page takes full container width but is hidden by default */
+.project-details {
+    display: none;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 2rem 0;
+    flex: 0 0 100%;
+}
+
+/* Only active page is visible */
+.project-details.active {
+    display: block;
+}
+
+/* Detail cards inside still animate in individually if needed */
+.project-detail-card {
+    opacity: 1;
+    transform: none;
+    transition: none;
 }

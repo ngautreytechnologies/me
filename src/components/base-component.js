@@ -1,4 +1,3 @@
-import { } from '../styles/styles'
 import { GLOBAL_SHEETS, ensureGlobalStyleInjected } from '../styles/styles';
 import { ReactiveValue } from '../modules/reactivity/reactive';
 import { removeElements } from '../modules/dom/dom';
@@ -190,7 +189,7 @@ export default class BaseComponent extends HTMLElement {
     }
 
     renderTemplateData(items, containerSelector = '[data-container]') {
-        this._log(`[${this.constructor.name}] renderTemplateData placeholder`, items);
+        this._log(`[${this.constructor.name}] renderTemplateData placeholder ${containerSelector}`, items);
     }
 
     // TODO: Make more secure etc
