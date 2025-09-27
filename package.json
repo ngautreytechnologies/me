@@ -8,13 +8,16 @@
     "dev": "rollup -c -w & serve dist -p 3000",
     "build": "rollup -c --logLevel debug",
     "preview": "serve dist -p 8080",
-    "lint": "npx eslint . "
+    "lint": "npx eslint . ",
+    "test": "jest"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.28.3",
     "@eslint/js": "^9.36.0",
     "@rollup/plugin-commonjs": "^28.0.6",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "autoprefixer": "^10.4.21",
+    "babel-jest": "^30.1.2",
     "cross-env": "^7.0.3",
     "css-loader": "^7.1.2",
     "cssnano": "^7.1.1",
@@ -23,6 +26,8 @@
     "eslint-plugin-import": "^2.32.0",
     "glob": "^10.4.5",
     "globals": "^16.4.0",
+    "jest": "^30.1.3",
+    "jest-environment-jsdom": "^30.1.2",
     "rollup": "^4.50.1",
     "rollup-plugin-css-only": "^4.5.5",
     "rollup-plugin-generate-html-template": "^1.7.0",

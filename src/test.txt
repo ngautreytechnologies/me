@@ -1,0 +1,115 @@
+
+> cv-site@1.0.0 test
+> jest
+
+  console.groupCollapsed
+      [BaseShadowComponent] Constructor start { template: '', componentCss: '', dataAttrs: null, useShadow: true }
+
+      at BaseShadowComponent.groupCollapsed [as _log] (src/components/base-component.js:204:21)
+
+  console.groupCollapsed
+      [BaseShadowComponent] _applyStyles start
+
+      at BaseShadowComponent.groupCollapsed [as _log] (src/components/base-component.js:204:21)
+
+  console.groupCollapsed
+      [BaseShadowComponent] _applyStyles complete
+
+      at BaseShadowComponent.groupCollapsed [as _log] (src/components/base-component.js:204:21)
+
+  console.groupCollapsed
+      [BaseShadowComponent] _applyFonts start
+
+      at BaseShadowComponent.groupCollapsed [as _log] (src/components/base-component.js:204:21)
+
+  console.groupCollapsed
+      [BaseShadowComponent] Font link appended https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap
+
+      at BaseShadowComponent.groupCollapsed [as _log] (src/components/base-component.js:204:21)
+          at Array.forEach (<anonymous>)
+
+  console.groupCollapsed
+      [BaseShadowComponent] Font link appended https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css
+
+      at BaseShadowComponent.groupCollapsed [as _log] (src/components/base-component.js:204:21)
+          at Array.forEach (<anonymous>)
+
+  console.groupCollapsed
+      [BaseShadowComponent] _applyFonts complete
+
+      at BaseShadowComponent.groupCollapsed [as _log] (src/components/base-component.js:204:21)
+
+  console.groupCollapsed
+      [BaseShadowComponent] _injectTemplate start null
+
+      at BaseShadowComponent.groupCollapsed [as _log] (src/components/base-component.js:204:21)
+
+  console.groupCollapsed
+      [BaseShadowComponent] Constructor complete { observedAttrs: [] }
+
+      at BaseShadowComponent.groupCollapsed [as _log] (src/components/base-component.js:204:21)
+
+  console.groupCollapsed
+      [BaseShadowComponent] Constructor start { template: '', componentCss: '', dataAttrs: null, useShadow: true }
+
+      at BaseShadowComponent.groupCollapsed [as _log] (src/components/base-component.js:204:21)
+
+  console.groupCollapsed
+      [BaseShadowComponent] _applyStyles start
+
+      at BaseShadowComponent.groupCollapsed [as _log] (src/components/base-component.js:204:21)
+
+  console.groupCollapsed
+      [BaseShadowComponent] _applyStyles complete
+
+      at BaseShadowComponent.groupCollapsed [as _log] (src/components/base-component.js:204:21)
+
+  console.groupCollapsed
+      [BaseShadowComponent] _applyFonts start
+
+      at BaseShadowComponent.groupCollapsed [as _log] (src/components/base-component.js:204:21)
+
+  console.groupCollapsed
+      [BaseShadowComponent] Font link appended https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap
+
+      at BaseShadowComponent.groupCollapsed [as _log] (src/components/base-component.js:204:21)
+          at Array.forEach (<anonymous>)
+
+  console.groupCollapsed
+      [BaseShadowComponent] Font link appended https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css
+
+      at BaseShadowComponent.groupCollapsed [as _log] (src/components/base-component.js:204:21)
+          at Array.forEach (<anonymous>)
+
+  console.groupCollapsed
+      [BaseShadowComponent] _applyFonts complete
+
+      at BaseShadowComponent.groupCollapsed [as _log] (src/components/base-component.js:204:21)
+
+  console.groupCollapsed
+      [BaseShadowComponent] _injectTemplate start null
+
+      at BaseShadowComponent.groupCollapsed [as _log] (src/components/base-component.js:204:21)
+
+  console.groupCollapsed
+      [BaseShadowComponent] Constructor complete { observedAttrs: [] }
+
+      at BaseShadowComponent.groupCollapsed [as _log] (src/components/base-component.js:204:21)
+
+  console.warn
+    [TemplateRenderer] No template found in container HTMLDivElement {}
+
+    [0m [90m 25 |[39m
+     [90m 26 |[39m         [36mif[39m ([33m![39mtemplateEl) {
+    [31m[1m>[22m[39m[90m 27 |[39m             console[33m.[39mwarn([32m`[TemplateRenderer] No template found in container`[39m[33m,[39m container)[33m;[39m
+     [90m    |[39m                     [31m[1m^[22m[39m
+     [90m 28 |[39m             [36mreturn[39m[33m;[39m
+     [90m 29 |[39m         }
+     [90m 30 |[39m[0m
+
+      at Function.warn (src/components/template-renderer.js:27:21)
+      at render (src/components/base-shadow-component.js:45:28)
+          at Array.forEach (<anonymous>)
+      at BaseShadowComponent.forEach [as renderSupplementaryData] (src/components/base-shadow-component.js:43:20)
+      at Object.renderSupplementaryData (src/components/base-shadow-component.test.js:60:19)
+

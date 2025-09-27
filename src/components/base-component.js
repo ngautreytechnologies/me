@@ -50,7 +50,6 @@ export default class BaseComponent extends HTMLElement {
             this._log('Reactive data updated', val);
         }));
 
-
         this._trackDisposable(this.events.subscribe(events => {
             this._log('Events updated', events);
             for (const key in events) {
