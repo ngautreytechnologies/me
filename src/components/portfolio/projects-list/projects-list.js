@@ -1,4 +1,4 @@
-import { tags } from '../data';
+import { technologyTaxonomy } from '../data';
 import BaseShadowComponent from '../../base-shadow-component';
 import { setSelectedTechnologyTopic } from '../../../modules/reactivity/signal-store';
 import { ProjectRenderer } from '../services/project';
@@ -9,14 +9,14 @@ import css from './projects-list.css';
 class ProjectsSearch extends BaseShadowComponent {
     constructor() {
         super(templateHtml, css);
-        this.rootTags = tags;
-        this.currentLevel = tags;
+        this.roottechnologyTaxonomy = technologyTaxonomy;
+        this.currentLevel = technologyTaxonomy;
         this.path = [];
     }
 
     connectedCallback() {
         super.connectedCallback();
-        this._renderLevel(this.rootTags);
+        this._renderLevel(this.roottechnologyTaxonomy);
     }
 
     _renderLevel(levelData) {
@@ -74,7 +74,7 @@ class ProjectsSearch extends BaseShadowComponent {
                 homeLink.addEventListener('click', e => {
                     e.preventDefault();
                     this.path = [];
-                    this._renderLevel(this.rootTags);
+                    this._renderLevel(this.roottechnologyTaxonomy);
                 });
                 homeLi.appendChild(homeLink);
             }
@@ -106,7 +106,7 @@ class ProjectsSearch extends BaseShadowComponent {
                     backButton.onclick = () => {
                         this.path.pop();
                         if (this.path.length === 0) {
-                            this._renderLevel(this.rootTags);
+                            this._renderLevel(this.roottechnologyTaxonomy);
                         } else {
                             const last = this.path[this.path.length - 1];
                             this._renderLevel(last.children || []);

@@ -207,7 +207,7 @@ export default class BaseComponent extends HTMLElement {
     }
 
     _applyStyles(componentCss) {
-        this._log('_applyStyles start', componentCss);
+        this._log('_applyStyles start');
         const sheets = [...GLOBAL_SHEETS];
         if (componentCss && typeof CSSStyleSheet !== 'undefined') {
             try {

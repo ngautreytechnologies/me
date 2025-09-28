@@ -24,13 +24,10 @@ describe('TemplateRenderer', () => {
         // Always reset container before render to avoid leftover DOM
         container.querySelectorAll('.item').forEach(el => el.remove());
         TemplateRenderer.render(container, data);
-
-        console.log('[DEBUG] Rendered HTML:\n', container.innerHTML);
     }
 
     function getItem(index = 0) {
         const items = Array.from(container.querySelectorAll('.item'));
-        console.log('[DEBUG] Found items:', items.length, items);
 
         if (items.length === 0) {
             throw new Error(`No .item elements rendered — check template or data.`);
@@ -124,5 +121,88 @@ describe('TemplateRenderer', () => {
 
         const el = item.querySelector('[data-field="name"]');
         expect(el.querySelector('strong').textContent).toBe('Bold');
+    });
+});
+
+describe('TemplateRenderer - tag rendering', () => {
+    let container;
+
+    beforeEach(() => {
+        document.body.innerHTML = `
+          <div id="test-container">
+            <template id="tag-item-template">
+              <div class="tag-card" data-field="name"></div>
+            </template>
+          </div>
+        `;
+        container = document.getElementById('test-container');
+    });
+
+    function renderTags(tags) {
+        // Clear previously rendered
+        container.querySelectorAll('.tag-card').forEach(el => el.remove());
+        TemplateRenderer.render(container, tags, { templateSelector: 'template', renderFlag: 'data-rendered' });
+    }
+
+    function getTag(index = 0) {
+        const nodes = Array.from(container.querySelectorAll('.tag-card'));
+        if (!nodes.length) throw new Error('No tag-card elements rendered');
+        if (index >= nodes.length) throw new Error(`Requested index ${index} exceeds ${nodes.length}`);
+        return nodes[index];
+    }
+
+    test('renders single tag correctly', () => {
+        const tags = [{ id: 'tag-1', name: 'Artificial Intelligence' }];
+        renderTags(tags);
+
+        const tag = getTag();
+        expect(tag.textContent).toBe('Artificial Intelligence');
+        expect(tag.getAttribute('data-rendered')).toBe('true');
+    });
+
+    test('renders multiple tags correctly', () => {
+        const tags = [
+            { id: 'tag-1', name: 'AI' },
+            { id: 'tag-2', name: 'AWS' },
+            { id: 'tag-3', name: 'Python' }
+        ];
+        renderTags(tags);
+
+        const tag0 = getTag(0);
+        const tag1 = getTag(1);
+        const tag2 = getTag(2);
+
+        expect(tag0.textContent).toBe('AI');
+        expect(tag1.textContent).toBe('AWS');
+        expect(tag2.textContent).toBe('Python');
+    });
+
+    test('handles function values for tag names', () => {
+        const tags = [{ id: 'tag-1', name: t => `Tag: ${t.id}` }];
+        renderTags(tags);
+
+        const tag = getTag();
+        expect(tag.textContent).toBe('Tag: tag-1');
+    });
+
+    test('clears previously rendered tags', () => {
+        const first = [{ id: 'tag-1', name: 'AI' }];
+        const second = [{ id: 'tag-2', name: 'AWS' }];
+
+        renderTags(first);
+        expect(container.querySelectorAll('.tag-card').length).toBe(1);
+
+        renderTags(second);
+        const tags = container.querySelectorAll('.tag-card');
+        expect(tags.length).toBe(1);
+        expect(tags[0].textContent).toBe('AWS');
+    });
+
+    test('renders tags with mustache style bindings', () => {
+        const tags = [{ id: 'tag-1', name: '{{id}}' }];
+        renderTags(tags);
+
+        const tag = getTag();
+        expect(tag.textContent).toBe('tag-1');
     });
 });

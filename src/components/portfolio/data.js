@@ -1,139 +1,114 @@
-export const technologyTaxonomy = {
-  "Artificial Intelligence & Machine Learning": [
-    "artificial-intelligence",
-    "ai",
-    "ml",
-    "machine-learning",
-    "real-time-ml",
-    "explainable-ai",
-    "privacy-by-design",
-    "human-in-the-loop",
-    "model-lineage",
-    "model-in-the-loop",
-    "anomaly-detection",
-    "topic-modeling",
-    "summarization",
-    "entity-recognition",
-    "ner",
-    "relationship-extraction",
-    "relation-extraction",
-    "knowledge-graph",
-    "graph-ai",
-    "graph-first-modeling",
-    "graph-powered",
-    "graph-centric"
-  ],
+export const technologyTaxonomy = [
+  {
+    name: "ai-ml",
+    title: "Artificial Intelligence & ML",
+    topics: [
+      { id: "artificial-intelligence", label: "AI" },
+      { id: "machine-learning", label: "ML" },
+      { id: "knowledge-graph", label: "KG" },
+      { id: "explainable-ai", label: "XAI" },
+      { id: "privacy-by-design", label: "Privacy" },
+      { id: "graph-ai", label: "Graph AI" },
+      { id: "graph-first-modeling", label: "Graph Model" },
+      { id: "graph-powered", label: "Graph-Powered" },
+      { id: "graph-centric", label: "Graph-Centric" }
+    ]
+  },
+  {
+    name: "generative-ai",
+    title: "Generative AI & LLMs",
+    topics: [
+      { id: "generative-ai", label: "Gen AI" },
+      { id: "large-language-models", label: "LLMs" },
+      { id: "prompt-engineering", label: "Prompt Eng." },
+      { id: "langchain", label: "LangChain" },
+      { id: "fine-tuning", label: "Fine-Tuning" },
+      { id: "rag", label: "RAG" },
+    ]
+  },
+  {
+    name: "ai-agents",
+    title: "AI Agents & Copilots",
+    topics: [
+      { id: "ai-agents", label: "Agents" },
+      { id: "enterprise-copilot", label: "Enterprise Copilot" },
+      { id: "mobile-copilot", label: "Mobile Copilot" },
+      { id: "edge-enabled", label: "Edge Enabled" }
+    ]
+  },
+  {
+    name: "cloud-serverless",
+    title: "Cloud & Serverless",
+    topics: [
+      { id: "aws", label: "AWS" },
+      { id: "serverless", label: "Serverless" },
+      { id: "aws-lambda", label: "Lambda" },
+      { id: "aws-iam", label: "IAM" },
+      { id: "amazon-s3", label: "S3" },
+      { id: "amazon-dynamodb", label: "DynamoDB" },
+      { id: "amazon-eventbridge", label: "EventBridge" },
+      { id: "amazon-kinesis", label: "Kinesis" },
+      { id: "amazon-redshift", label: "Redshift" },
+      { id: "amazon-athena", label: "Athena" },
+      { id: "amazon-quicksight", label: "Quicksight" },
+      { id: "amazon-sagemaker", label: "SageMaker" },
+      { id: "amazon-ecs", label: "ECS" },
+    ]
+  },
+  {
+    name: "architecture-patterns",
+    title: "Architecture & Patterns",
+    topics: [
+      { id: "solution-architecture", label: "Solution Architecture" },
+      { id: "microservices", label: "Microservices" },
+      { id: "event-driven", label: "Event Driven" },
+      { id: "data-fabric", label: "Data Fabric" },
+      { id: "data-mesh", label: "Data Mesh" },
+    ]
+  },
+  {
+    name: "data-integration",
+    title: "Data & Integration",
+    topics: [
+      { id: "graphql", label: "GraphQL" },
+      { id: "rest", label: "RESTful" },
+      { id: "postgres", label: "Postgres" },
+      { id: "neo4j", label: "Neo4j" },
+      { id: "redis", label: "Redis" },
+      { id: "graphdb", label: "GraphDB" },
+      { id: "spark", label: "Spark" },
+      { id: "kafka", label: "Kafka" },
+    ]
+  },
+  {
+    name: "programming-frameworks",
+    title: "Programming & Frameworks",
+    topics: [
+      { id: "python", label: "Python" },
+      { id: "csharp", label: "C#" },
+      { id: "go", label: "Go" },
+      { id: "cli", label: "CLI" },
+      { id: "javascript", label: "JS" },
+      { id: "typescript", label: "TS" },
+      { id: "fastapi", label: "FastAPI" },
+      { id: "flask", label: "Flask" },
+      { id: "react", label: "React" },
+      { id: "angular", label: "Angular" },
+      { id: "docker", label: "Docker" },
+      { id: "kubernetes", label: "K8s" },
+    ]
+  },
+  {
+    name: "automation-productivity",
+    title: "Automation & Productivity",
+    topics: [
+      { id: "co-pilot", label: "Co-Pilot" },
+      { id: "cli", label: "CLI" },
+      { id: "scaffolder", label: "Scaffolder" }
+    ]
+  }
+];
 
-  "Generative AI & LLMs": [
-    "generative-ai",
-    "large-language-models",
-    "openai-gpt",
-    "huggingface-transformers",
-    "langchain",
-    "text-embeddings",
-    "vector-embeddings",
-    "rag",
-    "retrieval-augmented-generation",
-    "pinecone",
-    "faiss",
-    "fine-tuning",
-    "evaluation-harnesses",
-    "prompt-engineering"
-  ],
-
-  "AI Agents & Copilots": [
-    "ai-agents",
-    "multi-agent",
-    "planner-agent",
-    "executor-agent",
-    "agent-orchestration",
-    "company-copilot",
-    "business-copilot",
-    "desktop-copilot",
-    "mobile-copilot",
-    "edge-enabled"
-  ],
-
-  "Cloud & Serverless": [
-    "aws",
-    "aws-lambda",
-    "aws-iam",
-    "amazon-s3",
-    "amazon-dynamodb",
-    "amazon-eventbridge",
-    "amazon-kinesis",
-    "amazon-redshift",
-    "amazon-athena",
-    "amazon-quicksight",
-    "amazon-sagemaker",
-    "amazon-ecs",
-    "serverless",
-    "serverless-microservices",
-    "cloudwatch",
-    "opentelemetry",
-    "vault",
-    "secure-enclave"
-  ],
-
-  "Architecture & Patterns": [
-    "solution-architecture",
-    "microservices",
-    "event-driven",
-    "pub-sub",
-    "event-sourcing",
-    "cqrs",
-    "command-query-separation",
-    "decorator",
-    "sidecar",
-    "strangler",
-    "data-mesh",
-    "domain-oriented",
-    "domain-governance",
-    "metadata-catalog",
-    "simulation-as-a-service"
-  ],
-
-  "Data & Integration": [
-    "data-centric",
-    "semantic-layer",
-    "knowledge-summarization",
-    "streaming-feature-pipelines",
-    "online-inference",
-    "model-cicd",
-    "airflow",
-    "spark",
-    "kafka",
-    "graphql",
-    "postgres",
-    "neo4j",
-    "redis",
-    "graphdb"
-  ],
-
-  "Programming & Frameworks": [
-    "python",
-    "csharp",
-    "go",
-    "cli",
-    "javascript",
-    "typescript",
-    "fastapi",
-    "react",
-    "react-native",
-    "docker",
-    "kubernetes",
-    "pyg",
-    "s3"
-  ],
-
-  "Automation & Productivity": [
-    "productivity",
-    "automation",
-    "servicenow-apis",
-    "cli",
-    "scaffolder"
-  ]
-};
 
 
 export const skills = [
