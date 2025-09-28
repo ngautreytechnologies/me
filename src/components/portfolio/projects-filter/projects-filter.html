@@ -1,23 +1,4 @@
 <div class="project-filter-root">
-    <!-- Selected tags horizontal list -->
-    <div class="selected-tags" aria-label="Selected tags" role="list">
-        <!-- Tags will be dynamically added here as they are selected -->
-        <!-- Example structure:
-        <div class="selected-tag" role="button" tabindex="0" aria-pressed="true">
-            <span class="tag-label">React</span>
-            <button type="button" class="remove-tag" aria-label="Remove tag">×</button>
-        </div>
-        -->
-    </div>
-
-    <!-- Controls: search + clear -->
-    <div class="filter-controls">
-        <input type="search" class="tag-search" placeholder="Search tags…" aria-label="Search tags" />
-        <button type="button" class="clear-selection" aria-label="Clear tag selection">
-            Clear
-        </button>
-    </div>
-
     <!-- Available tags list -->
     <div class="tag-item-container" data-container>
         <!-- Tag item template -->
@@ -27,5 +8,12 @@
                 <span class="tag-id" data-field="id" style="display: none;"></span>
             </div>
         </template>
+    </div>
+    <!-- Controls: search + clear -->
+    <div class="filter-controls">
+        <input type="search" class="tag-search" placeholder="Search tags…" aria-label="Search tags" />
+        <button type="button" class="clear-selection" aria-label="Clear tag selection">
+            Clear
+        </button>
     </div>
 </div>

@@ -1,172 +1,145 @@
-// projects-filter.js
 import BaseShadowComponent from '../../base-shadow-component';
 import templateHtml from './projects-filter.html';
 import css from './projects-filter.css';
 import { technologyTaxonomy } from '../data';
+import { TagManager } from '../services/taxonomy';
 import { ProjectRenderer } from '../services/project';
+import { Config } from '../../../config';
 
-const LOG = (...args) => console.log('[ProjectsFilter]', ...args);
+const LOG = (...args) => {
+    // Toggle verbose logging: comment out to silence
+    console.log('[ProjectsFilter]', ...args);
+};
 
 export default class ProjectsFilter extends BaseShadowComponent {
     constructor() {
         super(templateHtml, css);
-        this.selectedTagIds = new Set();
-        this._allTags = []; // flattened: { id, label, topics }
+        this.tagManager = new TagManager({ taxonomy: technologyTaxonomy });
         this._debounceTimer = null;
-        this.maxPerCategory = 5;
+        this._cardListeners = []; // keep refs if you want to remove listeners on disconnect
     }
 
     connectedCallback() {
         super.connectedCallback();
-        LOG('connectedCallback start');
 
         this._wireControls();
 
-        const tags = this._getRenderableTagsFromTaxonomy(technologyTaxonomy);
-        this._allTags = tags;
+        const tags = this.tagManager.orderTopTagsByPriority().getTopTags();
 
-        super.triggerTemplateRender(tags);
+        console.log('fjiogjogo', tags);
 
-        Promise.resolve().then(() => this._postRenderSetup(tags));
+        // Prefer top tags (the weighted selection). Fall back to all tags if top list missing.
+        const toRender = tags.slice(0, Config.MAX_TOPICS_VISIBLE || tags.length);
 
-        LOG('connectedCallback complete');
+        // triggerTemplateRender expects the data shape that matches your template (id/label)
+        super.triggerTemplateRender(toRender);
+
+        // Wait a microtask so TemplateRenderer has applied the template into the DOM.
+        Promise.resolve().then(() => this._postRenderSetup(toRender));
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback?.();
+        // Optional: remove listeners if you registered them and want to avoid leaks
+        this._cardListeners.forEach(({ el, type, fn }) => el.removeEventListener(type, fn));
+        this._cardListeners = [];
     }
 
     /* -------------------------
-       DOM Setup & Tag Wiring
+       Post-render setup (robust)
        ------------------------- */
-    _postRenderSetup(tags = []) {
+    _postRenderSetup(renderedTags = []) {
         const container = this.root.querySelector('.tag-item-container');
         if (!container) {
-            console.warn('projects-filter: .tag-item-container not found');
+            LOG('No .tag-item-container found');
             return;
         }
 
         const cards = Array.from(container.querySelectorAll('.tag-card'));
-        LOG('Found rendered tag cards:', cards.length);
+        LOG('Found cards:', cards.length, 'tags to wire:', renderedTags.length);
 
+        // Ensure we don't assume 1:1 length — map by index but guard
         cards.forEach((card, idx) => {
-            if (!card.id) {
-                const idEl = card.querySelector('.tag-id');
-                if (idEl?.textContent?.trim()) {
-                    card.id = idEl.textContent.trim();
-                } else if (tags[idx]?.id) {
-                    card.id = tags[idx].id;
-                } else {
-                    card.id = `tag-auto-${idx}`;
-                }
+            const tag = renderedTags[idx];
+            if (!tag) {
+                LOG('No tag data for card index', idx, '- skipping wiring for this card');
+                return;
             }
 
-            const labelEl = card.querySelector('.tag-label');
-            if (!labelEl) {
+            // Only set id if not already present
+            if (!card.id) card.id = tag.id;
+
+            // Add label only if missing (don't clobber existing markup)
+            if (!card.querySelector('.tag-label')) {
                 const span = document.createElement('span');
                 span.className = 'tag-label';
-                span.textContent = tags[idx]?.label || card.textContent.trim();
+                span.textContent = tag.label;
                 card.prepend(span);
+            } else {
+                // ensure label text matches tag.label (optional)
+                const labelEl = card.querySelector('.tag-label');
+                if (labelEl && labelEl.textContent.trim() === '') labelEl.textContent = tag.label;
             }
 
-            card.setAttribute('role', 'button');
-            card.setAttribute('tabindex', '0');
-            card.setAttribute('aria-pressed', 'false');
+            // Accessibility: set only if absent so we don't override author-provided values
+            if (!card.hasAttribute('role')) card.setAttribute('role', 'button');
+            if (!card.hasAttribute('tabindex')) card.setAttribute('tabindex', '0');
+            if (!card.hasAttribute('aria-pressed')) card.setAttribute('aria-pressed', 'false');
 
-            card.addEventListener('click', (e) => {
-                e.preventDefault();
+            // Lightweight event listeners (saved so they can be removed)
+            const activate = (e) => {
+                if (e && typeof e.preventDefault === 'function') e.preventDefault();
                 this._toggleTag(card);
-            });
+            };
 
-            card.addEventListener('keydown', (e) => {
+            const keyHandler = (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    this._toggleTag(card);
+                    activate(e);
                 }
-            });
-        });
+            };
 
-        this._renderSelectedStrip();
+            card.addEventListener('click', activate);
+            card.addEventListener('keydown', keyHandler);
+
+            // store refs for cleanup later
+            this._cardListeners.push({ el: card, type: 'click', fn: activate });
+            this._cardListeners.push({ el: card, type: 'keydown', fn: keyHandler });
+        });
     }
 
     /* -------------------------
-       Selection Handling
+       Tag selection toggle
        ------------------------- */
-    _toggleTag(cardEl) {
-        if (!cardEl?.id) return;
-        const id = cardEl.id;
+    _toggleTag(card) {
+        if (!card || !card.id) return;
+        const isActive = this.tagManager.selectedTagIds.has(card.id);
 
-        if (this.selectedTagIds.has(id)) {
-            this.selectedTagIds.delete(id);
-            cardEl.classList.remove('active');
-            cardEl.setAttribute('aria-pressed', 'false');
-        } else {
-            this.selectedTagIds.add(id);
-            cardEl.classList.add('active');
-            cardEl.setAttribute('aria-pressed', 'true');
-        }
-
-        this._renderSelectedStrip();
-        this._updateProjectsForSelection();
-    }
-
-    _renderSelectedStrip() {
-        const selectedContainer = this.root.querySelector('.selected-tags');
-        if (!selectedContainer) return;
-
-        selectedContainer.innerHTML = '';
-
-        Array.from(this.selectedTagIds).forEach((tagId) => {
-            const tagObj = this._allTags.find(t => t.id === tagId);
-            const label = tagObj?.label || tagId;
-
-            const chip = document.createElement('div');
-            chip.className = 'selected-tag';
-            chip.setAttribute('role', 'button');
-            chip.setAttribute('tabindex', '0');
-            chip.setAttribute('aria-pressed', 'true');
-            chip.innerHTML = `
-                <span class="tag-label">${this._escapeHtml(label)}</span>
-                <button type="button" class="remove-tag" aria-label="Remove ${this._escapeHtml(label)}">×</button>
-            `;
-
-            chip.querySelector('.remove-tag').addEventListener('click', (e) => {
-                e.preventDefault();
-                this._deselectTag(tagId);
-            });
-
-            chip.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    this._deselectTag(tagId);
-                }
-            });
-
-            selectedContainer.appendChild(chip);
-        });
-    }
-
-    _deselectTag(tagId) {
-        const card = this.root.querySelector(`#${CSS.escape(tagId)}`);
-        if (card) {
+        if (isActive) {
+            this.tagManager.deselectTag(card.id);
             card.classList.remove('active');
             card.setAttribute('aria-pressed', 'false');
+        } else {
+            this.tagManager.selectTag(card.id);
+            card.classList.add('active');
+            card.setAttribute('aria-pressed', 'true');
         }
 
-        this.selectedTagIds.delete(tagId);
-        this._renderSelectedStrip();
-        this._updateProjectsForSelection();
-    }
-
-    clearSelection() {
-        this.selectedTagIds.clear();
-        this.root.querySelectorAll('.tag-card').forEach(c => {
-            c.classList.remove('active');
-            c.setAttribute('aria-pressed', 'false');
-        });
-        this._renderSelectedStrip();
-        this._updateProjectsForSelection();
-        this._applySearch('');
+        this._updateProjects();
     }
 
     /* -------------------------
-       Search & Filtering
+       Project filtering (calls out to ProjectRenderer)
+       ------------------------- */
+    _updateProjects() {
+        const topics = this.tagManager.getSelectedTags().flatMap(t => t.topics || []);
+        // Uncomment below when you want to render project list
+        // ProjectRenderer.renderProjectsForTopics(document.querySelector('#projects-list'), topics);
+        LOG('Selected topics for project filtering:', topics);
+    }
+
+    /* -------------------------
+       Controls: search + clear
        ------------------------- */
     _wireControls() {
         const searchEl = this.root.querySelector('.tag-search');
@@ -175,192 +148,34 @@ export default class ProjectsFilter extends BaseShadowComponent {
         if (searchEl) {
             searchEl.addEventListener('input', (e) => {
                 clearTimeout(this._debounceTimer);
-                const q = (e.target.value || '').trim().toLowerCase();
-                this._debounceTimer = setTimeout(() => this._applySearch(q), 160);
+                const query = (e.target.value || '').trim().toLowerCase();
+                this._debounceTimer = setTimeout(() => this._applySearch(query), 160);
             });
         }
 
         if (clearBtn) {
             clearBtn.addEventListener('click', () => {
                 if (searchEl) searchEl.value = '';
-                this.clearSelection();
+                this.tagManager.clearSelection();
+                this.root.querySelectorAll('.tag-card').forEach(card => {
+                    card.classList.remove('active');
+                    card.setAttribute('aria-pressed', 'false');
+                });
                 this._applySearch('');
+                this._updateProjects();
             });
         }
     }
 
+    /* -------------------------
+       Search/filter tags
+       ------------------------- */
     _applySearch(query) {
-        const normalized = (query || '').trim().toLowerCase();
-        const cards = Array.from(this.root.querySelectorAll('.tag-card'));
-
-        cards.forEach(card => {
-            const label = card.querySelector('.tag-label')?.textContent?.trim().toLowerCase() || '';
-            const tagId = card.id?.toLowerCase() || '';
-
-            // Find the tag object to get its category/topic info
-            const tagObj = this._allTags.find(t => t.id === card.id);
-
-            // Build a search string including label, topics, and inferred category name
-            const topicsText = Array.isArray(tagObj?.topics)
-                ? tagObj.topics.join(' ').toLowerCase()
-                : '';
-            const categoryText = tagObj?.category?.toLowerCase?.() || '';
-
-            const combined = `${label} ${topicsText} ${categoryText} ${tagId}`;
-
-            const match = !normalized || combined.includes(normalized);
-            card.style.display = match ? '' : 'none';
+        const visibleTagIds = this.tagManager.searchTags(query).map(t => t.id);
+        this.root.querySelectorAll('.tag-card').forEach(card => {
+            // If card has no id (unexpected) treat as hidden
+            card.style.display = visibleTagIds.includes(card.id) ? '' : 'none';
         });
-
-        // Hide container if nothing matches
-        const container = this.root.querySelector('.tag-item-container');
-        const visibleCount = cards.filter(c => c.style.display !== 'none').length;
-        container.style.display = visibleCount > 0 ? '' : 'none';
-    }
-
-    /* -------------------------
-       Project Filtering
-       ------------------------- */
-    _updateProjectsForSelection() {
-        const topics = Array.from(this.selectedTagIds)
-            .map(id => {
-                const t = this._allTags.find(x => x.id === id);
-                return t ? (Array.isArray(t.topics) ? t.topics : [t.topics]) : [];
-            })
-            .flat()
-            .filter(Boolean);
-
-        const uniq = [...new Set(topics)];
-        const listContainer = document.querySelector('#projects-list');
-        // ProjectRenderer.renderProjectsForTopics(listContainer, uniq);
-    }
-
-    /* -------------------------
-       Taxonomy Flattening
-       ------------------------- */
-    _getRenderableTagsFromTaxonomy(taxonomy) {
-        const out = [];
-        let counter = 0;
-
-        if (!taxonomy || typeof taxonomy !== 'object') return out;
-
-        // ✅ Get priority from URL param (?t=aws, ?t=ai, ?t=programming)
-        const params = new URLSearchParams(window.location.search);
-        const globalPriority = params.get('t')?.toLowerCase() || null;
-
-        Object.values(taxonomy).forEach((category) => {
-            const topics = category.topics;
-            if (!Array.isArray(topics)) return;
-
-            // ✅ Choose priority: either from URL or category inference
-            let priority = globalPriority;
-            if (!priority) {
-                if (/ai|ml|llm|agents/i.test(category.name)) priority = 'ai';
-                else if (/cloud|serverless|aws/i.test(category.name)) priority = 'aws';
-                else if (/programming|frameworks/i.test(category.name)) priority = 'programming';
-                else priority = 'random';
-            }
-
-            const chosenTopics = this._selectTopics(topics, this.maxPerCategory, priority);
-            console.log('shitfuck', priority, chosenTopics);
-
-            chosenTopics.forEach((topic) => {
-                let tagData;
-                if (typeof topic === 'string') {
-                    tagData = {
-                        id: `tag-${counter++}`,
-                        label: this._humanLabel(topic),
-                        topics: [topic],
-                        category: category.name || category.title || ''
-                    };
-                } else if (typeof topic === 'object') {
-                    const tid = topic.id || `topic-${counter++}`;
-                    tagData = {
-                        id: `tag-${counter++}`,
-                        label: topic.label || this._humanLabel(tid),
-                        topics: topic.topics || [tid],
-                        category: category.name || category.title || ''
-                    };
-                } else {
-                    tagData = {
-                        id: `tag-${counter++}`,
-                        label: String(topic),
-                        topics: [String(topic)],
-                        category: category.name || category.title || ''
-                    };
-                }
-                out.push(tagData);
-            });
-        });
-
-        return out;
-    }
-
-    /**
-     * Selects up to maxCount topics from a category with optional prioritisation
-     * @param {Array} topics - list of topic objects { id, label }
-     * @param {number} maxCount - maximum number of topics to return
-     * @param {string} [priority] - optional: 'ai' | 'aws' | 'programming' | 'random'
-     * @returns {Array} - selected topics
-     */
-    _selectTopics(topics, maxCount = 9, priority = 'random') {
-        if (!Array.isArray(topics) || topics.length === 0) return [];
-
-        const copy = [...topics];
-
-        const regexMap = {
-            ai: /(ai|ml|llm|agent|copilot)/i,
-            aws: /(aws|lambda|s3|dynamodb|iam|eventbridge|kinesis|redshift|athena|quicksight|sagemaker|ecs)/i,
-            programming: /(python|c#|csharp|go|javascript|typescript|react|angular|fastapi|flask)/i
-        };
-
-        const regex = regexMap[priority];
-
-        // Sort by priority if applicable
-        if (regex) {
-            copy.sort((a, b) => {
-                const aScore = regex.test(a.id) || regex.test(a.label) ? 1 : 0;
-                const bScore = regex.test(b.id) || regex.test(b.label) ? 1 : 0;
-                return bScore - aScore;
-            });
-        } else {
-            // Fisher–Yates shuffle for random mode
-            for (let i = copy.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [copy[i], copy[j]] = [copy[j], copy[i]];
-            }
-        }
-
-        const selected = copy.slice(0, maxCount);
-
-        // Light shuffle for variety even in priority modes
-        for (let i = selected.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [selected[i], selected[j]] = [selected[j], selected[i]];
-        }
-
-        return selected;
-    }
-
-
-    /* -------------------------
-       Utils
-       ------------------------- */
-    _humanLabel(str) {
-        const acronyms = new Set(['ai', 'ml', 'llm', 'rag', 'api', 'db', 'ci', 'cd']);
-        const cleaned = String(str).replace(/[_-]/g, ' ').trim();
-        return acronyms.has(cleaned.toLowerCase())
-            ? cleaned.toUpperCase()
-            : cleaned.replace(/\b\w/g, c => c.toUpperCase());
-    }
-
-    _escapeHtml(str) {
-        return String(str || '')
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
     }
 }
 

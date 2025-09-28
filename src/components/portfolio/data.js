@@ -6,8 +6,6 @@ export const technologyTaxonomy = [
       { id: "artificial-intelligence", label: "AI" },
       { id: "machine-learning", label: "ML" },
       { id: "knowledge-graph", label: "KG" },
-      { id: "explainable-ai", label: "XAI" },
-      { id: "privacy-by-design", label: "Privacy" },
       { id: "graph-ai", label: "Graph AI" },
       { id: "graph-first-modeling", label: "Graph Model" },
       { id: "graph-powered", label: "Graph-Powered" },
@@ -108,8 +106,6 @@ export const technologyTaxonomy = [
     ]
   }
 ];
-
-
 
 export const skills = [
   {
