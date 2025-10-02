@@ -1,59 +1,54 @@
-import { Config } from '../../../config'
+import { Config } from '../../../config';
 import { RequestPipeline } from '../../../modules/pipeline/request-pipeline';
 
 export class GitHubClient {
     constructor(pipeline) {
-        if (pipeline) {
-            this.pipeline = pipeline;
-        } else {
-            // No pipeline steps but how is logger context and logger created
-            this.pipeline = new RequestPipeline();
-        }
+        this.pipeline = pipeline || new RequestPipeline();
     }
 
-    async searchRepositoriesByTopics() {
-        const url = `https://api.github.com/users/${Config.GITHUB_USERNAME}/repos`;
-
-        // Fetch all repos
-        const res = await fetch(url, {
-            headers: { 'Accept': 'application/vnd.github+json' }
-        });
-        if (!res.ok) throw new Error(`Failed to fetch repos: ${res.status}`);
-        const repos = await res.json();
-
-        // Filter by name prefixes using for loop
-        const filteredRepos = [];
-        for (let i = 0; i < repos.length; i++) {
-            const repo = repos[i];
-            if (repo.name.startsWith('portfolio') || repo.name.startsWith('codesample')) {
-                filteredRepos.push(repo);
-                break; // stop checking other prefixes for this repo
-            }
+    async searchRepositoriesByTopics(topics, prefixes = []) {
+        if (!Array.isArray(topics) || topics.length === 0) {
+            throw new Error('The `topics` parameter is required and must be a non-empty array.');
+        }
+        if (!Array.isArray(prefixes)) {
+            throw new Error('The `prefixes` parameter must be an array.');
         }
 
-        return filteredRepos;
+        const url = `https://api.github.com/users/${Config.GITHUB_USERNAME}/repos`;
+        const ctx = {
+            action: 'github-search-repos',
+            url,
+            request: {},
+            correlationId: crypto.randomUUID(),
+        };
 
+        return this.pipeline.execute(ctx, async () => {
+            const res = await fetch(url, { headers: { 'Accept': 'application/vnd.github+json' } });
+            if (!res.ok) throw new Error(`Failed to fetch repos: ${res.status}`);
+            const repos = await res.json();
+
+            return repos.filter(repo => {
+                const hasTopic = Array.isArray(repo.topics) && topics.some(topic => repo.topics.includes(topic));
+                const hasPrefix = prefixes.length === 0 || prefixes.some(prefix => repo.name.startsWith(prefix));
+                return hasTopic && hasPrefix;
+            });
+        });
     }
 
     async fetchCodeFile(repoName, filePath) {
         const url = `https://raw.githubusercontent.com/${Config.GITHUB_USERNAME}/${repoName}/main/${filePath}`;
-
         const ctx = {
             action: 'github-fetch-code-file',
             url,
             request: {},
-            userConsent: true,
-            correlationId: crypto.randomUUID()
+            correlationId: crypto.randomUUID(),
+            userConsent: true
         };
 
-        await this.pipeline.execute(ctx);
-
-        if (!ctx.response) {
+        return this.pipeline.execute(ctx, async () => {
             const res = await fetch(url);
             if (!res.ok) throw new Error(`Failed to fetch file: ${filePath}`);
-            ctx.response = await res.text();
-        }
-
-        return ctx.response;
+            return res.text();
+        });
     }
 }

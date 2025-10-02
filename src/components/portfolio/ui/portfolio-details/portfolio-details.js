@@ -1,11 +1,11 @@
-import { subscribeSelectedProject } from '../../../modules/reactivity/signal-store';
-import BaseShadowComponent from '../../base-shadow-component';
-import { GitHubClient } from '../services/github';
+import { subscribeSelectedProject } from '../../../../modules/reactivity/signal-store';
+import BaseShadowComponent from '../../../base-shadow-component';
+import { GitHubClient } from '../../services/github';
 
-import css from './project-details.css';
-import templateHtml from './project-details.html';
+import css from './portfolio-details.css';
+import templateHtml from './portfolio-details.html';
 
-class ProjectDetails extends BaseShadowComponent {
+class PortfolioDetails extends BaseShadowComponent {
     constructor(debug = true) {
         super(templateHtml, css);
         this.debug = debug;
@@ -19,7 +19,7 @@ class ProjectDetails extends BaseShadowComponent {
             isTouching: false,
         };
         this.currentPage = 1;
-        if (this.debug) console.log('[ProjectDetails] Constructor initialized');
+        if (this.debug) console.log('[PortfolioDetails] Constructor initialized');
     }
 
     connectedCallback() {
@@ -28,18 +28,18 @@ class ProjectDetails extends BaseShadowComponent {
         this._initCarouselStructure();
 
         subscribeSelectedProject(async project => {
-            console.group('[ProjectDetails] Selected project update');
+            console.group('[PortfolioDetails] Selected project update');
             console.log('Received project:', project);
 
             if (!project || !project.username || !project.repo) {
                 console.warn('No valid project selected, clearing display.');
-                this.clearProjectDetails();
+                this.clearPortfolioDetails();
                 this.togglePlaceholder(true);
                 console.groupEnd();
                 return;
             }
 
-            this.clearProjectDetails();
+            this.clearPortfolioDetails();
             this.togglePlaceholder(true);
             this._scrollToPage(0, false);
 
@@ -234,7 +234,7 @@ class ProjectDetails extends BaseShadowComponent {
         if (nextBtn) nextBtn.disabled = idx >= total - 1;
     }
 
-    clearProjectDetails() {
+    clearPortfolioDetails() {
         const root = this.root;
         [
             '[data-field="keyFeatures"]',
@@ -406,9 +406,9 @@ class ProjectDetails extends BaseShadowComponent {
             media: story.media || story.media_items || story.gallery || [],
         };
         console.log('Mapped story', result);
-        
+
         return result;
     }
 }
 
-customElements.define('project-details', ProjectDetails);
+customElements.define('project-details', PortfolioDetails);

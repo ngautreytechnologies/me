@@ -4,19 +4,11 @@
  * This file sets up global styles, animations, and navigation behavior for the portfolio website.
  */
 
+import { Config } from './config';
 import { initFloatingParticles, setupSectionCardAnimations } from './modules/animation/animation';
 import { setupNavigation } from './modules/dom/navigation';
-import { RequestPipeline } from './modules/pipeline/request-pipeline';
-import { ensureGlobalStyleInjected } from './styles/styles';
 import { Logger } from './modules/logging/logger';
-import { Config } from './config';
-import { anonymizationStep, piiRedactionStep, differentialPrivacyStep } from './modules/privacy/privacy';
-import { enricherStep } from './modules/enrichment/enrichment';
-import { timestampEnricher } from './modules/enrichment/timestamp';
-import { environmentEnricher } from './modules/enrichment/environment';
-import { ttlStep } from './modules/cache/cache';
-import { retryStep } from './modules/resilience/resilience';
-import attachGlobalHooks from './modules/hooks/global';
+import { ensureGlobalStyleInjected } from './styles/styles';
 
 const logger = new Logger(Config.LOG_LEVEL || 'debug', console);
 
@@ -45,39 +37,4 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
-});
-
-export const networkPipeline = new RequestPipeline()
-    // No data being collected at all so don't need this step until 
-    // analytics data is needed
-    // .use(consentStep({ checkConsentFn: ctx => ctx.userConsent }))
-    .use(piiRedactionStep())
-    .use(anonymizationStep())
-    .use(enricherStep(logger, [timestampEnricher, environmentEnricher]))
-    .use(ttlStep({ storage: localStorage, keyFn: ctx => ctx.url, ttlMs: 5 * 60 * 1000 }))
-    .use(retryStep({ retries: 3 }))
-
-export const interactionPipeline = new RequestPipeline()
-    // .use(consentStep({ checkConsentFn: ctx => ctx.userConsent }))
-    .use(piiRedactionStep())
-    .use(anonymizationStep())
-    .use(enricherStep(logger, [timestampEnricher, environmentEnricher]))
-
-export const storagePipeline = new RequestPipeline()
-    // .use(consentStep({ checkConsentFn: ctx => ctx.userConsent }))
-    .use(piiRedactionStep())
-    .use(anonymizationStep())
-
-export const analyticsPipeline = new RequestPipeline()
-    // .use(consentStep({ checkConsentFn: ctx => ctx.userConsent }))
-    .use(piiRedactionStep())
-    .use(anonymizationStep())
-    .use(differentialPrivacyStep({ numericKeys: ['count', 'duration'] }))
-    .use(enricherStep(logger, [timestampEnricher]))
-
-attachGlobalHooks({
-    networkPipeline,
-    interactionPipeline,
-    storagePipeline,
-    analyticsPipeline
 });

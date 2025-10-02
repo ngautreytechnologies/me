@@ -1,4 +1,7 @@
 import { createSignal } from "./signals";
+console.log('[SignalStore module loaded]');
+export const SIGNAL_STORE_ID = Symbol('SignalStoreID');
+console.log('siht', SIGNAL_STORE_ID.toString());
 
 // Example shared signal: selected certification
 export const [getSelectedCert, setSelectedCert, subscribeSelectedCert] = createSignal(null);
@@ -14,3 +17,8 @@ export const [getSelectedTechnologyTopic, setSelectedTechnologyTopic, subscribeS
 
 // Selected project signal (new)
 export const [getSelectedProject, setSelectedProject, subscribeSelectedProject] = createSignal(null);
+
+// 🔄 Tags updated event (new)
+// Used to broadcast when tag list is modified — e.g. tag added, removed, or reordered
+export const [getTagsUpdated, setTagsUpdated, subscribeTagsUpdated] = createSignal(null);
+

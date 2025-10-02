@@ -1,0 +1,295 @@
+:host {
+    --gap: 0.6rem;
+    --padding-vertical: 0.35rem;
+    --padding-horizontal: 0.7rem;
+    --control-height: 36px;
+    --max-category-width: 100%;
+    --animation-ease: 180ms;
+}
+
+/* Host spacing defaults (minimal) */
+:host {
+    display: block;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* Root */
+.project-filter-root {
+    width: 100%;
+    color: var(--text-primary);
+}
+
+/* Suggestions (live region) */
+.tag-suggestions {
+    display: none;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.tag-suggestions.active {
+    display: block;
+}
+
+/* Wrap controls + selected count in a single flex container */
+.filter-controls-wrapper {
+    display: flex;
+    justify-content: space-between;
+    /* pushes them apart */
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Left side: selected count */
+.tag-controls-note {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    flex: 0 0 auto;
+    /* don't stretch */
+}
+
+/* small limit pill */
+.tag-controls-note .selected-num {
+    font-weight: 700;
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.02);
+    padding: 0.12rem 0.5rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    font-size: 0.85rem;
+}
+
+/* Right side: search + buttons */
+.filter-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex: 1;
+    /* let this side grow/shrink */
+    justify-content: flex-end;
+}
+
+/* Tag container now positions children */
+.tag-item-container {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: right;
+    gap: 0.6rem;
+    margin-bottom: 0.6rem;
+}
+
+/* Selected counter aligned with tags (overlay on the right of tag container) */
+.selected-count-inline {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    padding: 0.25rem 0.8rem;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ---------- Tag card (clickable, skill-tag style) ---------- */
+/* Tag card — helper style: soft but more noticeable */
+.tag-card {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45ch;
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.07);
+    /* slightly stronger background */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    /* clearer outline */
+    color: var(--text-primary);
+    font-size: 0.75rem;
+    /* slightly larger text */
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 30px;
+}
+
+.tag-card:hover,
+.tag-card:focus {
+    background: rgba(255, 255, 255, 0.10);
+    /* mild hover feedback */
+    border-color: rgba(255, 255, 255, 0.22);
+}
+
+.tag-card:focus-visible {
+    outline: 2px solid rgba(0, 242, 254, 0.2);
+    outline-offset: 2px;
+}
+
+/* Active (selected) — gentle emphasis */
+.tag-card.active,
+.tag-card[aria-pressed="true"] {
+    background: rgba(0, 242, 254, 0.15);
+    border-color: var(--text-accent);
+    color: var(--text-accent);
+    font-weight: 700;
+}
+
+/* Tag label truncation */
+.tag-card .tag-label {
+    display: inline-block;
+    max-width: 14ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* Controls row settings (search + add + clear) */
+.tag-search {
+    flex: 1 1 auto;
+    min-width: 140px;
+    height: 36px;
+    padding: 0 0.75rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    outline: none;
+    transition: box-shadow 0.12s ease, border-color 0.12s ease;
+}
+
+.tag-search::placeholder {
+    color: var(--text-secondary);
+}
+
+.tag-search:focus {
+    border-color: var(--text-accent);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 0 4px rgba(0, 242, 254, 0.06);
+}
+
+/* Add custom (+) button — small, prominent */
+.add-custom {
+    height: 36px;
+    padding: 0 0.6rem;
+    border-radius: 10px;
+    background: var(--primary-gradient);
+    color: white;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5ch;
+    transition: transform 0.12s ease, filter 0.12s ease;
+}
+
+.add-custom:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.03);
+}
+
+.add-custom[hidden] {
+    display: none !important;
+}
+
+/* Clear button (subtle) */
+.clear-selection {
+    height: 36px;
+    padding: 0 0.8rem;
+    border-radius: 10px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: var(--text-primary);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.clear-selection:hover {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Selected count note (small hint under controls) - legacy (kept if used elsewhere) */
+.tag-controls-note {
+    margin-top: -0.2rem;
+    margin-bottom: 0.6rem;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.tag-controls-note .selected-count {
+    display: inline-flex;
+    gap: 0.45rem;
+    align-items: center;
+}
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+    .filter-controls {
+        gap: 0.4rem;
+    }
+
+    .tag-search {
+        min-width: 0;
+    }
+
+    .tag-item-container {
+        gap: 0.5rem;
+    }
+
+    .tag-card {
+        font-size: 0.72rem;
+        padding: 0.24rem 0.6rem;
+    }
+
+    .selected-count-inline {
+        right: 0.4rem;
+        padding: 0.18rem 0.6rem;
+        font-size: 0.8rem;
+    }
+
+    .filter-controls-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+
+    .filter-controls {
+        justify-content: flex-start;
+    }
+}
+
+/* small pop animation */
+@keyframes tagPop {
+    from {
+        opacity: 0;
+        transform: translateY(6px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.tag-card {
+    animation: tagPop 220ms ease both;
+}

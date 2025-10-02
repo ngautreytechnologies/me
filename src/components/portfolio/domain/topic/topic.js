@@ -1,17 +1,17 @@
-import { setSelectedTechnologyTopic } from '../../../modules/reactivity/signal-store';
-import { escapeHtml } from '../../../modules/security/security';
+import { setSelectedTechnologyTopic } from '../../../../modules/reactivity/signal-store';
+import { escapeHtml } from '../../../../modules/security/security';
 
 /**
  * Renders tags as clickable cards or buttons in a container.
  */
-export class TagRenderer {
+export class TopicRenderer {
     /**
      * Render tags in a horizontal or vertical layout.
      * @param {HTMLElement} container - Element where tags will be rendered.
      * @param {Array} tags - Flat list of tags [{ id, name, summary, parentId }]
      * @param {Object} options - { layout: 'horizontal'|'vertical' }
      */
-    static renderTags(container, tags = [], options = { layout: 'horizontal' }) {
+    static render(container, tags = [], options = { layout: 'horizontal' }) {
         if (!container) return;
 
         container.textContent = '';

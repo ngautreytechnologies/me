@@ -41,16 +41,17 @@ import './components/certifications/certifications';
 import './components/education/education';
 import './components/experience/experience';
 
-// Portfolio
-import './components/portfolio/data';
-import './components/portfolio/project-details/project-details';
-import './components/portfolio/projects-filter/projects-filter';
-import './components/portfolio/projects-list/projects-list';
-import './components/portfolio/services/github';
-import './components/portfolio/services/project';
-import './components/portfolio/services/tag';
-
 // Skills
 import './components/skills/data';
 import './components/skills/skill-details/skill-details';
 import './components/skills/skills-grid/skills-grid';
+
+// Portfolio
+import './components/portfolio/data';
+import './components/portfolio/ui/portfolio-details/portfolio-details';
+import './components/portfolio/ui/portfolio-filter/portfolio-filter';
+import './components/portfolio/ui/portfolio-list/portfolio-list';
+import './components/portfolio/services/github';
+import './components/portfolio/domain/project/project';
+import './components/portfolio/domain/topic/taxonomy';
+import './components/portfolio/domain/topic/topic';
