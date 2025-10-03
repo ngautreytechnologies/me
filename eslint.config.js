@@ -3,5 +3,27 @@ import globals from "globals";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([
-  { files: ["**/*.{js,mjs,cjs}"], plugins: { js }, extends: ["js/recommended"], languageOptions: { globals: globals.browser } },
+  {
+    // Apply to all JS files
+    files: ["**/*.{js,mjs,cjs}"],
+
+    // Use the JS plugin
+    plugins: { js },
+
+    // Recommended JS rules
+    extends: ["js/recommended"],
+
+    // Define global variables
+    languageOptions: {
+      globals: {
+        ...globals.browser, // browser globals
+        ...globals.jest     // Jest globals: describe, it, expect, beforeEach, etc.
+      }
+    },
+
+    rules: {
+      "no-empty": "warn",
+      "no-unused-vars": "warn",
+    },
+  }
 ]);

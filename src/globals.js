@@ -4,13 +4,10 @@
  * This file sets up global styles, animations, and navigation behavior for the portfolio website.
  */
 
-import { Config } from './config';
 import { initFloatingParticles, setupSectionCardAnimations } from './modules/animation/animation';
 import { setupNavigation } from './modules/dom/navigation';
-import { Logger } from './modules/logging/logger';
 import { ensureGlobalStyleInjected } from './styles/styles';
 
-const logger = new Logger(Config.LOG_LEVEL || 'debug', console);
 
 /**
  * DOM content loaded event to initialize global styles, animations, and navigation.

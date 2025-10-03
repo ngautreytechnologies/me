@@ -1,1 +1,1 @@
-module.exports = 'test-html-stub';
+export default {};

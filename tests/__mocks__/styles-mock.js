@@ -1,1 +1,1 @@
-module.exports = 'test-styles-stub';
+export default {};

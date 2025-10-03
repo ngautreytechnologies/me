@@ -60,7 +60,7 @@ export default class ProjectsFilter extends BaseShadowComponent {
        Ensure selected tags are included (preserve), keep unique, slice to visible limit
        ------------------------- */
     _prepareRenderList(tagsArray = []) {
-        const maxVisible = Config.MAX_TOPICS_VISIBLE || tagsArray.length || 50;
+        const maxVisible = Config.MAX_TOPICS_VISIBLE || 9;
         const selectedIds = new Set([...this.topicManager.selectedTagIds]);
 
         // Get selected tag objects (look in topTags then allTags)
@@ -186,8 +186,6 @@ export default class ProjectsFilter extends BaseShadowComponent {
 
         // Publish selection change for project list; projects are filtered with AND semantics
         const selectedTopics = this.topicManager.getSelectedTags().flatMap(t => t.topics || []);
-        console.log('shit', selectedTopics);
-
         setTagsUpdated({ timestamp: Date.now(), topics: selectedTopics });
     }
 
