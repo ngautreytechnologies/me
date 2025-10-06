@@ -1,12 +1,16 @@
 let patched = false;
 
+/**
+ * Enable structured JSON logging globally for console.*
+ * @param {object} options
+ * @param {boolean} [options.verbose=false] - Enable patching if true
+ * @param {() => string} [options.getCorrelationId] - Optional correlation ID function
+ */
 export function enableVerboseConsole({ verbose = false, getCorrelationId } = {}) {
     if (!verbose || patched) return;
     patched = true;
 
     const levels = ['log', 'debug', 'info', 'warn', 'error'];
-
-    // save originals
     const _origLog = console.log;
     const _origError = console.error;
 

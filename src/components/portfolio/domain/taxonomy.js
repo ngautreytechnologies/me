@@ -1,4 +1,4 @@
-import { Config } from '../../../../config';
+import { Config } from '../../../config';
 
 export class TopicManager {
     constructor({
@@ -33,7 +33,7 @@ export class TopicManager {
         // ordering base
         this._baseOrder = ['ai', 'aws', 'programming', 'random'];
 
-        if (this.debug) console.log('[TagManager] init', { globalPriority: this.globalPriority, maxPerCategory: this.maxPerCategory });
+        console.log('[TagManager] init', { globalPriority: this.globalPriority, maxPerCategory: this.maxPerCategory });
 
         // load custom tags from storage
         this._customTags = [];
@@ -71,7 +71,7 @@ export class TopicManager {
         this._initTags();
         // call render callback with updated topTags
         if (this._renderCallback) {
-            try { this._renderCallback(this.getTopTags()); } catch (err) { if (this.debug) console.error('[TagManager] renderCallback error', err); }
+            try { this._renderCallback(this.getTopTags()); } catch (err) { console.error('[TagManager] renderCallback error', err); }
         }
         return this;
     }
@@ -87,7 +87,7 @@ export class TopicManager {
         }
 
         this._topTags = this._applyTopicSelection(this._allTags);
-        if (this.debug) console.log('[TagManager] flattened/all/top', this._allTags.length, this._topTags.length);
+        console.log('[TagManager] flattened/all/top', this._allTags.length, this._topTags.length);
     }
 
     /* ---------------- flatten taxonomy ---------------- */
@@ -127,7 +127,7 @@ export class TopicManager {
         const chosen = [];
         for (const [category, tags] of Object.entries(groups)) {
             const kind = this._categoryKind(category);
-            if (this.debug) console.log('[TagManager] selecting', { category, kind, count: tags.length });
+            console.log('[TagManager] selecting', { category, kind, count: tags.length });
             chosen.push(...this._selectTopics(tags, this.maxPerCategory, kind));
         }
 
@@ -153,7 +153,7 @@ export class TopicManager {
         });
 
         const selected = weighted.slice(0, Math.min(maxCount, weighted.length)).map(w => w.tag);
-        if (this.debug) console.log('[TagManager] _selectTopics', { priorityKind, requested: maxCount, selected: selected.map(t => t.id) });
+        console.log('[TagManager] _selectTopics', { priorityKind, requested: maxCount, selected: selected.map(t => t.id) });
 
         return selected;
     }
@@ -196,7 +196,7 @@ export class TopicManager {
                 category: 'custom'
             }));
         } catch (err) {
-            if (this.debug) console.error('[TagManager] loadCustomTags error', err);
+            console.error('[TagManager] loadCustomTags error', err);
             this._customTags = [];
         }
         return this._customTags;
@@ -207,7 +207,7 @@ export class TopicManager {
             const payload = (this._customTags || []).map(t => ({ id: t.id, label: t.label, topics: t.topics }));
             localStorage.setItem(this._customKey(), JSON.stringify(payload));
         } catch (err) {
-            if (this.debug) console.error('[TagManager] saveCustomTags error', err);
+            console.error('[TagManager] saveCustomTags error', err);
         }
     }
 
@@ -233,10 +233,10 @@ export class TopicManager {
 
         // notify UI (render callback) with updated topTags
         if (this._renderCallback) {
-            try { this._renderCallback(this.getTopTags()); } catch (err) { if (this.debug) console.error('[TagManager] renderCallback error', err); }
+            try { this._renderCallback(this.getTopTags()); } catch (err) { console.error('[TagManager] renderCallback error', err); }
         }
 
-        if (this.debug) console.log('[TagManager] addCustomTag', tag.id, tag.label);
+        console.log('[TagManager] addCustomTag', tag.id, tag.label);
         return tag;
     }
 
@@ -291,7 +291,7 @@ export class TopicManager {
                 this._topTags = this._applyTopicSelection(this._allTags);
                 this.orderTopTagsByPriority();
                 if (this._renderCallback) {
-                    try { this._renderCallback(this.getTopTags()); } catch (err) { if (this.debug) console.error(err); }
+                    try { this._renderCallback(this.getTopTags()); } catch (err) { console.error(err); }
                 }
                 return this;
             }
@@ -299,7 +299,7 @@ export class TopicManager {
             const all = [...this._allTags];
             this._suggestedTags = all;
             if (this._renderCallback) {
-                try { this._renderCallback({ suggestions: this._suggestedTags }); } catch (err) { if (this.debug) console.error(err); }
+                try { this._renderCallback({ suggestions: this._suggestedTags }); } catch (err) { console.error(err); }
             }
             return all;
         }
@@ -313,11 +313,11 @@ export class TopicManager {
         // update suggestion cache and notify UI (non-destructive)
         this._suggestedTags = results;
         if (this._renderCallback) {
-            try { this._renderCallback({ suggestions: this._suggestedTags }); } catch (err) { if (this.debug) console.error(err); }
+            try { this._renderCallback({ suggestions: this._suggestedTags }); } catch (err) { console.error(err); }
         }
 
         if (!apply) {
-            if (this.debug) console.log('[TagManager] searchTags (suggestions) found', results.length, 'for', q);
+            console.log('[TagManager] searchTags (suggestions) found', results.length, 'for', q);
             return results;
         }
 
@@ -333,10 +333,10 @@ export class TopicManager {
 
         // render callback with final topTags
         if (this._renderCallback) {
-            try { this._renderCallback(this.getTopTags()); } catch (err) { if (this.debug) console.error('[TagManager] renderCallback error', err); }
+            try { this._renderCallback(this.getTopTags()); } catch (err) { console.error('[TagManager] renderCallback error', err); }
         }
 
-        if (this.debug) console.log('[TagManager] searchTags.apply -> topTags length', this._topTags.length);
+        console.log('[TagManager] searchTags.apply -> topTags length', this._topTags.length);
         return this;
     }
 
@@ -365,24 +365,25 @@ export class TopicManager {
         if (this.selectedTagIds.has(tagId)) return this;
 
         if (this.selectedTagIds.size >= this.MAX_SELECTED) {
-            if (this.debug) console.warn('[TagManager] selectTag limit reached', this.MAX_SELECTED);
+            console.warn('[TagManager] selectTag limit reached', this.MAX_SELECTED);
             return false;
         }
 
         this.selectedTagIds.add(tagId);
-        if (this.debug) console.log('[TagManager] selectTag', tagId);
+        console.log('[TagManager] selectTag', tagId, this.selectedTagIds);
+
         return this;
     }
 
     deselectTag(tagId) {
         this.selectedTagIds.delete(tagId);
-        if (this.debug) console.log('[TagManager] deselectTag', tagId);
+        console.log('[TagManager] deselectTag', tagId);
         return this;
     }
 
     clearSelection() {
         this.selectedTagIds.clear();
-        if (this.debug) console.log('[TagManager] clearSelection');
+        console.log('[TagManager] clearSelection');
         return this;
     }
 
@@ -413,7 +414,7 @@ export class TopicManager {
         });
 
         this._topTags = withIdx.map(x => x.t);
-        if (this.debug) console.log('[TagManager] orderTopTagsByPriority ->', this._topTags.map(t => `${t.id}@${t.category}`));
+        console.log('[TagManager] orderTopTagsByPriority ->', this._topTags.map(t => `${t.id}@${t.category}`));
         return this;
     }
 

@@ -1,5 +1,5 @@
 import BaseShadowComponent from '../../base-shadow-component';
-import { setSelectedSkill } from '../../../modules/reactivity/signal-store'
+import { setSelectedSkill } from '../../../reactivity'
 
 import css from './skills-grid.css';
 import templateHtml from './skills-grid.html';

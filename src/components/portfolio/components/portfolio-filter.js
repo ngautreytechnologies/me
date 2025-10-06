@@ -1,13 +1,13 @@
-import { Config } from '../../../../config';
-import { setTagsUpdated } from '../../../../modules/reactivity/signal-store';
+import { Config } from '../../../config';
+import { setTagsUpdated } from '../../../reactivity';
 
-import BaseShadowComponent from '../../../base-shadow-component';
+import BaseShadowComponent from '../../base-shadow-component';
 
-import { technologyTaxonomy } from '../../data';
-import { TopicManager } from '../../domain/topic/taxonomy';
+import { technologyTaxonomy } from '../data';
+import { TopicManager } from '../domain/taxonomy';
 
-import css from './portfolio-filter.css';
-import templateHtml from './portfolio-filter.html';
+import css from '../styles/portfolio-filter.css';
+import templateHtml from '../templates/portfolio-filter.html';
 
 // Toggle logging by editing this helper (minimal/no-op by default)
 const LOG = (...args) => {
@@ -89,56 +89,59 @@ export default class ProjectsFilter extends BaseShadowComponent {
         this._cardListeners.forEach(({ el, type, fn }) => el.removeEventListener(type, fn));
         this._cardListeners = [];
 
-        const cards = Array.from(container.querySelectorAll('.tag-card'));
-        LOG('Found cards:', cards.length, 'tags to wire:', renderedTags.length);
+        const chips = Array.from(container.querySelectorAll('.tag-card'));
+        LOG('Found cards:', chips.length, 'tags to wire:', renderedTags.length);
 
         // Map renderedTags by id for robust mapping
-        const tagMap = new Map(renderedTags.map(t => [t.id, t]));
+        const chipMap = new Map(renderedTags.map(t => [t.id, t]));
 
-        cards.forEach((card, index) => {
+        chips.forEach((chip, index) => {
+            console.log('chippy', chip, index);
+
             // Determine id for card: prefer existing id or data-id, else try match by position
-            let id = card.id || card.getAttribute('data-id') || null;
+            let id = chip.id || chip.getAttribute('data-id') || null;
             if (!id && renderedTags[index]) {
                 id = renderedTags[index].id;
-                card.id = id;
+                chip.id = id;
             }
 
-            const tag = id ? (tagMap.get(id) || this.topicManager.getAllTags().find(tt => tt.id === id)) : null;
-            if (!tag) {
+            const currentChip = id ? (chipMap.get(id) || this.topicManager.getAllTags().find(tt => tt.id === id)) : null;
+
+            if (!currentChip) {
                 // hide unknown cards
-                card.style.display = 'none';
+                chip.style.display = 'none';
                 return;
             }
-            card.style.display = '';
+            chip.style.display = '';
 
             // Ensure label exists and title for tooltip
-            let labelEl = card.querySelector('.tag-label');
+            let labelEl = chip.querySelector('.tag-label');
             if (!labelEl) {
                 labelEl = document.createElement('span');
                 labelEl.className = 'tag-label';
-                card.prepend(labelEl);
+                chip.prepend(labelEl);
             }
-            labelEl.textContent = tag.label;
-            labelEl.title = tag.label;
+            labelEl.textContent = currentChip.label;
+            labelEl.title = currentChip.label;
 
             // accessibility
-            if (!card.hasAttribute('role')) card.setAttribute('role', 'button');
-            if (!card.hasAttribute('tabindex')) card.setAttribute('tabindex', '0');
+            if (!chip.hasAttribute('role')) chip.setAttribute('role', 'button');
+            if (!chip.hasAttribute('tabindex')) chip.setAttribute('tabindex', '0');
 
             // mark selected state if selected
-            const isSelected = this.topicManager.selectedTagIds.has(tag.id);
+            const isSelected = this.topicManager.selectedTagIds.has(currentChip.id);
             if (isSelected) {
-                card.classList.add('active');
-                card.setAttribute('aria-pressed', 'true');
+                chip.classList.add('active');
+                chip.setAttribute('aria-pressed', 'true');
             } else {
-                card.classList.remove('active');
-                card.setAttribute('aria-pressed', 'false');
+                chip.classList.remove('active');
+                chip.setAttribute('aria-pressed', 'false');
             }
 
             // event handlers
             const activate = (e) => {
                 if (e && typeof e.preventDefault === 'function') e.preventDefault();
-                this._toggleTag(card);
+                this._toggleTag(chip);
             };
 
             const keyHandler = (e) => {
@@ -148,12 +151,12 @@ export default class ProjectsFilter extends BaseShadowComponent {
                 }
             };
 
-            card.addEventListener('click', activate);
-            card.addEventListener('keydown', keyHandler);
+            chip.addEventListener('click', activate);
+            chip.addEventListener('keydown', keyHandler);
 
             // save for cleanup
-            this._cardListeners.push({ el: card, type: 'click', fn: activate });
-            this._cardListeners.push({ el: card, type: 'keydown', fn: keyHandler });
+            this._cardListeners.push({ el: chip, type: 'click', fn: activate });
+            this._cardListeners.push({ el: chip, type: 'keydown', fn: keyHandler });
         });
     }
 
@@ -162,6 +165,8 @@ export default class ProjectsFilter extends BaseShadowComponent {
        Enforces selection limit; publishes tagsUpdated
        ------------------------- */
     _toggleTag(card) {
+        console.log('shitcard', card);
+
         if (!card || !card.id) return;
 
         const id = card.id;

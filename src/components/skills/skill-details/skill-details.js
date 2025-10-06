@@ -1,5 +1,5 @@
 import BaseShadowComponent from '../../base-shadow-component';
-import { subscribeSelectedSkill } from '../../../modules/reactivity/signal-store';
+import { subscribeSelectedSkill } from '../../../reactivity';
 import { data } from '../data';
 import { removeElements } from '../../../modules/dom/dom';
 

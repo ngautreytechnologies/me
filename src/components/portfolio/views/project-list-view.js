@@ -2,18 +2,15 @@ import { ProjectCardView } from '../views/project-card-view';
 
 /**
  * ProjectListView
- * - Renders project cards into a shadow-root container
+ * - Renders project cards into a container found in the given host root
  * - Handles enter/exit animations and viewport sizing (exactly N cards visible)
  * - Defensive: normalizes whatever ProjectCardView.render returns (Element | DocumentFragment | string | null)
  *
- * Usage:
- *   const view = new ProjectListView(hostEl, { autoScrollOnUpdate: true, visibleCount: 2 });
- *   await view.renderProjects(reposArray);
- *   view.teardown();
+ * constructor accepts either the component's ShadowRoot or the host HTMLElement (which may have a shadowRoot).
  */
 export class ProjectListView {
-    #container;
-    #cardView;
+    #container;         // container element (the .projects-container)
+    #cardView = null;   // ProjectCardView instance (optional)
     #cleanupViewport = null;
     #mo = null;
     #resizeHandler = null;
@@ -21,31 +18,46 @@ export class ProjectListView {
     #visibleCount = 2;
 
     /**
-     * @param {HTMLElement} hostEl - custom element with shadowRoot
+     * @param {ShadowRoot|HTMLElement} hostRoot - host's shadowRoot OR the host element itself
      * @param {Object} [opts]
-     * @param {boolean} [opts.autoScrollOnUpdate=false] - scroll to top after updates
-     * @param {number} [opts.visibleCount=2] - number of cards to show (min/max height)
+     * @param {string} [opts.containerSelector='.projects-container']
+     * @param {string} [opts.templateSelector='#project-card-template']
+     * @param {boolean} [opts.autoScrollOnUpdate=false]
+     * @param {number} [opts.visibleCount=2]
      */
-    constructor(hostEl, { autoScrollOnUpdate = false, visibleCount = 2 } = {}) {
-        if (!(hostEl instanceof HTMLElement) || !hostEl.shadowRoot) {
-            throw new Error('[ProjectListView] hostEl must be a custom element with a shadowRoot');
+    constructor(hostRoot, {
+        containerSelector = '.projects-container',
+        templateSelector = '#project-card-template',
+        autoScrollOnUpdate = false,
+        visibleCount = 2
+    } = {}) {
+        const rootNode = hostRoot instanceof ShadowRoot ? hostRoot : (hostRoot && hostRoot.shadowRoot) ? hostRoot.shadowRoot : hostRoot;
+        if (!rootNode) {
+            throw new TypeError('[ProjectListView] hostRoot must be a ShadowRoot or an HTMLElement (with or without shadowRoot)');
         }
 
-        this.#container = hostEl.shadowRoot.querySelector('.projects-container');
-        if (!this.#container) {
-            throw new Error('[ProjectListView] .projects-container not found in shadow root');
+        const container = rootNode.querySelector(containerSelector);
+        if (!container) {
+            throw new Error(`[ProjectListView] Container "${containerSelector}" not found within the provided host root`);
         }
+        this.#container = container;
 
-        const template = hostEl.shadowRoot.querySelector('#project-card-template');
-        if (template) {
-            // Note: ProjectCardView ensures it returns a single HTMLElement
-            this.#cardView = new ProjectCardView(template);
+        const template = rootNode.querySelector(templateSelector);
+        if (template instanceof HTMLTemplateElement) {
+            console.log('');
+
+            try {
+                this.#cardView = new ProjectCardView(template);
+            } catch (err) {
+                console.warn('[ProjectListView] Failed to construct ProjectCardView from template', err);
+                this.#cardView = null;
+            }
         } else {
-            console.warn('[ProjectListView] ⚠️ No #project-card-template found. Cards may not render.');
+            console.warn(`[ProjectListView] ⚠️ Template "${templateSelector}" not found or not an HTMLTemplateElement. Falling back to simple markup.`);
             this.#cardView = null;
         }
 
-        this.#autoScroll = !!autoScrollOnUpdate;
+        this.#autoScroll = Boolean(autoScrollOnUpdate);
         this.#visibleCount = Number.isFinite(visibleCount) && visibleCount > 0 ? Math.max(1, Math.floor(visibleCount)) : 2;
 
         this.#setupViewportObserver();
@@ -56,7 +68,15 @@ export class ProjectListView {
        ----------------------------- */
 
     clear() {
-        this.#container.textContent = '';
+        // Remove all children that are not a <template> element
+        Array.from(this.#container.childNodes).forEach(node => {
+            if (node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() === 'template') return;
+            node.remove();
+        });
+
+        // reset sizing
+        this.#container.style.minHeight = '';
+        this.#container.style.maxHeight = '';
     }
 
     showLoading(msg = 'Loading projects...') {
@@ -74,7 +94,7 @@ export class ProjectListView {
     _immediateReplaceWith(html) {
         this._cancelAnimations();
         this.clear();
-        this.#container.innerHTML = html;
+        this.#container.insertAdjacentHTML('beforeend', html);
         this._applyViewportSizing(this.#visibleCount);
         if (this.#autoScroll) this._scrollToTop({ smooth: false });
     }
@@ -114,7 +134,12 @@ export class ProjectListView {
         }
 
         try {
+            console.log('Card view exists -- replacing repos');
+
             await this._animateReplace(repos);
+
+            console.log('Repos replaced');
+
             if (this.#autoScroll) this._scrollToTop({ smooth: true });
         } catch (err) {
             console.error('[ProjectListView] renderProjects failed', err);
@@ -129,6 +154,44 @@ export class ProjectListView {
             this._applyViewportSizing(this.#visibleCount);
             if (this.#autoScroll) this._scrollToTop({ smooth: false });
         }
+    }
+
+    /**
+     * Append projects without clearing (no out-animation for existing cards).
+     * New cards will animate-in with stagger.
+     * @param {Array<object>} repos
+     */
+    async appendProjects(repos = []) {
+        if (!Array.isArray(repos) || repos.length === 0) return;
+        console.warn('repos', repos);
+
+        // create new cards hidden
+        const frag = document.createDocumentFragment();
+        repos.forEach((repo, i) => {
+            const raw = this.#cardView ? this.#cardView.render(repo) : null;
+            const card = this._normalizeCard(raw, repo);
+
+            if (!card.classList.contains('project-card')) card.classList.add('project-card');
+            card.classList.remove('animate-in', 'animate-out');
+
+            // We use --i relative to current count to keep stagger consistent
+            const currentCount = this.#container.querySelectorAll('.project-card').length;
+            const idx = currentCount + i;
+            card.style.setProperty('--i', String(idx));
+            card.style.transitionDelay = `${idx * 60}ms`;
+            frag.appendChild(card);
+        });
+
+        this.#container.appendChild(frag);
+
+        // force layout then add animate-in to new cards only
+        await new Promise(requestAnimationFrame);
+        const newCards = Array.from(this.#container.querySelectorAll('.project-card')).slice(-repos.length);
+        newCards.forEach((el) => {
+            try { el.classList.add('animate-in'); } catch (e) { /* ignore per-element errors */ }
+        });
+
+        this._applyViewportSizing(this.#visibleCount);
     }
 
     /* -----------------------------
@@ -153,8 +216,6 @@ export class ProjectListView {
                 const elementChildren = Array.from(maybeNode.children || []).filter(Boolean);
                 if (elementChildren.length === 1) {
                     const only = elementChildren[0];
-                    // detach from fragment (it is not in DOM yet) and return
-                    // ensure it has the class
                     if (!only.classList.contains('project-card')) only.classList.add('project-card');
                     return only;
                 }
@@ -196,41 +257,27 @@ export class ProjectListView {
        Animate replace (out -> in)
        ----------------------------- */
 
-    /**
-     * Animate existing cards out, append new cards hidden, then animate them in with stagger.
-     * Returns when in-animation has been started (and sizing updated).
-     */
     async _animateReplace(repos) {
-        // 1) animate existing out
+        // animate existing out
         const existing = Array.from(this.#container.querySelectorAll('.project-card'));
         if (existing.length > 0) {
             const outPromises = existing.map((el) => this._animateOutElement(el));
-            // Wait until all have settled or a fallback timeout
             await Promise.race([Promise.allSettled(outPromises), new Promise((res) => setTimeout(res, 520))]);
             existing.forEach((el) => {
-                try {
-                    el.remove();
-                } catch (e) { }
+                try { el.remove(); } catch (e) { /* ignore */ }
             });
         }
 
-        // 2) create new cards (hidden)
+        // create new cards (hidden)
         const frag = document.createDocumentFragment();
         repos.forEach((repo, i) => {
-            const raw = this.#cardView.render(repo);
+            const raw = this.#cardView ? this.#cardView.render(repo) : null;
             const card = this._normalizeCard(raw, repo);
 
-            // ensure a class exists
             if (!card.classList.contains('project-card')) card.classList.add('project-card');
-
-            // remove animation classes to ensure starting state
             card.classList.remove('animate-in', 'animate-out');
-
-            // set CSS variables for stagger
             card.style.setProperty('--i', String(i));
-            // inline fallback transitionDelay in ms
             card.style.transitionDelay = `${i * 60}ms`;
-
             frag.appendChild(card);
         });
 
@@ -241,35 +288,17 @@ export class ProjectListView {
 
         const newCards = Array.from(this.#container.querySelectorAll('.project-card'));
         newCards.forEach((el) => {
-            try {
-                el.classList.add('animate-in');
-            } catch (e) {
-                // ignore per-element errors
-            }
+            try { el.classList.add('animate-in'); } catch (e) { /* ignore per-element errors */ }
         });
 
-        // 3) update sizing now that new cards are present
+        // update sizing
         this._applyViewportSizing(this.#visibleCount);
     }
 
-    /**
-     * Animate a single element out. Resolves when transitionend or timeout.
-     * @param {HTMLElement} el
-     * @returns {Promise<boolean>}
-     */
     _animateOutElement(el) {
         return new Promise((resolve) => {
             let finished = false;
-
-            const cleanup = () => {
-                try {
-                    el.removeEventListener('transitionend', onEnd);
-                } catch (e) { }
-                clearTimeout(timeoutId);
-            };
-
             const onEnd = (ev) => {
-                // ensure the event target is the element itself (not a child)
                 if (ev && ev.target && ev.target !== el) return;
                 if (finished) return;
                 finished = true;
@@ -277,17 +306,19 @@ export class ProjectListView {
                 resolve(true);
             };
 
-            // Add class and listen for transition end
+            const cleanup = () => {
+                try { el.removeEventListener('transitionend', onEnd); } catch (e) { /* ignore */ }
+                clearTimeout(timeoutId);
+            };
+
             try {
                 el.classList.add('animate-out');
             } catch (e) {
-                // if class add fails, bail
                 cleanup();
                 resolve(false);
                 return;
             }
 
-            // fallback timeout in case transitionend never fires
             const timeoutId = setTimeout(() => {
                 if (!finished) {
                     finished = true;
@@ -296,7 +327,6 @@ export class ProjectListView {
                 }
             }, 520);
 
-            // Listen for transitionend on the element (once true ensures one call)
             el.addEventListener('transitionend', onEnd, { once: true });
         });
     }
@@ -305,10 +335,6 @@ export class ProjectListView {
        Viewport sizing
        ----------------------------- */
 
-    /**
-     * Set container min/max height to fit exactly visibleCount cards (using first card height).
-     * @param {number} visibleCount
-     */
     _applyViewportSizing(visibleCount = 2) {
         const first = this.#container.querySelector('.project-card');
         if (!first) {
@@ -317,7 +343,6 @@ export class ProjectListView {
             return;
         }
 
-        // offsetHeight includes padding + border
         const cardHeight = first.offsetHeight;
         const style = getComputedStyle(this.#container);
         const gapStr = style.gap || style.rowGap || '16px';
@@ -343,9 +368,7 @@ export class ProjectListView {
         this.#mo.observe(this.#container, { childList: true, subtree: true, attributes: true, attributeFilter: ['class', 'style'] });
 
         this.#cleanupViewport = () => {
-            try {
-                this.#mo?.disconnect();
-            } catch (e) { }
+            try { this.#mo?.disconnect(); } catch (e) { /* ignore */ }
             window.removeEventListener('resize', this.#resizeHandler);
             this.#mo = null;
             this.#resizeHandler = null;
@@ -359,9 +382,7 @@ export class ProjectListView {
                 c.classList.remove('animate-in', 'animate-out');
                 c.style.transitionDelay = '';
                 c.remove();
-            } catch (e) {
-                // ignore per-element errors
-            }
+            } catch (e) { /* ignore per-element errors */ }
         });
     }
 
@@ -372,19 +393,15 @@ export class ProjectListView {
             } else {
                 this.#container.scrollTop = 0;
             }
-        } catch (e) {
-            /* ignore */
-        }
+        } catch (e) { /* ignore */ }
     }
 
     teardown() {
         this._cancelAnimations();
-        try {
-            this.#cleanupViewport?.();
-        } catch (e) { }
+        try { this.#cleanupViewport?.(); } catch (e) { /* ignore */ }
         this.clear();
-        this.#container = null;
         this.#cardView = null;
         this.#cleanupViewport = null;
+        this.#container = null;
     }
 }

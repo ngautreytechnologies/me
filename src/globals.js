@@ -6,8 +6,19 @@
 
 import { initFloatingParticles, setupSectionCardAnimations } from './modules/animation/animation';
 import { setupNavigation } from './modules/dom/navigation';
-import { ensureGlobalStyleInjected } from './styles/styles';
+import { enableVerboseConsole } from './modules/observability/logging/setup';
+import { ensureGlobalStyleInjected } from './assets/styles/styles.js';
 
+/**
+ * Enables verbose logging globally so you can still use console.log/warn/error for:
+ *   - logging
+ *   - tracing
+ *   - performance 
+ */
+// enableVerboseConsole({
+//     verbose: true,
+//     getCorrelationId: () => window.__REQ_ID__ || 'global-session-1',
+// });
 
 /**
  * DOM content loaded event to initialize global styles, animations, and navigation.
@@ -35,3 +46,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+

@@ -1,4 +1,4 @@
-import { GLOBAL_SHEETS, ensureGlobalStyleInjected } from '../styles/styles';
+import { GLOBAL_SHEETS, ensureGlobalStyleInjected } from '../assets/styles/styles';
 import { ReactiveValue } from '../modules/reactivity/reactive';
 import { removeElements } from '../modules/dom/dom';
 

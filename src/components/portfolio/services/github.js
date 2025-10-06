@@ -36,7 +36,7 @@ export class GitHubClient {
         return this.pipeline.execute(ctx, async () => {
             const res = await fetch(url, {
                 headers: { 'Accept': 'application/vnd.github+json' },
-                signal, // ✅ support cancellation
+                signal,
             });
 
             if (!res.ok) {
