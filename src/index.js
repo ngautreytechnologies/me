@@ -9,6 +9,7 @@ import './modules/animation/animation.js';
 import './modules/async/async.js';
 import './modules/cache/cache.js';
 import './modules/data-structures/cloning/cloning.js';
+import './modules/depenency-injection/container.js';
 import './modules/dom/dom.js';
 import './modules/dom/navigation.js';
 import './modules/enrichment/enrichment.js';
@@ -26,7 +27,6 @@ import './modules/pipeline/context.js';
 import './modules/pipeline/request-pipeline.js';
 import './modules/privacy/privacy.js';
 import './modules/reactivity/event-hub.js';
-import './reactivity.js';
 import './modules/reactivity/reactive.js';
 import './modules/reactivity/signals.js';
 import './modules/resilience/resilience.js';
@@ -37,7 +37,13 @@ import './modules/storage/storage.js';
 import './modules/transformation/transformation.js';
 
 // ----- Styles -----
-import './assets/styles/styles.js'
+import './assets/styles/animations.css';
+import './assets/styles/globals.css';
+import './assets/styles/navigation.css';
+import './assets/styles/reset.css';
+import './assets/styles/styles.css';
+import './assets/styles/styles.js';
+import './assets/styles/typography.css';
 
 // ----- Components -----
 // Base components first
@@ -54,16 +60,20 @@ import './components/certifications/certifications.js';
 import './components/education/education.js';
 import './components/experience/experience.js';
 import './components/header/header.js';
-import './components/portfolio/components/portfolio-filter.js';
-import './components/portfolio/components/portfolio-list.js';
-import './components/portfolio/composition/portfolio-composer.js';
+import './components/portfolio/composers/portfolio-composer.js';
 import './components/portfolio/data.js';
-import './components/portfolio/domain/taxonomy.js';
-import './components/portfolio/domain/topic.js';
 import './components/portfolio/index.js';
-import './components/portfolio/services/github.js';
-import './components/portfolio/views/project-card-view.js';
-import './components/portfolio/views/project-list-view.js';
+import './components/portfolio/instruments/domain/project.js';
+import './components/portfolio/instruments/domain/taxonomy.js';
+import './components/portfolio/instruments/domain/topic.js';
+import './components/portfolio/instruments/services/github.js';
+import './components/portfolio/orchestrators/portfolio-orchestrator.js';
+import './components/portfolio/performances/views/project-card-view.js';
+import './components/portfolio/performances/views/project-details-view.js';
+import './components/portfolio/performances/views/project-list-view.js';
+import './components/portfolio/stages/components/portfolio-details.js';
+import './components/portfolio/stages/components/portfolio-filter.js';
+import './components/portfolio/stages/components/portfolio-list.js';
 import './components/skills/data.js';
 import './components/skills/skill-details/skill-details.js';
 import './components/skills/skills-grid/skills-grid.js';

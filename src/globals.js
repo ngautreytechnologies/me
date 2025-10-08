@@ -8,6 +8,7 @@ import { initFloatingParticles, setupSectionCardAnimations } from './modules/ani
 import { setupNavigation } from './modules/dom/navigation';
 import { enableVerboseConsole } from './modules/observability/logging/setup';
 import { ensureGlobalStyleInjected } from './assets/styles/styles.js';
+import { buildDiContainer } from './di.js';
 
 /**
  * Enables verbose logging globally so you can still use console.log/warn/error for:
@@ -47,3 +48,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+buildDiContainer();

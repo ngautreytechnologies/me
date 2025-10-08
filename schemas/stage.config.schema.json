@@ -1,0 +1,128 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://example.com/stage-config.schema.json",
+    "title": "Stage Configuration Schema",
+    "description": "Declarative orchestration configuration for portfolio orchestral architecture.",
+    "type": "object",
+    "properties": {
+        "options": {
+            "type": "object",
+            "description": "Global orchestration options and feature toggles.",
+            "properties": {
+                "enableAI": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "enableGraph": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "performanceMode": {
+                    "type": "string",
+                    "enum": [
+                        "hydration",
+                        "ssr",
+                        "client-only"
+                    ],
+                    "default": "hydration",
+                    "description": "Defines rendering strategy for the stage."
+                }
+            },
+            "required": [
+                "performanceMode"
+            ]
+        },
+        "instruments": {
+            "type": "array",
+            "description": "Core foundational modules or services.",
+            "items": {
+                "$ref": "#/$defs/component"
+            }
+        },
+        "musicians": {
+            "type": "array",
+            "description": "Domain logic components providing intelligence, context, or enrichment.",
+            "items": {
+                "$ref": "#/$defs/component"
+            }
+        },
+        "composers": {
+            "type": "array",
+            "description": "Orchestration components responsible for composing domain data into view models.",
+            "items": {
+                "$ref": "#/$defs/component"
+            }
+        },
+        "stages": {
+            "type": "array",
+            "description": "UI hosting layers or interactive spaces where performances occur.",
+            "items": {
+                "$ref": "#/$defs/component"
+            }
+        },
+        "performances": {
+            "type": "array",
+            "description": "Presentation logic or view renderers.",
+            "items": {
+                "$ref": "#/$defs/performance"
+            }
+        }
+    },
+    "required": [
+        "options",
+        "instruments",
+        "composers",
+        "stages",
+        "performances"
+    ],
+    "$defs": {
+        "component": {
+            "type": "object",
+            "description": "Reusable orchestral component definition.",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Identifier for the component."
+                },
+                "from": {
+                    "type": "string",
+                    "description": "ES module path to import."
+                },
+                "lifecycle": {
+                    "type": "string",
+                    "enum": [
+                        "singleton",
+                        "transient",
+                        "scoped"
+                    ],
+                    "default": "singleton",
+                    "description": "Dependency injection lifecycle scope."
+                },
+                "enabled": {
+                    "type": "string",
+                    "description": "Optional feature toggle key referencing options."
+                }
+            },
+            "required": [
+                "name",
+                "from"
+            ]
+        },
+        "performance": {
+            "allOf": [
+                {
+                    "$ref": "#/$defs/component"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "factory": {
+                            "type": "string",
+                            "description": "Optional path to a factory function module if dynamic creation is needed."
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

@@ -18,5 +18,6 @@ export class Config {
     static LOG_LEVEL = "DEBUG"
 
     static MAX_TOPICS_PER_CATEGORY = 2
+    
     static MAX_TOPICS_VISIBLE = 9
 }
