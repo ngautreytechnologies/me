@@ -1,0 +1,36 @@
+/* Core Skills */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    margin-top: 18px;
+}
+
+.skill h3 {
+    font-size: 1rem;
+    margin-bottom: 6px;
+    color: var(--color-heading);
+}
+
+.skill p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+/* Career Highlights */
+.highlights {
+    margin-top: 18px;
+    padding-left: 20px;
+    color: var(--color-text);
+}
+
+.highlights li {
+    margin-bottom: 14px;
+    line-height: 1.55;
+}
+
+.highlights li::marker {
+    color: var(--color-accent);
+}

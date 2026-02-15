@@ -4,136 +4,44 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nicholas Gautrey - Principal Engineer - AI Innovator</title>
 
-    <!-- Google Fonts: Inter for body, JetBrains Mono for code -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-        rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <title>Nicholas Gautrey — Principal Software Engineer</title>
 
-    <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon/apple-touch-icon.png">
+    <meta name="description"
+        content="Principal Software Engineer / Systems Architect — calm, high-integrity systems thinking." />
+    <meta name="color-scheme" content="light" />
 
-    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon/favicon-16x16.png">
+    <link rel="stylesheet" href="styles/styles.css" />
 
-    <!-- Global styles -->
+    <link rel="stylesheet" href="components/header/header.css" />
+    <link rel="stylesheet" href="components/skills/skills.css" />
+    <link rel="stylesheet" href="components/highlights/highlights.css" />
+    <link rel="stylesheet" href="components/impact/impact.css" />
+    <link rel="stylesheet" href="components/systems/systems.css" />
+    <link rel="stylesheet" href="components/experience/experience.css" />
+    <link rel="stylesheet" href="components/education/education.css" />
+    <link rel="stylesheet" href="components/footer/footer.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600&display=swap">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
 </head>
 
 <body>
-    <div id="floating-elements"></div>
-    <script>
-        (function () {
-            const particleCount = 15;
-            const colors = ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#00f2fe'];
-
-            function initParticles(container) {
-                if (!container) return;
-
-                function createParticle() {
-                    const particle = document.createElement('div');
-                    particle.className = 'particle';
-                    particle.textContent = Math.random() > 0.5 ? '1' : '0';
-                    particle.style.color = colors[Math.floor(Math.random() * colors.length)];
-                    particle.style.left = Math.random() * 100 + '%';
-                    // particle.style.animationDelay = Math.random() * 2 + 's';
-                    particle.style.animationDuration = (Math.random() * 7 + 8) + 's';
-
-                    container.appendChild(particle);
-
-                    setTimeout(() => {
-                        particle.remove();
-                    }, 24000);
-                }
-
-                setInterval(createParticle, 400);
-                for (let i = 0; i < particleCount; i++) {
-                    setTimeout(createParticle, i * 200);
-                }
-            }
-
-            // Watch for the container as early as possible
-            const observer = new MutationObserver(() => {
-                const container = document.getElementById('floating-elements');
-                if (container) {
-                    initParticles(container);
-                    observer.disconnect();
-                }
-            });
-
-            observer.observe(document.documentElement, { childList: true, subtree: true });
-        })();
-    </script>
-    <nav id="navbar" class="navbar">
-        <div class="nav-container">
-            <!-- Brand / Logo -->
-            <div class="nav-brand hidden">Nicholas Gautrey</div>
-
-            <!-- Navigation Links -->
-            <div class="nav-links">
-                <a href="#skills" class="nav-link" data-section="skills">Core Skills</a>
-                <a href="#experience" class="nav-link" data-section="experience">Experience</a>
-                <a href="#portfolio" class="nav-link" data-section="portfolio">Portfolio</a>
-                <a href="#education" class="nav-link" data-section="education">Education</a>
-                <a href="#certifications" class="nav-link" data-section="certifications">Certifications</a>
-            </div>
-
-            <div class="nav-icons hidden">
-                <a href="mailto:youremail@example.com" class="nav-icon" title="Email">
-                    <i class="fas fa-envelope"></i>
-                </a>
-                <a href="#download-pdf" class="nav-icon" title="Generate PDF">
-                    <i class="fas fa-file-pdf"></i>
-                </a>
-            </div>
-        </div>
-    </nav>
-    <header>
-        <header-content></header-content>
-    </header>
-    <main>
-        <div id="summary" class="section-card full-width">
-            <h2>Summary</h2>
-            <cv-summary></cv-summary>
-        </div>
-
-        <div id="skills" class="section-card">
-            <h2>🚀 Core Skills</h2>
-            <skills-grid></skills-grid>
-        </div>
-
-        <div id="skill-details" class="section-card">
-            <h2>📋 Skill Details</h2>
-            <skill-details></skill-details>
-        </div>
-
-        <div id="experience" class="section-card full-width">
-            <h2>💼 Experience</h2>
-            <experience-timeline></experience-timeline>
-        </div>
-
-        <div id="projects" class="section-card">
-            <h2>🎯 Featured Topics</h2>
-            <projects-filter></projects-filter>
-            <portfolio-list></portfolio-list>
-        </div>
-
-        <div id="project-details" class="section-card">
-            <h2>📋 Project Details</h2>
-            <project-details></project-details>
-        </div>
-
-        <div id="education" class="section-card full-width">
-            <h2>🎓 Education</h2>
-            <education-list></education-list>
-        </div>
-
-        <div id="certifications" class="section-card full-width">
-            <h2>🏆 Certifications</h2>
-            <certification-list></certification-list>
-        </div>
+    <main class="page">
+        <section id="cv-header" class="section"></section>
+        <section id="core-skills" class="section"></section>
+        <section id="career-highlights" class="section"></section>
+        <section id="strategic-impact" class="section"></section>
+        <section id="flagship-systems" class="section"></section>
+        <section id="experience" class="section"></section>
+        <section id="education" class="section"></section>
+        <footer id="footer" class="footer"></footer>
     </main>
+
+    <script src="main.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,244 @@
+/*
+  Case: Principal Engineer CV Site
+  Tone: Calm, high-integrity, architect’s notebook
+  Palette: Grounded Masculine Calm (Trust-Building)
+*/
+
+:root {
+    /* Core Palette */
+    --color-bg: #081825;
+    --color-surface: #ffffff;
+
+    --color-text: #1e1e1e;
+    --color-heading: #0f2a44;
+    --color-muted: #3e5568;
+    --color-accent: #c6a75e;
+
+    /* Subtle UI Lines */
+    --color-border: rgba(15, 42, 68, 0.08);
+    --color-border-strong: rgba(15, 42, 68, 0.14);
+
+    /* Typography */
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial,
+        sans-serif;
+
+    --font-heading: "Source Serif 4", Georgia, serif;
+
+    /* Layout */
+    --page-width: 850px;
+
+    /* Card Style */
+    --radius: 20px;
+
+    --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.35);
+    --shadow-edge: 0 1px 0 rgba(255, 255, 255, 0.65) inset;
+
+    /* Spacing Rhythm */
+    --space-xs: 6px;
+    --space-sm: 12px;
+    --space-md: 20px;
+    --space-lg: 34px;
+    --space-xl: 52px;
+}
+
+/* Reset + Baseline */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--color-bg);
+    color: var(--color-text);
+
+    font-family: var(--font-body);
+    font-size: 16.5px;
+    line-height: 1.75;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Page Shell */
+
+.page {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 64px 22px 80px;
+}
+
+.section {
+    margin-top: var(--space-xl);
+}
+
+/* Typography Hierarchy */
+
+h1,
+h2,
+h3 {
+    font-family: var(--font-heading);
+    color: var(--color-heading);
+    letter-spacing: -0.012em;
+    line-height: 1.25;
+}
+
+h1 {
+    font-size: 2.4rem;
+    margin: 0 0 var(--space-sm);
+}
+
+h2 {
+    font-size: 1.25rem;
+    margin: 0 0 var(--space-md);
+    font-weight: 600;
+
+    position: relative;
+    padding-bottom: var(--space-sm);
+}
+
+/* Calm accent underline */
+
+h2::after {
+    content: "";
+    display: block;
+
+    width: 56px;
+    height: 2px;
+    margin-top: var(--space-sm);
+
+    background: var(--color-accent);
+    opacity: 0.85;
+    border-radius: 2px;
+}
+
+h3 {
+    font-size: 1.05rem;
+    margin: 0 0 var(--space-sm);
+    font-weight: 600;
+}
+
+/* Body Text */
+
+p {
+    margin: var(--space-sm) 0;
+}
+
+.muted {
+    color: var(--color-muted);
+}
+
+/* Lists */
+
+ul {
+    margin: var(--space-sm) 0;
+    padding-left: 22px;
+}
+
+li {
+    margin-bottom: var(--space-sm);
+    line-height: 1.6;
+}
+
+li::marker {
+    color: var(--color-accent);
+}
+
+/* Links */
+
+a {
+    color: var(--color-heading);
+    text-decoration: none;
+
+    border-bottom: 1px solid rgba(198, 167, 94, 0.35);
+    padding-bottom: 1px;
+
+    transition: border-color 160ms ease;
+}
+
+a:hover {
+    border-bottom-color: rgba(198, 167, 94, 0.9);
+}
+
+/* Shared Card Primitive */
+
+.card {
+    background: var(--color-surface);
+
+    border-radius: var(--radius);
+    padding: var(--space-lg);
+
+    border: 1px solid var(--color-border);
+
+    box-shadow: var(--shadow-soft), var(--shadow-edge);
+}
+
+/* Selection */
+
+::selection {
+    background: rgba(198, 167, 94, 0.28);
+}
+
+/* ========================================================= */
+/* CV Section Heading Row + Icon Alignment */
+/* ========================================================= */
+
+.section-title {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+
+    margin-bottom: var(--space-md);
+}
+
+.section-title h2 {
+    margin: 0;
+}
+
+/* Icon Badge (quiet margin marker) */
+
+.section-title i {
+    font-size: 1.3rem;
+
+    color: rgba(198, 167, 94, 0.85);
+
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 999px;
+    background: rgba(198, 167, 94, 0.08);
+
+    margin-top: 4px;
+}
+
+/* Responsive */
+
+@media (max-width: 640px) {
+    .page {
+        padding: 44px 16px 70px;
+    }
+
+    .card {
+        padding: 22px;
+    }
+
+    h1 {
+        font-size: 2.05rem;
+    }
+
+    .section-title i {
+        width: 30px;
+        height: 30px;
+        font-size: 1.15rem;
+    }
+}

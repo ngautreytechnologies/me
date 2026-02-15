@@ -8,3 +8,6 @@ node_modules
 .venv
 enhancements.md
 docs/internal
+
+src.zip
+working-document.md

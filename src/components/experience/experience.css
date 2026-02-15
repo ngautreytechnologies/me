@@ -1,66 +1,23 @@
-/* Experience timeline */
-.experience-timeline {
-    position: relative;
-    padding-left: 2rem;
+/* Experience */
+.role-block {
+    margin-top: 26px;
 }
 
-.experience-timeline::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: var(--accent-gradient);
+.role-block h3 {
+    margin-bottom: 6px;
+    color: var(--color-heading);
 }
 
-.experience-item {
-    position: relative;
-    margin-bottom: 2rem;
-    padding-left: 2rem;
+.role-block ul {
+    margin-top: 10px;
+    padding-left: 20px;
 }
 
-.experience-item::before {
-    content: '';
-    position: absolute;
-    left: -1.5rem;
-    top: 0.5rem;
-    width: 12px;
-    height: 12px;
-    background: var(--secondary-gradient);
-    border-radius: 50%;
-    border: 2px solid var(--dark-bg);
+.role-block li {
+    margin-bottom: 10px;
+    line-height: 1.55;
 }
 
-.experience-item:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-}
-
-.job-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--text-accent);
-    margin-bottom: 0.25rem;
-}
-
-.job-company {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text-primary);
-    margin-bottom: 0.3rem;
-}
-
-.job-period {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    opacity: 0.8;
-    margin-bottom: 0.5rem;
-}
-
-.education-description>p {
-    font-size: 1rem;
-    color: var(--text-secondary) !important;
+.role-block p {
+    margin: 6px 0;
 }
