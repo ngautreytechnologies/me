@@ -19,18 +19,28 @@
     line-height: 1.4;
 }
 
-/* Career Highlights */
-.highlights {
-    margin-top: 18px;
-    padding-left: 20px;
-    color: var(--color-text);
+/* Core Skills Grid Refinement */
+
+#core-skills h3 {
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: rgba(245, 246, 244, 0.92);
+    margin-bottom: 6px;
 }
 
-.highlights li {
-    margin-bottom: 14px;
+#core-skills p {
+    color: rgba(245, 246, 244, 0.65);
+    font-size: 0.95rem;
     line-height: 1.55;
 }
 
-.highlights li::marker {
-    color: var(--color-accent);
+/* Slightly more spacing between skill blocks */
+
+#core-skills .skills-grid {
+    gap: 26px;
+}
+
+#core-skills .skills-grid {
+    border-top: 1px solid rgba(245, 246, 244, 0.06);
+    padding-top: 18px;
 }

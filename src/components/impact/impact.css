@@ -1,21 +1,105 @@
 /* Strategic Impact */
-.impact-block {
-    margin-top: 22px;
-    padding-top: 18px;
-    border-top: 1px solid var(--color-border);
+
+.strategic-impact-card {
+    padding-top: 38px;
+    padding-bottom: 38px;
 }
 
-.impact-block h3 {
-    margin-bottom: 10px;
+/* Case Title */
+
+.impact-case h3 {
     font-size: 1.05rem;
-    color: var(--color-heading);
+    font-weight: 600;
+    color: rgba(245, 246, 244, 0.92);
 }
 
-.impact-block p {
-    margin: 6px 0;
-    line-height: 1.55;
+.impact-case {
+    margin-top: 30px;
+    padding-top: 20px;
+
+    border-top: 1px solid rgba(245, 246, 244, 0.08);
 }
 
-.impact-block strong {
-    color: var(--color-heading);
+/* First role should not have a divider */
+.impact-case:first-of-type {
+    margin-top: 18px;
+    padding-top: 0;
+    border-top: none;
+}
+
+/* Impact List */
+
+.impact-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Rows */
+
+.impact-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+
+    padding: 8px 0;
+    line-height: 1.65;
+
+    color: rgba(245, 246, 244, 0.74);
+}
+
+/* Text wrapper fixes flex wrapping */
+
+.impact-text {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Gentle spacing between rows */
+
+.impact-list li+li {
+    margin-top: 6px;
+}
+
+/* Icon Bullets */
+
+.impact-list li i {
+    flex-shrink: 0;
+    margin-top: 3px;
+
+    font-size: 0.95rem;
+    color: rgba(198, 167, 94, 0.65);
+    opacity: 0.9;
+}
+
+/* Outcome Row (Subtle Highlight) */
+
+.impact-list li.outcome {
+    margin-top: 10px;
+    color: rgba(245, 246, 244, 0.88);
+    font-weight: 500;
+}
+
+.impact-list li.outcome i {
+    color: rgba(198, 167, 94, 0.9);
+}
+
+/* Keyword Emphasis */
+
+.impact-list strong {
+    color: rgba(245, 246, 244, 0.92);
+    font-weight: 600;
+}
+
+
+/* Responsive Tightening */
+
+@media (max-width: 640px) {
+    .impact-divider {
+        margin: 20px 0;
+    }
+
+    .impact-list li {
+        gap: 10px;
+    }
 }
