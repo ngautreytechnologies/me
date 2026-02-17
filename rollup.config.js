@@ -15,25 +15,29 @@ export default {
     },
     plugins: [
         resolve({
-            browser: true,         // ✅ ensures browser-friendly modules
-            preferBuiltins: false, // ✅ avoids Node core over polyfills
+            browser: true,
+            preferBuiltins: false,
         }),
         commonjs(),
 
-        // Import HTML templates as strings
-        string({ include: ['src/components/**/*.html'] }),
+        // Import HTML templates as strings, exclude tests
+        string({
+            include: ['src/components/**/*.html'],
+            exclude: ['**/__tests__/**', '**/*.spec.html', '**/*.test.html'],
+        }),
 
-        // Component-level styles → bundled into JS
+        // Component-level styles → bundled into JS, exclude tests
         postcss({
-            include: 'src/components/**/*.css',
-            inject: false,   // don’t auto-inject <style> into <head>
-            extract: false,  // don’t write individual files
+            include: ['src/components/**/*.css'],
+            exclude: ['**/__tests__/**', '**/*.spec.css', '**/*.test.css'],
+            inject: false,
+            extract: false,
             minimize: true,
         }),
 
         // Global styles → extracted as one CSS file
         postcss({
-            include: 'src/styles/*.css',
+            include: ['src/assets/styles/*.css'],
             inject: false,
             extract: 'styles.css',
             minimize: true,
@@ -47,7 +51,7 @@ export default {
 
         copy({
             targets: [
-                { src: 'src/images/**/*', dest: 'dist/images' },
+                { src: 'src/assets/images/**/*', dest: 'dist/images' },
             ],
         }),
     ],
