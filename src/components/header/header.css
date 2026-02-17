@@ -1,0 +1,130 @@
+.header-card {
+    text-align: center;
+    padding-top: 42px;
+    padding-bottom: 42px;
+}
+
+/* Social Icons */
+
+.social-row {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-bottom: 26px;
+}
+
+.social-row a {
+    color: rgba(245, 246, 244, 0.75);
+    font-size: 1.1rem;
+    opacity: 0.78;
+    transition: transform 160ms ease, opacity 160ms ease, color 160ms ease;
+}
+
+.social-row a:hover {
+    color: var(--color-accent);
+    transform: translateY(-2px);
+    opacity: 1;
+}
+
+/* Name + Role */
+
+.identity .name {
+    font-size: 2.4rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.identity .role {
+    margin-top: 10px;
+    font-size: 0.95rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(245, 246, 244, 0.65);
+}
+
+/* Divider */
+
+.header-divider {
+    margin: 28px auto;
+    width: 72%;
+    height: 1px;
+    background: rgba(245, 246, 244, 0.12);
+}
+
+/* Hero Summary (NEW) */
+
+.header-summary {
+    margin-top: 18px;
+    margin-bottom: 10px;
+
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+
+    font-size: 1.05rem;
+    line-height: 1.6;
+
+    color: rgba(245, 246, 244, 0.78);
+}
+
+/* Brand Mark */
+
+.brand-mark {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+
+.brand-mark img {
+    width: 74px;
+    height: 74px;
+    opacity: 0.92;
+
+    filter: drop-shadow(0 0 14px rgba(198, 167, 94, 0.14));
+
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.02);
+    padding: 10px;
+}
+
+/* Skill Strip (Upgraded to Chips) */
+
+.skill-strip {
+    margin-top: 26px;
+
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+/* Replace dot separators with calm pill badges */
+
+.skill-strip span {
+    padding: 0.45rem 0.9rem;
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(245, 246, 244, 0.08);
+
+    color: rgba(245, 246, 244, 0.62);
+}
+
+/* Remove old dot separator behaviour */
+
+.skill-strip span::after {
+    content: "";
+    margin: 0;
+}
+
+/* Remove break helper (no longer needed) */
+
+.skill-break {
+    display: none;
+}

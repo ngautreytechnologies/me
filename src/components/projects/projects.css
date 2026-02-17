@@ -1,0 +1,79 @@
+/* ============================================================
+   Flagship projects
+   ============================================================ */
+
+/* Each project entry */
+.project-item {
+    margin-top: 28px;
+    padding-top: 20px;
+
+    border-top: 1px solid rgba(245, 246, 244, 0.08);
+}
+
+/* Remove border from the first item */
+.project-item:first-of-type {
+    border-top: none;
+    padding-top: 0;
+}
+
+/* Title row with icon */
+.project-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 10px;
+}
+
+/* Icon bullet */
+.project-title i {
+    flex-shrink: 0;
+    font-size: 1rem;
+
+    color: rgba(198, 167, 94, 0.75);
+    opacity: 0.9;
+}
+
+/* Project heading */
+.project-title h3 {
+    margin: 0;
+
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.35;
+
+    color: rgba(245, 246, 244, 0.92);
+}
+
+/* Paragraph rhythm */
+.project-item p {
+    margin: 6px 0;
+    line-height: 1.6;
+
+    /* Softer than pure white for readability */
+    color: rgba(245, 246, 244, 0.74);
+}
+
+/* Muted focus line */
+.project-item .muted {
+    margin-top: 10px;
+    color: rgba(245, 246, 244, 0.62);
+}
+
+/* Focus label emphasis */
+.project-item strong {
+    color: rgba(245, 246, 244, 0.90);
+    font-weight: 600;
+}
+
+/* Mobile spacing */
+@media (max-width: 640px) {
+    .project-item {
+        margin-top: 22px;
+        padding-top: 16px;
+    }
+
+    .project-title {
+        gap: 10px;
+    }
+}
