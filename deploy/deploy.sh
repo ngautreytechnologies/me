@@ -10,7 +10,7 @@ REPO_URL=$(git config --get remote.origin.url)
 echo "🚀 Deploying $DIST_DIR to GitHub Pages..."
 
 if [ ! -d "$DIST_DIR" ]; then
-  echo "❌ Error: $DIST_DIR does not exist. Run build.sh first."
+  echo "Error: $DIST_DIR does not exist. Run build.sh first."
   exit 1
 fi
 
@@ -29,4 +29,4 @@ git push --force origin "$BRANCH"
 cd ..
 rm -rf "$TEMP_DIR"
 
-echo "✅ Deployment complete!"
+echo "Deployment completed."
