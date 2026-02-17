@@ -13,13 +13,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # If you're deploying directly (no build step needed)
+      # 2. Build dist folder (static packaging)
+      - name: Package site into dist/
+        run: |
+          rm -rf dist
+          mkdir dist
+
+          # Copy root HTML entrypoint
+          cp index.html dist/
+
+          # Copy all static folders
+          cp -r assets dist/
+          cp -r components dist/
+          cp -r styles dist/
+          cp -r js dist/
+
+          # Copy root JS files
+          cp main.js dist/
+          cp reactivity.js dist/
+
+      # 3. Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./
+          publish_dir: ./dist
           publish_branch: gh-pages
