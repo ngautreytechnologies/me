@@ -1,10 +1,119 @@
-<div class="experience-timeline" data-container>
-    <template id="experience-item-template">
-        <div class="experience-item">
-            <div data-field="title" class="job-title"></div>
-            <div data-field="company" class="job-company"></div>
-            <div data-field="period" class="job-period"></div>
-            <slot name="description" class="experience-description"></slot>
-        </div>
-    </template>
-</div>
+<section class="card">
+  <div class="section-title">
+    <h2>Experience</h2>
+    <i class="fa-solid fa-briefcase"></i>
+  </div>
+
+  <p class="muted">
+    Over 13+ years in software engineering, I've delivered full-stack backend and platform systems across multiple
+    domains,
+    progressing from hands-on implementation through to principal-level architecture, scalability, and long-term systems
+    evolution.
+  </p>
+
+  <div class="role-block">
+    <h3>Independent Systems Design and Development — CaseCell &amp; DendriFlow</h3>
+    <p class="role-dates muted">2025 - Present</p>
+
+    <ul class="role-points">
+      <li>
+        Building <strong>CaseCell</strong>, a local-first evidence and chain-of-custody platform for high-stakes,
+        integrity-critical workflows where provenance and admissibility must withstand external scrutiny.
+      </li>
+
+      <li>
+        Modelled and implemented the core architecture using <strong>Domain-Driven Design</strong>, with explicit
+        bounded contexts separating admissible Custody and Derivation layers from non-admissible Sandbox exploration.
+      </li>
+
+      <li>
+        Delivered deterministic integrity guarantees by construction: canonical artefact identity, provenance capture,
+        and tamper-evident custody continuity across evidence lifecycles.
+      </li>
+
+      <li>
+        Built the Sandbox as a disposable investigative layer (including bounded AI support), with strict admissibility
+        enforcement and human-controlled promotion workflows into tribunal-grade derived artefacts.
+      </li>
+
+      <li>
+        Alongside this, developing <strong>DendriFlow</strong> as a smaller DevEx research project exploring modular
+        workflow automation, developer ergonomics, and carefully bounded AI assistance.
+      </li>
+    </ul>
+  </div>
+
+  <div class="role-block">
+    <h3>Principal Software Engineer — Alchem Technologies Ltd</h3>
+    <p class="role-dates muted">Mar 2024 - Jul 2025</p>
+
+    <ul class="role-points">
+      <li>
+        Set architectural direction for a domain-driven modular platform, balancing near-term delivery with a clear
+        path to future decomposition.
+      </li>
+
+      <li>
+        Defined integration boundaries and modelling discipline to reduce coupling and enable safe evolution in a
+        compliance-heavy domain.
+      </li>
+
+      <li>
+        Led proof-of-concept workstreams to validate approach and de-risk innovative platform capabilities.
+      </li>
+
+      <li>
+        Mentored engineers through design reviews, exploratory delivery, and maintainable architecture practices.
+      </li>
+    </ul>
+  </div>
+
+  <div class="role-block">
+    <h3>Principal Software Developer — E-bate Limited</h3>
+    <p class="role-dates muted">Sep 2022 - Mar 2024</p>
+
+    <ul class="role-points">
+      <li>
+        Led redesign of a complex tiered rebate calculation engine, delivering an
+        <strong>~85% performance improvement</strong> in critical workloads.
+      </li>
+
+      <li>
+        Strengthened platform reliability and extensibility while supporting customer-specific commercial flexibility.
+      </li>
+
+      <li>
+        Established coding standards and mentoring practices that reduced knowledge silos across the engineering
+        organisation.
+      </li>
+    </ul>
+  </div>
+
+  <div class="role-block">
+    <h3>Senior Software Developer — E-bate Limited</h3>
+    <p class="role-dates muted">Nov 2021 - Sep 2022</p>
+
+    <ul class="role-points">
+      <li>
+        Delivered new platform features with a strong focus on clean code, testing discipline, and production defect
+        resolution.
+      </li>
+
+      <li>
+        Built internal templates and sample services that improved developer productivity and architectural consistency.
+      </li>
+    </ul>
+  </div>
+
+  <div class="role-block">
+    <h3>Earlier Experience</h3>
+    <p class="role-dates muted">2012 - 2021</p>
+
+    <ul class="role-points">
+      <li>
+        Backend and platform engineering roles across IoT, cloud systems, and customer-facing product environments,
+        building strong foundations in maintainable delivery, systems evolution, and production reliability.
+      </li>
+    </ul>
+  </div>
+</section>
