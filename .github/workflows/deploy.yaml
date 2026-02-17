@@ -1,34 +1,36 @@
-name: Build and Deploy CV Site
+name: Deploy CV Site
 
 on:
   push:
     branches:
-      - main  # ✅ Only trigger on main
+      - main
+
+permissions:
+  contents: write
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      # 1. Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+      # 2. Package static site from src/ into dist/
+      - name: Package site into dist/
+        run: |
+          rm -rf dist
+          mkdir dist
 
-    - name: Install dependencies
-      run: npm install
+          # Copy everything from src/ into dist/
+          cp -r src/* dist/
 
-    - name: Build project
-      run: |
-        rm -rf dist
-        npm run copy
-
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v4
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./dist
-        publish_branch: gh-pages  # ✅ Explicitly deploy to gh-pages
+      # 3. Deploy dist/ to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
+  
